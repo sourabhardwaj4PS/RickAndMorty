@@ -14,6 +14,7 @@
 		2F05F5672C1B078E00475454 /* RickAndMortyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05F5662C1B078E00475454 /* RickAndMortyTests.swift */; };
 		2F05F5712C1B078E00475454 /* RickAndMortyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05F5702C1B078E00475454 /* RickAndMortyUITests.swift */; };
 		2F05F5732C1B078E00475454 /* RickAndMortyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05F5722C1B078E00475454 /* RickAndMortyUITestsLaunchTests.swift */; };
+		2F3A80892C21BE0E00800758 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2F3A80882C21BE0E00800758 /* README.md */; };
 		2F673E392C1B29C400943B32 /* CharacterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F673E382C1B29C400943B32 /* CharacterKit */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		2F05F56C2C1B078E00475454 /* RickAndMortyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F05F5702C1B078E00475454 /* RickAndMortyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyUITests.swift; sourceTree = "<group>"; };
 		2F05F5722C1B078E00475454 /* RickAndMortyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2F3A80882C21BE0E00800758 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		2F05F5482C1B078B00475454 = {
 			isa = PBXGroup;
 			children = (
+				2F3A80882C21BE0E00800758 /* README.md */,
 				2F05F5532C1B078B00475454 /* RickAndMorty */,
 				2F05F5652C1B078E00475454 /* RickAndMortyTests */,
 				2F05F56F2C1B078E00475454 /* RickAndMortyUITests */,
@@ -241,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F3A80892C21BE0E00800758 /* README.md in Resources */,
 				2F05F55D2C1B078E00475454 /* Preview Assets.xcassets in Resources */,
 				2F05F5592C1B078E00475454 /* Assets.xcassets in Resources */,
 			);
