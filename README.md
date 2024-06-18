@@ -35,4 +35,4 @@ https://rickandmortyapi.com/documentation/
 
 Below is a screenshot of the latest code coverage summary:
 
-![Code Coverage Summary](assets/coverage-summary.png)
+![Code Coverage Summary](/RickAndMorty/Assets.xcassets/coverage-summary.imageset/coverage-summary.png)
