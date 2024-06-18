@@ -14,7 +14,7 @@ This app is a demonstration of SwiftUI + Combine, async/await for network calls,
 ## Modules
 
 1. **Characters Module**: Handles functionality related to characters, including displaying character information, searching characters, and managing character details.
-2. **Episodes Module**: To be developed later.
+2. **Episodes Module**: `To be developed later.`
 3. **Main App**: Integrates all modules together to create the "Rick And Morty" app, offering a seamless user experience across characters, episodes, and locations.
 
 ## Installation
