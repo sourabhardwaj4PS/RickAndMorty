@@ -24,3 +24,9 @@ This app is a demonstration of SwiftUI + Combine, async/await for network calls,
 3. Build and run the project on a simulator or device.
 
 
+## (Public) API Credits
+https://rickandmortyapi.com/documentation/
+
+**List characters**: https://rickandmortyapi.com/api/character/?page=1
+
+**Character details**: https://rickandmortyapi.com/api/character/1
