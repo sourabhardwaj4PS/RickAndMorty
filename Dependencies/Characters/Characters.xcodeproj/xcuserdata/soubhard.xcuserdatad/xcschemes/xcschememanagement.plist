@@ -9,6 +9,24 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>CharactersUITests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2F05F58A2C1B24F700475454</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2F05F5A52C1B24FA00475454</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

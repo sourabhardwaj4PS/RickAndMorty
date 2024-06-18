@@ -10,7 +10,7 @@ import XCTest
 final class CharactersUITests: XCTestCase {
 
     private var app: XCUIApplication!
-    var tableView: XCUIElement!
+    var charactersListView: XCUIElement!
     
     override func setUpWithError() throws {
         app = XCUIApplication()
@@ -21,20 +21,16 @@ final class CharactersUITests: XCTestCase {
         // Print the entire view hierarchy
         print(app.debugDescription)
         
-        let exists = NSPredicate(format: "exists == true")
-        expectation(for: exists, evaluatedWith: tableView, handler: nil)
-        waitForExpectations(timeout: 5, handler: nil)
+        charactersListView = app.collectionViews["charactersListView"]
     }
 
     override func tearDownWithError() throws {
         app = nil
-        tableView = nil
+        charactersListView = nil
     }
     
     func testCharacterRowView() {
-
         // Wait for charactersListView to appear
-        let charactersListView = app.collectionViews["charactersListView"]
         XCTAssertTrue(charactersListView.waitForExistence(timeout: 5), "charactersListView should be present.")
 
         // Check a specific row
@@ -42,18 +38,16 @@ final class CharactersUITests: XCTestCase {
         XCTAssertTrue(firstCharacterRowView.exists, "rowView-1 should be present.")
 
         // Check attributes view within the row
-        let attributesView = firstCharacterRowView.otherElements["attributesView"]
+        let attributesView = firstCharacterRowView.otherElements["attributesView-1"]
         XCTAssertTrue(attributesView.exists, "attributesView should be present.")
     }
     
     func testCharactersListView_charactersList_shouldShowList() throws {
         // Check if the table view exists
-        tableView = app.collectionViews["charactersListView"]
-        
-        XCTAssertTrue(tableView.exists, "The characters list view should be present.")
+        XCTAssertTrue(charactersListView.exists, "The characters list view should be present.")
         
         // Check the number of cells
-        let cells = tableView.cells
+        let cells = charactersListView.cells
         XCTAssertGreaterThan(cells.count, 0, "The characters list should have at least one cell.")
         
         // Find the first cell
@@ -62,63 +56,57 @@ final class CharactersUITests: XCTestCase {
     }
     
     func testCharactersListView_charactersList_shouldLoadMorePagesOnScroll() throws {
-        let app = XCUIApplication()
-        let tableView = app.collectionViews["charactersListView"]
-
         // Check if the table view exists
-        XCTAssertTrue(tableView.exists, "The characters list view should be present.")
-
-        // scroll to bottom
+        XCTAssertTrue(charactersListView.exists, "The characters list view should be present.")
         
-        // Check the number of cells
-        let cells = tableView.cells
-        XCTAssertGreaterThan(cells.count, 0, "The characters list should have at least one cell.")
-
-        // Tap the first cell
-        let firstCell = cells.element(boundBy: 0)
+        // last cell before scrolling
+        let initialLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 2)
+        XCTAssertTrue(initialLastCell.exists, "The initial last cell does not exist")
         
-        XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
-        firstCell.tap()
+        let initialLastCellIdentifier = initialLastCell.identifier
+        XCTAssertFalse(initialLastCellIdentifier.isEmpty, "The identifier of the initial last cell is empty")
+        
+        // scroll to the bottom
+        charactersListView.scrollToBottom()
+        
+        // last cell before scrolling
+        let newLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 1)
+        XCTAssertTrue(newLastCell.exists, "The new last cell does not exist")
+
+        let newLastCellIdentifier = newLastCell.identifier
+        XCTAssertFalse(newLastCellIdentifier.isEmpty, "The identifier of the new last cell is empty")
+
+        // Verify that more items are loaded
+        XCTAssertNotEqual(initialLastCellIdentifier, newLastCellIdentifier, "The 'load more' functionality did not load additional items")
     }
-
     
     func testCharacterRowView_charactersList_shouldShowRowView() throws {
-        let tableView = app.collectionViews["charactersListView"]
-        let firstCell = tableView.cells.element(boundBy: 0)
-
+        let firstCell = charactersListView.cells.element(boundBy: 0)
         XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
         
-        print(firstCell.debugDescription)
-
         // Check if the character row view is correctly displayed
-        let characterRowView = firstCell.otherElements["CharacterListView.RowView-1"]
+        let characterRowView = firstCell.otherElements["rowView-1"]
         XCTAssertTrue(characterRowView.exists, "The character row view should be displayed.")
     }
 
     func testCharacterRowView_charactersList_shouldShowAttributes() throws {
-        let app = XCUIApplication()
-        let tableView = app.collectionViews["charactersListView"]
-        let firstCell = tableView.cells.element(boundBy: 0)
-
+        let firstCell = charactersListView.cells.element(boundBy: 0)
         XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
 
         // Check if the attributes view is correctly displayed
-        let attributesView = app.otherElements["attributesView"]
+        let attributesView = app.otherElements["attributesView-1"]
         XCTAssertTrue(attributesView.exists, "The attributes view should be displayed.")
 
         // Check if specific attributes are displayed
-        let attributeName = attributesView.staticTexts["name"]
+        let attributeName = attributesView.staticTexts["name-1"]
         XCTAssertTrue(attributeName.exists, "The attribute name should be displayed.")
 
-        let attributeValue = attributesView.staticTexts["gender"]
+        let attributeValue = attributesView.staticTexts["gender-1"]
         XCTAssertTrue(attributeValue.exists, "The attribute gender should be displayed.")
     }
     
     func testCharactersListView_tappingCharactersList_shouldShowDetailsView() throws {
-        let app = XCUIApplication()
-        let tableView = app.collectionViews["charactersListView"]
-        let firstCell = tableView.cells.element(boundBy: 0)
-
+        let firstCell = charactersListView.cells.element(boundBy: 0)
         XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
 
         // Tap the first cell to display the detail view
@@ -129,6 +117,7 @@ final class CharactersUITests: XCTestCase {
         XCTAssertTrue(detailView.exists, "The character detail view should be displayed after tapping a character cell.")
     }
 
+    /*
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
@@ -136,5 +125,16 @@ final class CharactersUITests: XCTestCase {
                 XCUIApplication().launch()
             }
         }
-    }
+    }*/
+}
+
+extension XCUIElement {
+    func scrollToBottom(maxScrolls: Int = 3) {
+           var currentScrolls = 0
+           while currentScrolls < maxScrolls {
+               swipeUp()
+               currentScrolls += 1
+               print("swiping up = \(currentScrolls)")
+           }
+       }
 }

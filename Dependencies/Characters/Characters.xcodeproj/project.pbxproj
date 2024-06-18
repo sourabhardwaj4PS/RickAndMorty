@@ -47,6 +47,7 @@
 		2F05F5AA2C1B24FA00475454 /* CharactersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersUITests.swift; sourceTree = "<group>"; };
 		2F05F5AC2C1B24FA00475454 /* CharactersUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2F05F5B92C1B254300475454 /* CharacterKit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CharacterKit; sourceTree = SOURCE_ROOT; };
+		2F3A80862C21687200800758 /* CharactersTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CharactersTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +79,7 @@
 		2F05F5822C1B24F700475454 = {
 			isa = PBXGroup;
 			children = (
+				2F3A80862C21687200800758 /* CharactersTests.xctestplan */,
 				2F05F58D2C1B24F700475454 /* Characters */,
 				2F05F59F2C1B24FA00475454 /* CharactersTests */,
 				2F05F5A92C1B24FA00475454 /* CharactersUITests */,

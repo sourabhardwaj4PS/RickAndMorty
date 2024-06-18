@@ -36,7 +36,6 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                             CharacterRowView(viewModel: characterVM)
                                 .accessibilityIdentifier("rowView-\(characterVM.character.id)")
                                 .onAppear {
-                                    print("Setting identifier: rowView-\(characterVM.character.id)")
                                     if viewModel.shouldLoadMore(index: index) {
                                         Task {
                                             await viewModel.loadMore()
@@ -49,10 +48,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
 //                        }
                     }
                 }
-                .accessibility(identifier: "charactersListView")
-                .onAppear {
-                    print("Setting identifier: charactersListView")
-                }
+                .accessibilityIdentifier("charactersListView")
                 .navigationTitle("Characters")
                 .listStyle(.plain)
             }

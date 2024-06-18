@@ -22,19 +22,14 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
             ImageView(imageUrlString: viewModel.character.image)
                 .frame(width: 134, height: 134)
                 .cornerRadius(5)
-                .accessibility(identifier: "thumbnailView-\(viewModel.character.id)")
-                .onAppear {
-                    print("Setting identifier: thumbnailView-\(viewModel.character.id)")
-                }
+                .accessibilityIdentifier("thumbnailView-\(viewModel.character.id)")
             
             AttributesView(viewModel: viewModel)
-                .accessibility(identifier: "attributesView-\(viewModel.character.id)")
-                .onAppear {
-                    print("Setting identifier: attributesView-\(viewModel.character.id)")
-                }
             
             Spacer()
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("rowView-\(viewModel.character.id)")
     }
 }
 

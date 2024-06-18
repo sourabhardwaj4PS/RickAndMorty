@@ -20,35 +20,22 @@ struct AttributesView<T>: View where T: CharacterViewModel {
         VStack(alignment: .leading, spacing: 8, content: {
             
             TitleLabelView(title: "Name:", label: viewModel.character.name)
-                .accessibility(identifier: "name-\(viewModel.character.id)")
-                .onAppear() {
-                    print("Setting identifier: name-\(viewModel.character.id)")
-                }
+                .accessibilityIdentifier("name-\(viewModel.character.id)")
             
             TitleLabelView(title: "Gender:", label: viewModel.character.gender)
-                .accessibility(identifier: "gender-\(viewModel.character.id)")
-                .onAppear() {
-                    print("Setting identifier: gender-\(viewModel.character.id)")
-                }
+                .accessibilityIdentifier("gender-\(viewModel.character.id)")
             
             TitleLabelView(title: "Status:", label: viewModel.character.status)
-                .accessibility(identifier: "status-\(viewModel.character.id)")
-                .onAppear() {
-                    print("Setting identifier: status-\(viewModel.character.id)")
-                }
+                .accessibilityIdentifier("status-\(viewModel.character.id)")
 
             TitleLabelView(title: "Species:", label: viewModel.character.species)
-                .accessibility(identifier: "species-\(viewModel.character.id)")
-                .onAppear() {
-                    print("Setting identifier: species-\(viewModel.character.id)")
-                }
+                .accessibilityIdentifier("species-\(viewModel.character.id)")
             
             TitleLabelView(title: "No of episodes:", label: "\(viewModel.character.episode.count)")
-                .accessibility(identifier: "episodes-\(viewModel.character.id)")
-                .onAppear() {
-                    print("Setting identifier: episodes-\(viewModel.character.id)")
-                }
+                .accessibilityIdentifier("episodes-\(viewModel.character.id)")
         })
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("attributesView-\(viewModel.character.id)")
         .padding(8)
     }
 }

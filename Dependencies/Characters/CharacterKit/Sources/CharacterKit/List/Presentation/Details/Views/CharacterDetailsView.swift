@@ -43,9 +43,10 @@ struct CharacterDetailsView<T>: View where T: CharacterViewModel {
                     Text(episode)
                 }
             }
+            .accessibilityElement(children: .contain)
         }
         .padding(8)
-        .accessibility(identifier: "characterDetailView")
+        .accessibilityIdentifier("characterDetailsView")
     }
 }
 
