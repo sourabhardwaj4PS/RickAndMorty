@@ -19,11 +19,4 @@ public struct CharacterInfoImpl: CharacterInfo {
     public var pages: Int
     public var next: String?
     public var prev: String?
-    
-//    enum CodingKeys: String, CodingKey {
-//        case count = "count"
-//        case pages = "pages"
-//        case next = "next"
-//        case prev = "prev"
-//    }
 }

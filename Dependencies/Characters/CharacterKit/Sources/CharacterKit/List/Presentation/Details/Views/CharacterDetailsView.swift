@@ -28,25 +28,33 @@ struct CharacterDetailsView<T>: View where T: CharacterViewModel {
                     .font(.largeTitle)
                 
                 TitleLabelView(title: "Species:", label: viewModel.character.species)
+                    .accessibilityIdentifier("title")
                 
                 TitleLabelView(title: "Status:", label: viewModel.character.status)
+                    .accessibilityIdentifier("status")
                 
                 TitleLabelView(title: "Gender:", label: viewModel.character.gender)
+                    .accessibilityIdentifier("gender")
                 
                 TitleLabelView(title: "Birth:", label: viewModel.character.created)
+                    .accessibilityIdentifier("birth")
 
                 Text("Episodes Aired:")
                     .font(.headline)
+                    .accessibilityIdentifier("episodes")
                 
                 ForEach(viewModel.character.episode.indices, id: \.self) { index in
                     let episode = viewModel.character.episode[index]
                     Text(episode)
                 }
             }
+            .accessibilityIdentifier("characterDetailsView")
             .accessibilityElement(children: .contain)
         }
         .padding(8)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("characterDetailsView")
+        .navigationBarTitle("In depth", displayMode: .inline)
     }
 }
 

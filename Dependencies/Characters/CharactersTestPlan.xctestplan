@@ -1,0 +1,34 @@
+{
+  "configurations" : [
+    {
+      "id" : "E50F362A-356E-49E7-9C72-19AFDB3BFC50",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CharacterKit",
+        "identifier" : "CharacterKitTests",
+        "name" : "CharacterKitTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "CharactersUITestsLaunchTests"
+      ],
+      "target" : {
+        "containerPath" : "container:Characters.xcodeproj",
+        "identifier" : "2F05F5A52C1B24FA00475454",
+        "name" : "CharactersUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

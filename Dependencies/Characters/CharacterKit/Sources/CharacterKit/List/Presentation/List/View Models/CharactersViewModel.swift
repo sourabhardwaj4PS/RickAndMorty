@@ -12,10 +12,12 @@ import CoreKit
 public protocol CharactersViewModel: ObservableObject {
     
     var characters: [CharacterViewModel] { get set }
+    var character: CharacterViewModel? { get set }
+    var navigateToDetails: Bool { get set }
     
     // character details
     func loadCharacterDetails(id: Int) async
-    func tapped(viewModel: CharacterViewModel)
+    func tappedCharacter(id: Int)
     
     // pagination
     var isLoading: Bool { get set }
@@ -29,6 +31,8 @@ public class CharactersViewModelImpl: CharactersViewModel {
     @Dependency public var useCase: CharacterUseCase
     
     @Published public var characters: [CharacterViewModel] = []
+    @Published public var character: CharacterViewModel?
+    @Published public var navigateToDetails = false
     
     public var isLoading: Bool = false
     public var currentPage: Int = 1
@@ -104,7 +108,8 @@ public class CharactersViewModelImpl: CharactersViewModel {
                     let characterVM = CharacterViewModelImpl(character: character)
                     print("character details received:")
                     print("Name: \(characterVM.character.name)")
-                    self.characters = [characterVM]
+                    self.character = characterVM
+                    self.navigateToDetails = true
                 }
                 .store(in: &self.cancellables)
         }
@@ -113,10 +118,10 @@ public class CharactersViewModelImpl: CharactersViewModel {
         }
     }
     
-    public func tapped(viewModel: CharacterViewModel) {
+    public func tappedCharacter(id: Int) {
         print("character tapped")
         Task {
-            await loadCharacterDetails(id: viewModel.character.id)
+            await loadCharacterDetails(id: id)
         }
     }
 }

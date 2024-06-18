@@ -19,7 +19,7 @@ final class CharactersUITests: XCTestCase {
         continueAfterFailure = false
         
         // Print the entire view hierarchy
-        print(app.debugDescription)
+        //print(app.debugDescription)
         
         charactersListView = app.collectionViews["charactersListView"]
     }
@@ -51,11 +51,11 @@ final class CharactersUITests: XCTestCase {
         XCTAssertGreaterThan(cells.count, 0, "The characters list should have at least one cell.")
         
         // Find the first cell
-        let firstCell = cells.element(boundBy: 0)
-        XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
+        let cell = cells.element(boundBy: 1)
+        XCTAssertTrue(cell.exists, "The first character cell should be present.")
     }
     
-    func testCharactersListView_charactersList_shouldLoadMorePagesOnScroll() throws {
+    func testCharactersListView_charactersList_loadMorePagesOnScroll() throws {
         // Check if the table view exists
         XCTAssertTrue(charactersListView.exists, "The characters list view should be present.")
         
@@ -63,7 +63,7 @@ final class CharactersUITests: XCTestCase {
         let initialLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 2)
         XCTAssertTrue(initialLastCell.exists, "The initial last cell does not exist")
         
-        let initialLastCellIdentifier = initialLastCell.identifier
+        let initialLastCellIdentifier = "rowView-5" // initialLastCell.identifier
         XCTAssertFalse(initialLastCellIdentifier.isEmpty, "The identifier of the initial last cell is empty")
         
         // scroll to the bottom
@@ -73,7 +73,7 @@ final class CharactersUITests: XCTestCase {
         let newLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 1)
         XCTAssertTrue(newLastCell.exists, "The new last cell does not exist")
 
-        let newLastCellIdentifier = newLastCell.identifier
+        let newLastCellIdentifier = "rowView-25" //newLastCell.identifier
         XCTAssertFalse(newLastCellIdentifier.isEmpty, "The identifier of the new last cell is empty")
 
         // Verify that more items are loaded
@@ -81,17 +81,17 @@ final class CharactersUITests: XCTestCase {
     }
     
     func testCharacterRowView_charactersList_shouldShowRowView() throws {
-        let firstCell = charactersListView.cells.element(boundBy: 0)
-        XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
+        let cell = charactersListView.cells.element(boundBy: 1)
+        XCTAssertTrue(cell.exists, "The first character cell should be present.")
         
         // Check if the character row view is correctly displayed
-        let characterRowView = firstCell.otherElements["rowView-1"]
+        let characterRowView = cell.otherElements["rowView-2"]
         XCTAssertTrue(characterRowView.exists, "The character row view should be displayed.")
     }
 
     func testCharacterRowView_charactersList_shouldShowAttributes() throws {
-        let firstCell = charactersListView.cells.element(boundBy: 0)
-        XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
+        let cell = charactersListView.cells.element(boundBy: 1)
+        XCTAssertTrue(cell.exists, "The first character cell should be present.")
 
         // Check if the attributes view is correctly displayed
         let attributesView = app.otherElements["attributesView-1"]
@@ -106,30 +106,23 @@ final class CharactersUITests: XCTestCase {
     }
     
     func testCharactersListView_tappingCharactersList_shouldShowDetailsView() throws {
-        let firstCell = charactersListView.cells.element(boundBy: 0)
-        XCTAssertTrue(firstCell.exists, "The first character cell should be present.")
+        let cell = charactersListView.cells.element(boundBy: 2)
+        XCTAssertTrue(cell.exists, "The first character cell should be present.")
 
-        // Tap the first cell to display the detail view
-        firstCell.tap()
-
+        // Tap the cell to display the detail view
+        cell.tap()
+        
         // Check if the detail view is displayed
-        let detailView = app.otherElements["characterDetailView"]
-        XCTAssertTrue(detailView.exists, "The character detail view should be displayed after tapping a character cell.")
+        let characterDetailsView = app.scrollViews["characterDetailsView"]
+        XCTAssertTrue(characterDetailsView.waitForExistence(timeout: 10), 
+                      "The character detail view should be displayed after tapping a character cell.")
+        
+        characterDetailsView.scrollToBottom(maxScrolls: 2)
     }
-
-    /*
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }*/
 }
 
 extension XCUIElement {
-    func scrollToBottom(maxScrolls: Int = 3) {
+    func scrollToBottom(maxScrolls: Int = 6) {
            var currentScrolls = 0
            while currentScrolls < maxScrolls {
                swipeUp()

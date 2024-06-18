@@ -23,6 +23,15 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
             }
             else {
                 List {
+                    // NavigationLink to the CharacterDetailsView
+                    if let modelVM = viewModel.character as? CharacterViewModelImpl {
+                        NavigationLink(destination: CharacterDetailsView(viewModel: modelVM),
+                                       isActive: $viewModel.navigateToDetails) {
+                           EmptyView()
+                       }
+                    }
+                    
+                    // loop characters to make RowViews
                     ForEach(viewModel.characters.indices, id: \.self) { index in
                         let character = viewModel.characters[index]
 
@@ -31,7 +40,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                         
                         // FIXME: VERY VERY BAD APPROACH !!
                         let characterVM = CharacterViewModelImpl(character: character.character)
-                        
+                                                
 //                        NavigationLink(destination: CharacterDetailsView(viewModel: characterVM)) {
                             CharacterRowView(viewModel: characterVM)
                                 .accessibilityIdentifier("rowView-\(characterVM.character.id)")
@@ -43,7 +52,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                                     }
                                 }
                                 .onTapGesture {
-                                    viewModel.tapped(viewModel: characterVM)
+                                    viewModel.tappedCharacter(id: character.character.id)
                                 }
 //                        }
                     }
@@ -56,6 +65,6 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
     }
 }
 
-#Preview {
+/*#Preview {
     CharactersListView(viewModel: PreviewCharactersViewModelImpl())
-}
+}*/

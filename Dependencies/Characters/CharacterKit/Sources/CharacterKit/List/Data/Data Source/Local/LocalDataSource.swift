@@ -15,7 +15,7 @@ public protocol CharacterLocalDataSource {
     func characterDetails(characterId: Int) throws -> Character?
 }
 
-public class CharacterLocalDataSourceImpl: CharacterLocalDataSource {
+/*public class CharacterLocalDataSourceImpl: CharacterLocalDataSource {
     
     public func save(character: [Character]) -> Bool {
         return false
@@ -29,4 +29,4 @@ public class CharacterLocalDataSourceImpl: CharacterLocalDataSource {
         return nil
     }
         
-}
+}*/

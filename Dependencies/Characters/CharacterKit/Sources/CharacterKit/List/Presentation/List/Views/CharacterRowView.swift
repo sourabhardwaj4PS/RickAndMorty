@@ -28,6 +28,7 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
             
             Spacer()
         }
+        .background(Color.white)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("rowView-\(viewModel.character.id)")
     }

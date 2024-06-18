@@ -136,10 +136,10 @@ class CharacterViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Character details loaded successfully!")
 
         // When
-        sut.$characters
+        sut.$character
             .dropFirst()
             .sink { character in
-                XCTAssertEqual(character.first?.character.name, "Morty Smith")
+                XCTAssertEqual(character?.character.name, "Morty Smith")
                 expectation.fulfill()
             }
             .store(in: &cancellables)
@@ -220,13 +220,12 @@ class CharacterViewModelTests: XCTestCase {
             // Given
             let expectedResult = MockData.character
             let character: CharacterImpl = try JSONDecoder().decode(CharacterImpl.self, from: expectedResult)
-            let characterVM = CharacterViewModelImpl(character: character)
             
             MockURLProtocol.resetMockData()
             MockURLProtocol.populateRequestHandler()
 
             // When
-            sut.tapped(viewModel: characterVM)
+            sut.tappedCharacter(id: character.id)
                         
             print(sut.isLoading)
             XCTAssertTrue(sut.isLoading)
@@ -236,7 +235,7 @@ class CharacterViewModelTests: XCTestCase {
         }
     }
     
-    func testCharactersViewModel_shouldLoadNextPage_shouldLoadNextPageForCharacters() async {
+    func testCharactersViewModel_shouldLoadNextPage_loadNextPageForCharacters() async {
         do {
             // Given
             let expectedResult = MockData.character
