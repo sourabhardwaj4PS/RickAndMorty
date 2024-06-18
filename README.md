@@ -30,3 +30,9 @@ https://rickandmortyapi.com/documentation/
 **List characters**: https://rickandmortyapi.com/api/character/?page=1
 
 **Character details**: https://rickandmortyapi.com/api/character/1
+
+## Code Coverage
+
+Below is a screenshot of the latest code coverage summary:
+
+![Code Coverage Summary](assets/coverage-summary.png)
