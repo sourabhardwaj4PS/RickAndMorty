@@ -6,37 +6,6 @@
 //
 
 import Foundation
-@testable import CharacterKit
-
-extension CharacterImpl {
-    
-    static func mockedCharacter() -> CharacterImpl {
-        return CharacterImpl(
-            id: 1,
-            name: "Citadel Ricks",
-            status: "Alive",
-            species: "Cartoon",
-            type: "",
-            gender: "Male",
-            image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-            url: "none",
-            created: "NA",
-            episode: ["episode 1","episode 2","episode 3"]
-        )
-    }
-}
-
-extension CharactersImpl {
-    
-    static func mockedCharacters() -> CharactersImpl {
-        return CharactersImpl(info:
-                                CharacterInfoImpl(count: 1, pages: 1, next: nil, prev: nil),
-                              results: [
-                                CharacterImpl.mockedCharacter(),
-                                CharacterImpl.mockedCharacter()
-                              ])
-    }
-}
 
 public struct MockData {
     static let allCharacters = """
