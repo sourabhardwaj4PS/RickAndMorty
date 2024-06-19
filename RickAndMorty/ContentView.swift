@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CharacterKit
 
 struct ContentView: View {
     var body: some View {

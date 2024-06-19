@@ -1,5 +1,5 @@
 //
-//  DIContainer.swift
+//  MockContainer.swift
 //
 //
 //  Created by Sourabh Bhardwaj on 16/06/24.
@@ -11,8 +11,9 @@ import NetworkKit
 
 @testable import CharacterKit
 
-public class DIContainer {
-    public static func setupMockDepedencyContainer() {
+public class MockContainer {
+    
+    public static func setupMockDependencies() {
         DependencyContainer.register(type: (any CharactersViewModel).self, CharactersViewModelImpl())
         
         DependencyContainer.register(type: (any CharacterUseCase).self, CharacterUseCaseImpl())

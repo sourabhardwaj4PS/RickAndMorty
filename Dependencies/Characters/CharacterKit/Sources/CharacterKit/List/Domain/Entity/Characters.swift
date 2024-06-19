@@ -12,19 +12,6 @@ public protocol Characters: CharacterBase, Codable {
     var results: [Character] { get set }
 }
 
-/*public protocol Characters: Codable {
-    associatedtype C: Character
-    associatedtype CI: CharacterInfo
-
-    var info: CI { get set }
-    var results: [C] { get set }
-}
-
-public struct CharactersImpl<C: Character, CI: CharacterInfo>: Characters {
-    public var info: CI
-    public var results: [C]
-}*/
-
 public struct CharactersImpl: Characters {
     public var info: CharacterInfo
     public var results: [Character]

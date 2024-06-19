@@ -65,10 +65,7 @@ public class SessionApiClient<EndpointType: ApiEndpoint>: ApiClient {
                 return data
             }
             .decode(type: T.self, decoder: JSONDecoder())
-            .mapError({ error -> ApiError in
-                guard let error = error as? ApiError else {
-                    return ApiError.decodingFailed
-                }
+            .mapError({ error -> Error in
                 return error
             })
             .eraseToAnyPublisher()

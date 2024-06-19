@@ -16,4 +16,3 @@ public struct NeverDecodable: Decodable {
         throw DecodingError.unexpectedValue
     }
 }
-

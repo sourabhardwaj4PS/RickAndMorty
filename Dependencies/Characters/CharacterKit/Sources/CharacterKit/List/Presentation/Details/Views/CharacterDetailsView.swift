@@ -8,91 +8,82 @@
 import Foundation
 import SwiftUI
 
-struct CharacterDetailsView<T>: View where T: CharacterViewModel {
+struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
     
-    @State var viewModel: T
+    @StateObject var viewModel: T
     
     public init(viewModel: @autoclosure @escaping () -> T) {
-        _viewModel = State(wrappedValue: viewModel())
+        _viewModel = StateObject(wrappedValue: viewModel())
+        print("CharacterDetailsView init")
     }
     
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                ImageView(imageUrlString: viewModel.character.image)
-                    .frame(maxWidth: .infinity, maxHeight: 360)
-                    .background(Color.yellow)
-                    .cornerRadius(5)
-                
-                Text(viewModel.character.name)
-                    .font(.largeTitle)
-                
-                TitleLabelView(title: "Species:", label: viewModel.character.species)
-                    .accessibilityIdentifier("title")
-                
-                TitleLabelView(title: "Status:", label: viewModel.character.status)
-                    .accessibilityIdentifier("status")
-                
-                TitleLabelView(title: "Gender:", label: viewModel.character.gender)
-                    .accessibilityIdentifier("gender")
-                
-                TitleLabelView(title: "Birth:", label: viewModel.character.created)
-                    .accessibilityIdentifier("birth")
+            if viewModel.finishedLoading {
+                VStack(alignment: .leading, spacing: 16) {
+                    ImageView(imageUrlString: viewModel.image)
+                        .frame(maxWidth: .infinity, maxHeight: 360)
+                        .background(Color.yellow)
+                        .cornerRadius(5)
+                        .accessibilityIdentifier("image")
+                    
+                    Text(viewModel.name)
+                        .font(.largeTitle)
+                        .accessibilityIdentifier("name")
+                    
+                    TitleLabelView(title: "Species:", label: viewModel.species)
+                        .accessibilityIdentifier("title")
+                    
+                    TitleLabelView(title: "Status:", label: viewModel.status)
+                        .accessibilityIdentifier("status")
+                    
+                    TitleLabelView(title: "Gender:", label: viewModel.gender)
+                        .accessibilityIdentifier("gender")
+                    
+                    TitleLabelView(title: "Birth:", label: viewModel.created)
+                        .accessibilityIdentifier("birth")
 
-                Text("Episodes Aired:")
-                    .font(.headline)
-                    .accessibilityIdentifier("episodes")
-                
-                ForEach(viewModel.character.episode.indices, id: \.self) { index in
-                    let episode = viewModel.character.episode[index]
-                    Text(episode)
+                    Text("Episodes Aired:")
+                        .font(.headline)
+                        .accessibilityIdentifier("episodes")
+                    
+                    ForEach(viewModel.episode.indices, id: \.self) { index in
+                        let episode = viewModel.episode[index]
+                        Text(episode)
+                    }
                 }
+                .accessibilityElement(children: .contain)
             }
-            .accessibilityIdentifier("characterDetailsView")
-            .accessibilityElement(children: .contain)
+            else {
+                ProgressView()
+            }
         }
         .padding(8)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("characterDetailsView")
         .navigationBarTitle("In depth", displayMode: .inline)
+        .onAppear(perform: {
+            Task {
+                await viewModel.loadCharacterDetails(id: viewModel.characterId)
+            }
+        })
+        .alert("Characters", isPresented: $viewModel.isServerError, actions: {
+            Button("Retry") {
+                Task {
+                    await viewModel.loadCharacterDetails(id: viewModel.characterId)
+                }
+            }
+            Button("Cancel", role: .cancel) {
+                print("alert tapped")
+            }
+        }, message: {
+            Text(viewModel.errorMessage)
+        })
     }
 }
 
 
 
-#Preview {
-    CharacterDetailsView(viewModel: CharacterViewModelImpl(
-        character: CharacterImpl(
-            id: 1,
-            name: "Citadel of Ricks",
-            status: "Alive",
-            species: "Cartoon",
-            type: "",
-            gender: "Male",
-            image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-            url: "https://rickandmortyapi.com/api/character/2",
-            created: "2017-11-04T18:50:21.651Z",
-            episode: [
-                "https://rickandmortyapi.com/api/episode/1",
-                "https://rickandmortyapi.com/api/episode/2",
-                "https://rickandmortyapi.com/api/episode/3",
-                "https://rickandmortyapi.com/api/episode/4",
-                "https://rickandmortyapi.com/api/episode/5",
-                "https://rickandmortyapi.com/api/episode/6",
-                "https://rickandmortyapi.com/api/episode/7",
-                "https://rickandmortyapi.com/api/episode/8",
-                "https://rickandmortyapi.com/api/episode/9",
-                "https://rickandmortyapi.com/api/episode/10",
-                "https://rickandmortyapi.com/api/episode/11",
-                "https://rickandmortyapi.com/api/episode/12",
-                "https://rickandmortyapi.com/api/episode/13",
-                "https://rickandmortyapi.com/api/episode/14",
-                "https://rickandmortyapi.com/api/episode/15",
-                "https://rickandmortyapi.com/api/episode/16",
-                "https://rickandmortyapi.com/api/episode/17",
-                "https://rickandmortyapi.com/api/episode/18",
-                "https://rickandmortyapi.com/api/episode/19",
-            ]
-        )
-    ))
-}
+//#Preview {
+//    CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: 3))
+//}

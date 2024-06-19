@@ -19,10 +19,10 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
     
     var body: some View {
         HStack(spacing: 0) {
-            ImageView(imageUrlString: viewModel.character.image)
+            ImageView(imageUrlString: viewModel.image)
                 .frame(width: 134, height: 134)
                 .cornerRadius(5)
-                .accessibilityIdentifier("thumbnailView-\(viewModel.character.id)")
+                .accessibilityIdentifier("thumbnailView-\(viewModel.id)")
             
             AttributesView(viewModel: viewModel)
             
@@ -30,7 +30,7 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
         }
         .background(Color.white)
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("rowView-\(viewModel.character.id)")
+        .accessibilityIdentifier("rowView-\(viewModel.id)")
     }
 }
 

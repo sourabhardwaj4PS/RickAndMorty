@@ -106,7 +106,7 @@ final class CharactersUITests: XCTestCase {
     }
     
     func testCharactersListView_tappingCharactersList_shouldShowDetailsView() throws {
-        let cell = charactersListView.cells.element(boundBy: 2)
+        let cell = charactersListView.cells.element(boundBy: 0)
         XCTAssertTrue(cell.exists, "The first character cell should be present.")
 
         // Tap the cell to display the detail view
@@ -114,15 +114,23 @@ final class CharactersUITests: XCTestCase {
         
         // Check if the detail view is displayed
         let characterDetailsView = app.scrollViews["characterDetailsView"]
-        XCTAssertTrue(characterDetailsView.waitForExistence(timeout: 10), 
+        XCTAssertTrue(characterDetailsView.waitForExistence(timeout: 1.0),
                       "The character detail view should be displayed after tapping a character cell.")
+        
+        
+        // check if details(image, labels etc) are loaded
+        let imageView = characterDetailsView.images["image"]
+        XCTAssertTrue(imageView.exists, "The image of the character should be present.")
+        
+        let episodesLabel = characterDetailsView.staticTexts["episodes"]
+        XCTAssertTrue(episodesLabel.exists, "The image of the character should be present.")
         
         characterDetailsView.scrollToBottom(maxScrolls: 2)
     }
 }
 
 extension XCUIElement {
-    func scrollToBottom(maxScrolls: Int = 6) {
+    func scrollToBottom(maxScrolls: Int = 4) {
            var currentScrolls = 0
            while currentScrolls < maxScrolls {
                swipeUp()

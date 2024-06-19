@@ -13,15 +13,18 @@ public protocol CharactersViewModel: ObservableObject {
     
     var characters: [CharacterViewModel] { get set }
     var character: CharacterViewModel? { get set }
-    var navigateToDetails: Bool { get set }
     
     // character details
-    func loadCharacterDetails(id: Int) async
-    func tappedCharacter(id: Int)
+    func loadCharacters() async
+    
+    var isLoading: Bool { get set }
     
     // pagination
-    var isLoading: Bool { get set }
     var currentPage: Int { get set }
+    
+    // error handling
+    var isServerError: Bool { get set }
+    var errorMessage: String { get set }
     
     func shouldLoadMore(index: Int) -> Bool
     func loadMore() async
@@ -32,7 +35,10 @@ public class CharactersViewModelImpl: CharactersViewModel {
     
     @Published public var characters: [CharacterViewModel] = []
     @Published public var character: CharacterViewModel?
-    @Published public var navigateToDetails = false
+    
+    // error handling
+    @Published public var isServerError = false
+    @Published public var errorMessage = ""
     
     public var isLoading: Bool = false
     public var currentPage: Int = 1
@@ -59,6 +65,10 @@ public class CharactersViewModelImpl: CharactersViewModel {
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { [weak self] completion in
                     guard let self = self else { return }
+                    if case .failure(let error) = completion {
+                        self.isServerError = true
+                        self.errorMessage = error.localizedDescription
+                    }
                     self.isLoading = false
                 }, receiveValue: { [weak self] characters in
                     guard let self = self else { return }
@@ -83,45 +93,5 @@ public class CharactersViewModelImpl: CharactersViewModel {
     // increment currentPage, and load more data
     public func shouldLoadMore(index: Int) -> Bool {
         return index == characters.count - 2
-    }
-    
-    public func loadCharacterDetails(id: Int) async {
-        isLoading = true
-
-        let params: Parameters = [
-            "characterId": "\(id)"
-        ]
-        do {
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await useCase.characterDetails(params: params)
-            publisher
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    print("loadCharacterDetails completion \(completion)")
-                    if case .failure(let error) = completion {
-                        // Handle error
-                        print("Failed to load characters: \(error)")
-                    }
-                    else {
-                        self.isLoading = false
-                    }
-                } receiveValue: { character in
-                    let characterVM = CharacterViewModelImpl(character: character)
-                    print("character details received:")
-                    print("Name: \(characterVM.character.name)")
-                    self.character = characterVM
-                    self.navigateToDetails = true
-                }
-                .store(in: &self.cancellables)
-        }
-        catch let exception {
-            print("Exception in loadCharacterDetails = \(exception)")
-        }
-    }
-    
-    public func tappedCharacter(id: Int) {
-        print("character tapped")
-        Task {
-            await loadCharacterDetails(id: id)
-        }
     }
 }

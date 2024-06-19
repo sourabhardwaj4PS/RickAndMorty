@@ -100,4 +100,10 @@ public struct MockData {
           "created": "2017-11-04T18:50:21.651Z"
         }
     """.data(using: .utf8)!
+    
+    static let someData = """
+    {
+        "someKey": "someValue"
+    }
+    """.data(using: .utf8)!
 }

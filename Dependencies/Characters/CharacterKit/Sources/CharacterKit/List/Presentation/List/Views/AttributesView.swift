@@ -19,23 +19,23 @@ struct AttributesView<T>: View where T: CharacterViewModel {
     var body: some View {
         VStack(alignment: .leading, spacing: 8, content: {
             
-            TitleLabelView(title: "Name:", label: viewModel.character.name)
-                .accessibilityIdentifier("name-\(viewModel.character.id)")
+            TitleLabelView(title: "Name:", label: viewModel.name)
+                .accessibilityIdentifier("name-\(viewModel.id)")
             
-            TitleLabelView(title: "Gender:", label: viewModel.character.gender)
-                .accessibilityIdentifier("gender-\(viewModel.character.id)")
+            TitleLabelView(title: "Gender:", label: viewModel.gender)
+                .accessibilityIdentifier("gender-\(viewModel.id)")
             
-            TitleLabelView(title: "Status:", label: viewModel.character.status)
-                .accessibilityIdentifier("status-\(viewModel.character.id)")
+            TitleLabelView(title: "Status:", label: viewModel.status)
+                .accessibilityIdentifier("status-\(viewModel.id)")
 
-            TitleLabelView(title: "Species:", label: viewModel.character.species)
-                .accessibilityIdentifier("species-\(viewModel.character.id)")
+            TitleLabelView(title: "Species:", label: viewModel.species)
+                .accessibilityIdentifier("species-\(viewModel.id)")
             
-            TitleLabelView(title: "No of episodes:", label: "\(viewModel.character.episode.count)")
-                .accessibilityIdentifier("episodes-\(viewModel.character.id)")
+            TitleLabelView(title: "No of episodes:", label: "\(viewModel.episodesCount)")
+                .accessibilityIdentifier("episodes-\(viewModel.id)")
         })
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("attributesView-\(viewModel.character.id)")
+        .accessibilityIdentifier("attributesView-\(viewModel.id)")
         .padding(8)
     }
 }
