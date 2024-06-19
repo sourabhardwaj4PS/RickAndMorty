@@ -58,15 +58,23 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                 })
                 .background(
                     NavigationLink(
-                        destination: CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: selectedCharacterId ?? 1)),
-                        isActive: $navigateToDetails
-                    ) {
-                        EmptyView()
-                    }
+                        destination: destinationView,
+                        isActive: $navigateToDetails,
+                        label: { EmptyView() }
+                    )
                 )
             }
         }
     }
+    
+    @ViewBuilder
+        private var destinationView: some View {
+            if let characterId = selectedCharacterId {
+                CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterId))
+            } else {
+                EmptyView()
+            }
+        }
 }
 
 /*#Preview {
