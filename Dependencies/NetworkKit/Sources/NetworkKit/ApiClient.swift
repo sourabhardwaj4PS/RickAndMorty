@@ -21,7 +21,7 @@ extension URLSession: URLSessionProtocol { }
 
 public class SessionApiClient<EndpointType: ApiEndpoint>: ApiClient {
     private var session: URLSessionProtocol
-    public var request: URLRequest?
+    public var request: URLRequest!
 
     // MARK: - Init
 

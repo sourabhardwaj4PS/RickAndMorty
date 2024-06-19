@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-@testable import NetworkKit
-
 public class MockURLProtocol: URLProtocol {
     
     // MARK: - Mocking Data
@@ -48,7 +46,7 @@ public class MockURLProtocol: URLProtocol {
             }
 
             if MockURLProtocol.decodingFailed {
-                throw NSError(domain: "com.example.errorDomain", code: 500, userInfo: [NSLocalizedDescriptionKey: "Simulated generic error"])
+                throw ApiError.decodingFailed
             }
             
             let (response, data) = try handler(request)

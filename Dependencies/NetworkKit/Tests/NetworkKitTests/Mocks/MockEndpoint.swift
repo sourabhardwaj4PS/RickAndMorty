@@ -14,30 +14,30 @@ public enum MockEndpoint: ApiEndpoint {
     
     case characters(page: Int)
     
-    var baseURL: URL { URL(string: "https://mocked.com/api")! }
+    public var baseURL: URL { URL(string: "https://mocked.com/api")! }
     
-    var path: String {
+    public var path: String {
         switch self {
         case .characters:
             return "/character/"
         }
     }
     
-    var queryItems: [URLQueryItem]? {
+    public var queryItems: [URLQueryItem]? {
         switch self {
         case .characters(let page):
             return [URLQueryItem(name: "page", value: "\(page)")]
         }
     }
     
-    var method: NetworkKit.HttpMethod { .get }
+    public var method: NetworkKit.HttpMethod { .get }
     
-    var headers: [String : String]? {
+    public var headers: [String : String]? {
         return [
             "Authorization": "Bearer-Mocked ABCDEFG123456",
             "Content-Type": "application/json"
         ]
     }
     
-    var body: Data? { nil }
+    public var body: Data? { nil }
 }

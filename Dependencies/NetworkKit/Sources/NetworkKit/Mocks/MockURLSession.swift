@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-@testable import NetworkKit
-
 public class MockURLSession: URLSessionProtocol {
     
     public init() { }
