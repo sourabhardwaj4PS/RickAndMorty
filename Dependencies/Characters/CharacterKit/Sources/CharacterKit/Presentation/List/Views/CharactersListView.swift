@@ -56,13 +56,13 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                 }, message: {
                     Text(viewModel.errorMessage)
                 })
-                .background(
+                .background(content: {
                     NavigationLink(
                         destination: destinationView,
                         isActive: $navigateToDetails,
                         label: { EmptyView() }
                     )
-                )
+                })
             }
         }
     }
