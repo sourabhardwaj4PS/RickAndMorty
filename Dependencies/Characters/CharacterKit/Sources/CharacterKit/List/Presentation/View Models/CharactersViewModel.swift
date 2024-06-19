@@ -38,4 +38,5 @@ public protocol NetworkableCharacters {
  */
 public protocol CharactersViewModel: PublishableCharacters, NetworkableCharacters {
     var isLoading: Bool { get set }
+    var hasAppeared: Bool { get set }
 }

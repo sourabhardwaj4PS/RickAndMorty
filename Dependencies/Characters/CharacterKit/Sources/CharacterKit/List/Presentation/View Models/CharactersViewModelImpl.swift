@@ -13,6 +13,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
     @Dependency public var useCase: CharacterUseCase
     
     @Published public var characters: [CharacterViewModel] = []
+    @Published public var hasAppeared: Bool = false
     
     // error handling
     @Published public var isServerError = false
@@ -24,13 +25,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    public init(isTestEnvironment: Bool = false) {
-        if !isTestEnvironment {
-            Task {
-                await loadCharacters()
-            }
-        }
-    }
+    public init() { }
     
     public func loadCharacters() async {
         do {

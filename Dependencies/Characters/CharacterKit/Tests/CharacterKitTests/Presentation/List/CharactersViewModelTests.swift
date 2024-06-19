@@ -21,7 +21,7 @@ class CharactersViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         MockContainer.setupMockDependencies()
         
-        sut = CharactersViewModelImpl(isTestEnvironment: true)
+        sut = CharactersViewModelImpl()
     }
 
     override func tearDownWithError() throws {
@@ -51,7 +51,7 @@ class CharactersViewModelTests: XCTestCase {
                 expectation.fulfill()
                 
             }.store(in: &cancellables)
-        
+    
         await sut.loadCharacters()
         
         await fulfillment(of: [expectation], timeout: 1.0)
