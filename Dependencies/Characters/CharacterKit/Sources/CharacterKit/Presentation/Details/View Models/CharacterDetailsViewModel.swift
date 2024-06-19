@@ -9,18 +9,21 @@ import Foundation
 import Combine
 import CoreKit
 
-public protocol CharacterDetailsViewModel: ObservableObject {
-    
-    var characterId: Int { get set }
-    
+public protocol PublishableCharacterDetails: ObservableObject {
     var finishedLoading: Bool { get set }
-    var character: Character? { get set }
-
+    
     // error handling
     var isServerError: Bool { get set }
     var errorMessage: String { get set }
+}
+
+public protocol NetworkableCharacterDetails {
+    var parameters: Parameters? { get set }
     
-    // attributes to access
+    func loadCharacterDetails(id: Int) async
+}
+
+public protocol AttributableCharacter {
     var name: String { get }
     var status: String { get }
     var species: String { get }
@@ -30,37 +33,24 @@ public protocol CharacterDetailsViewModel: ObservableObject {
     var url: String { get }
     var created: String { get }
     var episode: [String] { get }
-    
-    // to make server call
-    var parameters: Parameters? { get set }
-    func loadCharacterDetails(id: Int) async
+}
+
+public protocol CharacterDetailsViewModel: PublishableCharacterDetails, NetworkableCharacterDetails, AttributableCharacter {
+    var characterId: Int { get set }
 }
 
 public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     @Dependency public var useCase: CharacterUseCase
     
-    // error handling
+    @Published public var finishedLoading: Bool = false
     @Published public var isServerError: Bool = false
     @Published public var errorMessage: String = ""
-    @Published public var finishedLoading: Bool = false
-    
-    public var character: Character?
-    
-    private var cancellables = Set<AnyCancellable>()
-    public var characterId: Int
     
     public var parameters: Parameters?
+    public var characterId: Int
     
-    // getters
-    public var name: String { return character?.name ?? "" }
-    public var status: String { return character?.status ?? "" }
-    public var species: String { return character?.species ?? "" }
-    public var type: String { return character?.type ?? "" }
-    public var gender: String { return character?.gender ?? "" }
-    public var image: String { return character?.image ?? "" }
-    public var url: String { return character?.url ?? "" }
-    public var created: String { return character?.created ?? "" }
-    public var episode: [String] { return character?.episode ?? [] }
+    private var cancellables = Set<AnyCancellable>()
+    private var character: Character?
     
     public init(characterId: Int) {
         self.characterId = characterId
@@ -98,4 +88,17 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
         }
     }
     
+}
+
+
+extension CharacterDetailsViewModelImpl: AttributableCharacter {
+    public var name: String { return character?.name ?? "" }
+    public var status: String { return character?.status ?? "" }
+    public var species: String { return character?.species ?? "" }
+    public var type: String { return character?.type ?? "" }
+    public var gender: String { return character?.gender ?? "" }
+    public var image: String { return character?.image ?? "" }
+    public var url: String { return character?.url ?? "" }
+    public var created: String { return character?.created ?? "" }
+    public var episode: [String] { return character?.episode ?? [] }
 }

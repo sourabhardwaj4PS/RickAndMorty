@@ -9,33 +9,33 @@ import Foundation
 import Combine
 import CoreKit
 
-public protocol CharactersViewModel: ObservableObject {
-    
+public protocol PublishableCharacters: ObservableObject {
     var characters: [CharacterViewModel] { get set }
-    var character: CharacterViewModel? { get set }
-    
-    // character details
-    func loadCharacters() async
-    var parameters: Parameters? { get set }
-    
-    var isLoading: Bool { get set }
-    
-    // pagination
-    var currentPage: Int { get set }
     
     // error handling
     var isServerError: Bool { get set }
     var errorMessage: String { get set }
+}
+
+public protocol NetworkableCharacters {
+    var parameters: Parameters? { get set }
     
-    func shouldLoadMore(index: Int) -> Bool
+    // pagination
+    var currentPage: Int { get set }
+
     func loadMore() async
+    func loadCharacters() async
+    func shouldLoadMore(index: Int) -> Bool
+}
+
+public protocol CharactersViewModel: PublishableCharacters, NetworkableCharacters {
+    var isLoading: Bool { get set }
 }
 
 public class CharactersViewModelImpl: CharactersViewModel {
     @Dependency public var useCase: CharacterUseCase
     
     @Published public var characters: [CharacterViewModel] = []
-    @Published public var character: CharacterViewModel?
     
     // error handling
     @Published public var isServerError = false
