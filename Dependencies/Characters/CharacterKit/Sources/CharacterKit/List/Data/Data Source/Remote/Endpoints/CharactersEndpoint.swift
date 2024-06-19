@@ -41,15 +41,8 @@ public enum CharactersEndpoint: ApiEndpoint {
         return headers
     }
 
-    //TODO: See if this is needed?
     public var body: Data? {
         return nil
-        /*switch self {
-        case .characters(page: let page):
-            return Data()
-        case .characterDetails(characterId: let characterId):
-            return Data()
-        }*/
     }
     
     public var queryItems: [URLQueryItem]? {

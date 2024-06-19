@@ -21,7 +21,7 @@ class CharactersViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         MockContainer.setupMockDependencies()
         
-        sut = CharactersViewModelImpl()
+        sut = CharactersViewModelImpl(isTestEnvironment: true)
     }
 
     override func tearDownWithError() throws {
@@ -45,7 +45,7 @@ class CharactersViewModelTests: XCTestCase {
             .dropFirst()
             .sink { characters in
                 // Then
-                //XCTAssertEqual(characters.count, 4) //FIXME: two calls for loadCharacters making the count double
+                XCTAssertEqual(characters.count, 4)
                 XCTAssertEqual(characters.first?.name, "Rick")
                 XCTAssertEqual(characters.last?.name, "Treudo")
                 expectation.fulfill()
@@ -87,6 +87,29 @@ class CharactersViewModelTests: XCTestCase {
 
         XCTAssertFalse(sut.isLoading)
     }
+    
+    /*func testCharactersViewModel_loadingCharacters_shouldHandleExceptions() {
+        // Given
+        let invalidURL = URL(string: "invalid url")!
+        var endpoint = CharactersEndpoint.characters(page: 1)
+        endpoint.baseURL = invalidURL
+        
+        let expectation = XCTestExpectation(description: "All characters should not load")
+
+        // When
+        sut.$errorMessage
+            .dropFirst()
+            .sink(receiveValue: { message in
+                // Then
+                XCTAssertEqual(message, RequestError.invalidComponents.localizedDescription)
+                expectation.fulfill()
+            })
+            .store(in: &cancellables)
+        
+        await sut.loadCharacters()
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+    }*/
 
     func testCharactersViewModel_loadingCharacters_shouldValidateParameters() async {
         

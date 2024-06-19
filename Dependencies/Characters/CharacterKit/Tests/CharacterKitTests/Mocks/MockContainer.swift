@@ -14,7 +14,7 @@ import NetworkKit
 public class MockContainer {
     
     public static func setupMockDependencies() {
-        DependencyContainer.register(type: (any CharactersViewModel).self, CharactersViewModelImpl())
+        DependencyContainer.register(type: (any CharactersViewModel).self, CharactersViewModelImpl(isTestEnvironment: true))
         
         DependencyContainer.register(type: (any CharacterUseCase).self, CharacterUseCaseImpl())
         

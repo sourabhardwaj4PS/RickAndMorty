@@ -30,23 +30,25 @@ public class SessionApiClient<EndpointType: ApiEndpoint>: ApiClient {
     }
 
     // MARK: - Request
-
-    public func createRequest(_ endpoint: EndpointType) -> URLRequest? {
-        guard var components = URLComponents(url: endpoint.baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: true) else { return nil }
+    public func createRequest(_ endpoint: EndpointType) throws -> URLRequest {
+        guard var components = URLComponents(url: endpoint.baseURL.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: true) else {
+            throw RequestError.invalidComponents
+        }
         
-        // add query params if provided
+        // Add query params if provided
         if let queryItems = endpoint.queryItems {
             components.queryItems = queryItems
         }
         
-        guard let url = components.url else { return nil }
+        guard let url = components.url else {
+            throw RequestError.invalidURL
+        }
 
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.httpBody = endpoint.body
         endpoint.headers?.forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }
         
-        self.request = request
         return request
     }
     

@@ -24,36 +24,41 @@ public class CharacterRemoteDataSourceImpl: CharacterRemoteDataSource {
     public init() { }
     
     public func characters<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error> {
+        
         guard let page = params["page"], let currentPage = Int(String(describing: page)) else {
             return Fail(error: ApiError.invalidParameter).eraseToAnyPublisher()
         }
         
-        // create the request
-        guard let request = apiClient.createRequest(.characters(page: currentPage)) else {
-            return Fail(error: ApiError.invalidRequest).eraseToAnyPublisher()
+        do {
+            // create request
+            let endpont = CharactersEndpoint.characters(page: currentPage)
+            let request = try apiClient.createRequest(endpont)
+            
+            // execute the request
+            return try apiClient.execute(urlRequest: request)
         }
-                
-        // have a chance to intercept the request if needed
-        //request.httpBody =
-        
-        // execute the request
-        return try apiClient.execute(urlRequest: request)
+        catch let exception {
+            return Fail(error: exception).eraseToAnyPublisher()
+        }
     }
     
     public func characterDetails<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error> {
+        
         guard let id = params["characterId"], let characterId = Int(String(describing: id)) else {
-            throw ApiError.invalidParameter
-        }
-        // create the request
-        guard let request = apiClient.createRequest(.characterDetails(characterId: characterId)) else {
-            return Fail(error: ApiError.invalidRequest).eraseToAnyPublisher()
+            return Fail(error: ApiError.invalidParameter).eraseToAnyPublisher()
         }
         
-        // have a chance to intercept the request if needed
-        //request.allHTTPHeaderFields
-        
-        // execute the request
-        return try apiClient.execute(urlRequest: request)
+        do {
+            // create request
+            let endpont = CharactersEndpoint.characterDetails(characterId: characterId)
+            let request = try apiClient.createRequest(endpont)
+            
+            // execute the request
+            return try apiClient.execute(urlRequest: request)
+        }
+        catch let exception {
+            return Fail(error: exception).eraseToAnyPublisher()
+        }
     }
     
 }

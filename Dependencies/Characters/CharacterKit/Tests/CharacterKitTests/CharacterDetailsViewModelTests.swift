@@ -115,37 +115,31 @@ class CharacterDetailsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.finishedLoading, "Character details request should not begin because of invalid Id")
     }
     
-//    func testCharacterUseCase_characterDetails_ShouldValidateParameters() async {
-//        // Arrange or Given
-//        
-//        let expectation = XCTestExpectation(description: "Invalid parameters should fail the characterDetails request")
-//          
-//        MockURLProtocol.resetMockData()
-//        MockURLProtocol.populateRequestHandler()
-//        
-//        // When
-//        do {
-//            try await sut.useCase.characterDetails(params: ["invalidCharacterId": "1"])
-//                .receive(on: DispatchQueue.main)
-//                .sink { completion in
-//                    switch completion {
-//                    case .finished:
-//                        XCTFail("Expected an error to be received in testCharacterUseCase_characterDetails_ShouldValidateParameters")
-//                    case .failure(let error):
-//                        XCTAssertEqual(error as! ApiError, ApiError.invalidParameter)
-//                    }
-//                    expectation.fulfill()
-//                } receiveValue: { (characters: NeverDecodable) in
-//                    
-//                }
-//                .store(in: &cancellables)
-//            
-//            await fulfillment(of: [expectation], timeout: 1.0)
-//        }
-//        catch let exception {
-//            print("Exception in testCharacterUseCase_characterDetails_ShouldValidateParameters = \(exception)")
-//        }
-//    }
+    func testCharacterUseCase_characterDetails_ShouldValidateParameters() async {
+        
+        // Given
+        let expectation = XCTestExpectation(description: "Invalid parameters should fail the characterDetails request")
+          
+        MockURLProtocol.resetMockData()
+        MockURLProtocol.populateRequestHandler()
+        
+        // When
+        sut.$isServerError
+            .dropFirst()
+            .sink(receiveValue: { serverError in
+                // Then
+                XCTAssertTrue(serverError)
+                expectation.fulfill()
+            })
+            .store(in: &cancellables)
+        
+        sut.parameters = ["invalidCharacterId": "3"]
+        
+        await sut.loadCharacterDetails(id: 3)
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+    }
+
 
     
 }

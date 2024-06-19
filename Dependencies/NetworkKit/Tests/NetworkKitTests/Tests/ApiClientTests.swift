@@ -41,6 +41,28 @@ final class ApiClientTests: XCTestCase {
         XCTAssertEqual(request?.httpMethod, "GET")
     }
     
+    func testCreateRequest_ThrowsInvalidComponentsError() {
+        // Given
+        let invalidURL = URL(string: "invalid url")! // Invalid URL
+        let endpoint = MockEndpoint(baseURL: invalidURL, path: "", method: .get, queryItems: nil, body: nil, headers: nil)
+        
+        // When & Then
+        XCTAssertThrowsError(try createRequest(endpoint)) { error in
+            XCTAssertEqual(error as? RequestError, RequestError.invalidComponents)
+        }
+    }
+
+    func testCreateRequest_ThrowsInvalidURLError() {
+        // Given
+        let validURL = URL(string: "https://example.com")! // Valid base URL
+        let endpoint = MockEndpoint(baseURL: validURL, path: "invalid path", method: .get, queryItems: nil, body: nil, headers: nil)
+        
+        // When & Then
+        XCTAssertThrowsError(try createRequest(endpoint)) { error in
+            XCTAssertEqual(error as? RequestError, RequestError.invalidURL)
+        }
+    }
+    
     func testCreateRequest_WithHeaders() {
         // validate request creation
         guard let request = apiClient?.createRequest(.characters(page: 1)) else {

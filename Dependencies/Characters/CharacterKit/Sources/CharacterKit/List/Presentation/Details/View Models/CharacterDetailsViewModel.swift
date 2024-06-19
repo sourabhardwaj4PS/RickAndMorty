@@ -32,6 +32,7 @@ public protocol CharacterDetailsViewModel: ObservableObject {
     var episode: [String] { get }
     
     // to make server call
+    var parameters: Parameters? { get set }
     func loadCharacterDetails(id: Int) async
 }
 
@@ -47,6 +48,8 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     public var characterId: Int
+    
+    public var parameters: Parameters?
     
     // getters
     public var name: String { return character?.name ?? "" }
@@ -75,7 +78,7 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
             "characterId": "\(id)"
         ]
         do {
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await useCase.characterDetails(params: params)
+            let publisher: AnyPublisher<CharacterImpl, Error> = try await useCase.characterDetails(params: parameters ?? params)
             publisher
                 .receive(on: DispatchQueue.main)
                 .sink { completion in

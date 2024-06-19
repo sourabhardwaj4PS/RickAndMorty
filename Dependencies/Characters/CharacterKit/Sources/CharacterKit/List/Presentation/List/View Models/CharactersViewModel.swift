@@ -47,9 +47,11 @@ public class CharactersViewModelImpl: CharactersViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    public init() {
-        Task {
-            await loadCharacters()
+    public init(isTestEnvironment: Bool = false) {
+        if !isTestEnvironment {
+            Task {
+                await loadCharacters()
+            }
         }
     }
     
