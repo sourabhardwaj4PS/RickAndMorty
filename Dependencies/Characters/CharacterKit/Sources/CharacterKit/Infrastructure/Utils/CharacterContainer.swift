@@ -1,22 +1,20 @@
 //
-//  MockContainer.swift
+//  CharacterContainer.swift
 //
 //
-//  Created by Sourabh Bhardwaj on 16/06/24.
+//  Created by Sourabh Bhardwaj on 19/06/24.
 //
 
 import Foundation
 import CoreKit
 import NetworkKit
 
-@testable import CharacterKit
-
-public class MockContainer {
+public final class CharacterContainer {
     
     /**
-     Sets up "Mock" Dependencies for abstractions with respective implementations.
+     Sets up dependencies for abstractions with respective implementations.
      */
-    public static func setupMockDependencies() {
+    public static func setupDependencies() {
         ///
         /// Character dependencies
         ///
@@ -40,6 +38,7 @@ public class MockContainer {
         ///
         /// Api Client dependency
         ///
-        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(session: MockURLSession()))
+        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(session: URLSession.shared))
     }
+
 }
