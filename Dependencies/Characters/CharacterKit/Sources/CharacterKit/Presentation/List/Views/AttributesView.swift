@@ -34,9 +34,10 @@ struct AttributesView<T>: View where T: CharacterViewModel {
             TitleLabelView(title: "No of episodes:", label: "\(viewModel.episodesCount)")
                 .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.episodes)-\(viewModel.id)")
         })
+        .padding(8)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.attributesViewPrefix)\(viewModel.id)")
-        .padding(8)
+        
     }
 }
 

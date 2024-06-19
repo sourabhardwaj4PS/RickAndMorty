@@ -51,7 +51,6 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
                         Text(episode)
                     }
                 }
-                .accessibilityElement(children: .contain)
             }
             else {
                 ProgressView()

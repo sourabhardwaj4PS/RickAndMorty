@@ -28,8 +28,10 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                     ForEach(viewModel.characters.indices, id: \.self) { index in
                         if let characterVM = viewModel.characters[index] as? CharacterViewModelImpl {
                             
+                            // create row view
                             CharacterRowView(viewModel: characterVM)
                                 .onAppear {
+                                    // validates the current index with total number of characters
                                     if viewModel.shouldLoadMore(index: index) {
                                         Task {
                                             await viewModel.loadMore()
@@ -37,6 +39,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                                     }
                                 }
                                 .onTapGesture {
+                                    // store the tapped character Id and trigger navigation using state variable
                                     selectedCharacterId = characterVM.id
                                     navigateToDetails = true
                                 }
@@ -57,6 +60,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                     Text(viewModel.errorMessage)
                 })
                 .background(content: {
+                    // avoids initialization of destination view for every row (in the list) even before tapping
                     NavigationLink(
                         destination: destinationView,
                         isActive: $navigateToDetails,
@@ -68,13 +72,13 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
     }
     
     @ViewBuilder
-        private var destinationView: some View {
-            if let characterId = selectedCharacterId {
-                CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterId))
-            } else {
-                EmptyView()
-            }
+    private var destinationView: some View {
+        if let characterId = selectedCharacterId {
+            CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterId))
+        } else {
+            EmptyView()
         }
+    }
 }
 
 /*#Preview {
