@@ -16,6 +16,7 @@ public protocol CharactersViewModel: ObservableObject {
     
     // character details
     func loadCharacters() async
+    var parameters: Parameters? { get set }
     
     var isLoading: Bool { get set }
     
@@ -42,6 +43,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
     
     public var isLoading: Bool = false
     public var currentPage: Int = 1
+    public var parameters: Parameters?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -53,6 +55,8 @@ public class CharactersViewModelImpl: CharactersViewModel {
     
     public func loadCharacters() async {
         do {
+            guard !isLoading else { return }
+            
             isLoading = true
             
             print("Loading page = \(currentPage)")
@@ -60,7 +64,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
                 "page": "\(currentPage)"
             ]
             
-            let publisher: AnyPublisher<CharactersImpl, Error> = try await useCase.characters(params: params)
+            let publisher: AnyPublisher<CharactersImpl, Error> = try await useCase.characters(params: parameters ?? params)
             publisher
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { [weak self] completion in
@@ -81,7 +85,8 @@ public class CharactersViewModelImpl: CharactersViewModel {
             print("Exception in loadCharacters = \(exception)")
         }
     }
-    
+
+    // Increments currentPage, and load more characters
     public func loadMore() async {
         currentPage += 1
         Task {
@@ -89,8 +94,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
         }
     }
     
-    // When scrolling arrives at the position "characters.count - 2",
-    // increment currentPage, and load more data
+    // When scrolling arrives at the position "characters.count - 2", call loadMore
     public func shouldLoadMore(index: Int) -> Bool {
         return index == characters.count - 2
     }

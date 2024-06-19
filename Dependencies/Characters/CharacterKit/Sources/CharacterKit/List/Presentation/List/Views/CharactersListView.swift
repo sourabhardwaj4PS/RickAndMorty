@@ -27,7 +27,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                 List {
                     ForEach(viewModel.characters.indices, id: \.self) { index in
                         if let characterVM = viewModel.characters[index] as? CharacterViewModelImpl {
-                          
+                            
                             CharacterRowView(viewModel: characterVM)
                                 .accessibilityIdentifier("rowView-\(characterVM.id)")
                                 .onAppear {
@@ -41,93 +41,6 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                                     selectedCharacterId = characterVM.id
                                     navigateToDetails = true
                                 }
-
-                            
-                            
-                            
-//                            NavigationLink(
-//                                destination: CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: selectedCharacterId ?? 0)),
-//                                tag: characterVM.id,
-//                                selection: $selectedCharacterId
-//                            ) {
-//                                CharacterRowView(viewModel: characterVM)
-//                                    .accessibilityIdentifier("rowView-\(characterVM.id)")
-//                                    .onAppear {
-//                                        if viewModel.shouldLoadMore(index: index) {
-//                                            Task {
-//                                                await viewModel.loadMore()
-//                                            }
-//                                        }
-//                                    }
-//                                    .onTapGesture {
-//                                        selectedCharacterId = characterVM.id
-//                                    }
-//                            }
-                            
-                            
-//                            NavigationLink(
-//                                destination: {
-//                                    // Lazy-initialize the view model when the navigation link is tapped
-//                                    if let characterId = characterVM.id {
-//                                        CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterVM.id))
-//                                    } else {
-//                                        EmptyView()
-//                                    }
-//                                }(),
-//                                label: {
-//                                    CharacterRowView(viewModel: characterVM)
-//                                        .accessibilityIdentifier("rowView-\(characterVM.id)")
-//                                        .onAppear {
-//                                            if viewModel.shouldLoadMore(index: index) {
-//                                                Task {
-//                                                    await viewModel.loadMore()
-//                                                }
-//                                            }
-//                                        }
-//                                }
-//                            )
-                            
-                            
-//                            NavigationLink(destination: CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterVM.id))) {
-//                                CharacterRowView(viewModel: characterVM)
-//                                    .accessibilityIdentifier("rowView-\(characterVM.id)")
-//                                    .onAppear {
-//                                        if viewModel.shouldLoadMore(index: index) {
-//                                            Task {
-//                                                await viewModel.loadMore()
-//                                            }
-//                                        }
-//                                    }                               
-//                            }
-                            
-//                        }
-//                            
-//                            NavigationLink(
-//                                destination: CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterVM.id)),
-//                                label: {
-//                                    CharacterRowView(viewModel: characterVM)
-//                                        .accessibilityIdentifier("rowView-\(characterVM.id)")
-//                                        .onAppear {
-//                                            if viewModel.shouldLoadMore(index: index) {
-//                                                Task {
-//                                                    await viewModel.loadMore()
-//                                                }
-//                                            }
-//                                        }                                }
-//                            )
-//                            NavigationLink(
-//                                destination: CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: characterVM.id))
-//                            ) {
-//                                CharacterRowView(viewModel: characterVM)
-//                                    .accessibilityIdentifier("rowView-\(characterVM.id)")
-//                                    .onAppear {
-//                                        if viewModel.shouldLoadMore(index: index) {
-//                                            Task {
-//                                                await viewModel.loadMore()
-//                                            }
-//                                        }
-//                                    }
-//                            }
                         }
                         else {
                             Text("Not able to parse View Model in Listing View")
@@ -157,20 +70,6 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                         EmptyView()
                     }
                 )
-                
-//                if let selected = viewModel.tappedCharacterId {
-//                    let detailsVM = CharacterDetailsViewModelImpl(characterId: selected)
-//                    let detailsView = CharacterDetailsView(viewModel: detailsVM)
-//
-//                    NavigationLink(
-//                        destination: detailsView,
-//                        isActive: $viewModel.navigateToDetails,
-//                        label: {
-//                            EmptyView()
-//                        }
-//                    )
-//                }
-                
             }
         }
     }

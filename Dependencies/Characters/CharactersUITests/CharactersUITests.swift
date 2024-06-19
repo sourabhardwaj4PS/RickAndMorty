@@ -18,9 +18,6 @@ final class CharactersUITests: XCTestCase {
 
         continueAfterFailure = false
         
-        // Print the entire view hierarchy
-        //print(app.debugDescription)
-        
         charactersListView = app.collectionViews["charactersListView"]
     }
 
@@ -60,11 +57,11 @@ final class CharactersUITests: XCTestCase {
         XCTAssertTrue(charactersListView.exists, "The characters list view should be present.")
         
         // last cell before scrolling
-        let initialLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 2)
+        let initialLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 1)
         XCTAssertTrue(initialLastCell.exists, "The initial last cell does not exist")
         
-        let initialLastCellIdentifier = "rowView-5" // initialLastCell.identifier
-        XCTAssertFalse(initialLastCellIdentifier.isEmpty, "The identifier of the initial last cell is empty")
+        let initialLastCellImageIdentifier = initialLastCell.images.firstMatch.identifier
+        XCTAssertFalse(initialLastCellImageIdentifier.isEmpty, "The identifier of the initial last cell is empty")
         
         // scroll to the bottom
         charactersListView.scrollToBottom()
@@ -73,11 +70,11 @@ final class CharactersUITests: XCTestCase {
         let newLastCell = charactersListView.cells.element(boundBy: charactersListView.cells.count - 1)
         XCTAssertTrue(newLastCell.exists, "The new last cell does not exist")
 
-        let newLastCellIdentifier = "rowView-25" //newLastCell.identifier
-        XCTAssertFalse(newLastCellIdentifier.isEmpty, "The identifier of the new last cell is empty")
+        let newLastCellImageIdentifier = newLastCell.images.firstMatch.identifier
+        XCTAssertFalse(newLastCellImageIdentifier.isEmpty, "The identifier of the new last cell is empty")
 
         // Verify that more items are loaded
-        XCTAssertNotEqual(initialLastCellIdentifier, newLastCellIdentifier, "The 'load more' functionality did not load additional items")
+        XCTAssertNotEqual(initialLastCellImageIdentifier, newLastCellImageIdentifier, "The 'load more' functionality did not load additional items")
     }
     
     func testCharacterRowView_charactersList_shouldShowRowView() throws {
@@ -130,7 +127,7 @@ final class CharactersUITests: XCTestCase {
 }
 
 extension XCUIElement {
-    func scrollToBottom(maxScrolls: Int = 4) {
+    func scrollToBottom(maxScrolls: Int = 5) {
            var currentScrolls = 0
            while currentScrolls < maxScrolls {
                swipeUp()

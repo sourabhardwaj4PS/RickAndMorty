@@ -60,88 +60,60 @@ class CharactersViewModelTests: XCTestCase {
     }
     
     func testCharactersViewModel_loadingCharacters_shouldLoadWithFailure() async {
-        // Given
-        do {
-            let expectation = XCTestExpectation(description: "All characters should not load")
-              
-            MockURLProtocol.resetMockData()
-            MockURLProtocol.populateRequestHandler()
-            MockURLProtocol.requestFailed = true
-            
-            // When
-            try await sut.useCase.characters(params: ["page": "1"])
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        XCTFail("Expected an error to be received in testCharactersViewModel_loadingCharacters_shouldLoadWithFailure")
-                    case .failure(_):
-                        expectation.fulfill()
-                    }
-                } receiveValue: { (characters: NeverDecodable) in
-                    
-                }
-                .store(in: &cancellables)
-
-            // Complete the expectation
-            await fulfillment(of: [expectation], timeout: 1.0)
-        }
-        catch let exception {
-            print("Exception in testCharactersViewModel_loadingCharacters_shouldLoadWithFailure = \(exception)")
-        }
-    }
-    
-    func testCharacterUseCase_loadCharacters_ShouldValidateParameters() async {
-        // Arrange or Given
         
-        let expectation = XCTestExpectation(description: "Invalid parameters should fail the loadCharacters request")
+        // Given
+        let expectation = XCTestExpectation(description: "All characters should not load")
+          
+        MockURLProtocol.resetMockData()
+        MockURLProtocol.populateRequestHandler()
+        MockURLProtocol.requestFailed = true
+        
+        // validate server error is false at first
+        XCTAssertFalse(sut.isServerError)
+        
+        // When
+        sut.$isServerError
+            .dropFirst()
+            .sink(receiveValue: { serverError in
+                // Then
+                XCTAssertTrue(serverError)
+                expectation.fulfill()
+            })
+            .store(in: &cancellables)
+        
+        await sut.loadCharacters()
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+
+        XCTAssertFalse(sut.isLoading)
+    }
+
+    func testCharactersViewModel_loadingCharacters_shouldValidateParameters() async {
+        
+        // Given
+        let expectation = XCTestExpectation(description: "All characters should not not because expected parameter is 'page' instead of 'invalidPage'.")
           
         MockURLProtocol.resetMockData()
         MockURLProtocol.populateRequestHandler()
         
         // When
-        do {
-            try await sut.useCase.characters(params: ["invalidPage": "1"])
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        XCTFail("Expected an error to be received in testCharacterUseCase_loadCharacters_ShouldValidateParameters")
-                    case .failure(let error):
-                        XCTAssertEqual(error as! ApiError, ApiError.invalidParameter)
-                    }
-                    expectation.fulfill()
-                } receiveValue: { (characters: NeverDecodable) in
-                    
-                }
-                .store(in: &cancellables)
-            
-            await fulfillment(of: [expectation], timeout: 1.0)
-        }
-        catch let exception {
-            print("Exception in testCharacterUseCase_loadCharacters_ShouldValidateParameters = \(exception)")
-        }
+        sut.$isServerError
+            .dropFirst()
+            .sink(receiveValue: { serverError in
+                // Then
+                XCTAssertTrue(serverError)
+                expectation.fulfill()
+            })
+            .store(in: &cancellables)
+        
+        sut.parameters = ["invalidPage": "1"]
+        
+        await sut.loadCharacters()
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+
+        XCTAssertFalse(sut.isLoading)
     }
-    
-//    func testCharactersViewModel_characterTapped_shouldTriggerCharacterDetails() async {
-//        do {
-//            // Given
-//            let expectedResult = MockData.character
-//            let character: CharacterImpl = try JSONDecoder().decode(CharacterImpl.self, from: expectedResult)
-//            
-//            MockURLProtocol.resetMockData()
-//            MockURLProtocol.populateRequestHandler()
-//
-//            // When
-//            sut.tappedCharacter(id: character.id)
-//                        
-//            print(sut.isLoading)
-//            XCTAssertTrue(sut.isLoading)
-//        }
-//        catch let exception {
-//            print("Exception in testCharactersViewModel_characterTapped_shouldTriggerCharacterDetails = \(exception)")
-//        }
-//    }
     
     func testCharactersViewModel_shouldLoadNextPage_loadNextPageForCharacters() async {
         do {
