@@ -26,7 +26,6 @@ struct ImageView: View {
             }, image: {
                 $0
                     .resizable()
-                    .renderingMode(.original)
         })
         .cornerRadius(5)
     }

@@ -22,8 +22,7 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
                 VStack(alignment: .leading, spacing: 16) {
                     ImageView(imageUrlString: viewModel.image)
                         .frame(maxWidth: .infinity, maxHeight: 360)
-                        .background(Color.yellow)
-                        .cornerRadius(5)
+                        .background(Color.gray.opacity(0.1))
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.image)
                     
                     Text(viewModel.name)
