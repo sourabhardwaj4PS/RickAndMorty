@@ -22,7 +22,7 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
             ImageView(imageUrlString: viewModel.image)
                 .frame(width: 134, height: 134)
                 .cornerRadius(5)
-                .accessibilityIdentifier("thumbnailView-\(viewModel.id)")
+                .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.thumbnailViewPrefix)\(viewModel.id)")
             
             AttributesView(viewModel: viewModel)
             
@@ -30,7 +30,7 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
         }
         .background(Color.white)
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("rowView-\(viewModel.id)")
+        .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.rowViewPrefix)\(viewModel.id)")
     }
 }
 

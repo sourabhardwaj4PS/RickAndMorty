@@ -29,7 +29,6 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                         if let characterVM = viewModel.characters[index] as? CharacterViewModelImpl {
                             
                             CharacterRowView(viewModel: characterVM)
-                                .accessibilityIdentifier("rowView-\(characterVM.id)")
                                 .onAppear {
                                     if viewModel.shouldLoadMore(index: index) {
                                         Task {
@@ -44,18 +43,16 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                         }
                     }
                 }
-                .accessibilityIdentifier("charactersListView")
-                .navigationTitle("Characters")
+                .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.listView)
+                .navigationTitle(CharacterConstants.Titles.Page.characters)
                 .listStyle(.plain)
-                .alert("Characters", isPresented: $viewModel.isServerError, actions: {
-                    Button("Retry") {
+                .alert(CharacterConstants.Titles.Alerts.somethingWentWrong, isPresented: $viewModel.isServerError, actions: {
+                    Button(CharacterConstants.Titles.Buttons.retry) {
                         Task {
                             await viewModel.loadCharacters()
                         }
                     }
-                    Button("Cancel", role: .cancel) {
-                        print("alert tapped")
-                    }
+                    Button(CharacterConstants.Titles.Buttons.cancel, role: .cancel) { }
                 }, message: {
                     Text(viewModel.errorMessage)
                 })

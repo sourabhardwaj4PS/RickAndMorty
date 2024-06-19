@@ -20,22 +20,22 @@ struct AttributesView<T>: View where T: CharacterViewModel {
         VStack(alignment: .leading, spacing: 8, content: {
             
             TitleLabelView(title: "Name:", label: viewModel.name)
-                .accessibilityIdentifier("name-\(viewModel.id)")
+                .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.name)-\(viewModel.id)")
             
             TitleLabelView(title: "Gender:", label: viewModel.gender)
-                .accessibilityIdentifier("gender-\(viewModel.id)")
+                .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.gender)-\(viewModel.id)")
             
             TitleLabelView(title: "Status:", label: viewModel.status)
-                .accessibilityIdentifier("status-\(viewModel.id)")
+                .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.status)-\(viewModel.id)")
 
             TitleLabelView(title: "Species:", label: viewModel.species)
-                .accessibilityIdentifier("species-\(viewModel.id)")
+                .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.species)-\(viewModel.id)")
             
             TitleLabelView(title: "No of episodes:", label: "\(viewModel.episodesCount)")
-                .accessibilityIdentifier("episodes-\(viewModel.id)")
+                .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.episodes)-\(viewModel.id)")
         })
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("attributesView-\(viewModel.id)")
+        .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.attributesViewPrefix)\(viewModel.id)")
         .padding(8)
     }
 }

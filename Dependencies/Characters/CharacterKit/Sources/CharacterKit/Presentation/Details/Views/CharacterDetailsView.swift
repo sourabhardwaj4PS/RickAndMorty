@@ -24,27 +24,27 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
                         .frame(maxWidth: .infinity, maxHeight: 360)
                         .background(Color.yellow)
                         .cornerRadius(5)
-                        .accessibilityIdentifier("image")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.image)
                     
                     Text(viewModel.name)
                         .font(.largeTitle)
-                        .accessibilityIdentifier("name")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.name)
                     
                     TitleLabelView(title: "Species:", label: viewModel.species)
-                        .accessibilityIdentifier("title")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.species)
                     
                     TitleLabelView(title: "Status:", label: viewModel.status)
-                        .accessibilityIdentifier("status")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.status)
                     
                     TitleLabelView(title: "Gender:", label: viewModel.gender)
-                        .accessibilityIdentifier("gender")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.gender)
                     
                     TitleLabelView(title: "Birth:", label: viewModel.created)
-                        .accessibilityIdentifier("birth")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.birth)
 
                     Text("Episodes Aired:")
                         .font(.headline)
-                        .accessibilityIdentifier("episodes")
+                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.episodes)
                     
                     ForEach(viewModel.episode.indices, id: \.self) { index in
                         let episode = viewModel.episode[index]
@@ -59,22 +59,20 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
         }
         .padding(8)
         .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("characterDetailsView")
-        .navigationBarTitle("In depth", displayMode: .inline)
+        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.detailsView)
+        .navigationBarTitle(CharacterConstants.Titles.Page.characterDetails, displayMode: .inline)
         .onAppear(perform: {
             Task {
                 await viewModel.loadCharacterDetails(id: viewModel.characterId)
             }
         })
-        .alert("Characters", isPresented: $viewModel.isServerError, actions: {
-            Button("Retry") {
+        .alert(CharacterConstants.Titles.Alerts.somethingWentWrong, isPresented: $viewModel.isServerError, actions: {
+            Button(CharacterConstants.Titles.Buttons.ok) {
                 Task {
                     await viewModel.loadCharacterDetails(id: viewModel.characterId)
                 }
             }
-            Button("Cancel", role: .cancel) {
-                print("alert tapped")
-            }
+            Button(CharacterConstants.Titles.Buttons.cancel, role: .cancel) { }
         }, message: {
             Text(viewModel.errorMessage)
         })
