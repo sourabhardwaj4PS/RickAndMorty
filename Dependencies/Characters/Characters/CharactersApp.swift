@@ -7,8 +7,6 @@
 
 import SwiftUI
 import CharacterKit
-import CoreKit
-import NetworkKit
 
 @main
 struct CharactersApp: App {
@@ -19,22 +17,6 @@ struct CharactersApp: App {
     }
     
     init() {
-        setupDependencyContainer()
-    }
-    
-}
-
-extension CharactersApp {
-    
-    func setupDependencyContainer() {
-        DependencyContainer.register(type: (any CharactersViewModel).self, CharactersViewModelImpl())
-        
-        DependencyContainer.register(type: (any CharacterUseCase).self, CharacterUseCaseImpl())
-        
-        DependencyContainer.register(type: (any CharacterRepository).self, CharacterRepositoryImpl())
-        
-        DependencyContainer.register(type: (any CharacterRemoteDataSource).self, CharacterRemoteDataSourceImpl())
-        
-        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(session: URLSession.shared))
+        CharacterContainer.setupDependencies()
     }
 }
