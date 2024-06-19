@@ -1,4 +1,4 @@
-# Rick And Morty App
+# Rick And Morty (Dummy App)
 
 This app is a demonstration of SwiftUI + Combine, async/await for network calls, CLEAN + MVVM architecture, and Swift Package Manager for dependency management. The code is structured using a modular architecture where each Swift package represents a different module (e.g., characters, episodes, etc.), and all modules are integrated into the main app "Rick And Morty."
 
