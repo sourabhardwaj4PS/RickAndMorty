@@ -33,7 +33,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
             
             isLoading = true
             
-            print("Loading page = \(currentPage)")
+            DLog("Loading page = \(currentPage)")
             let params: Parameters = [
                 "page": "\(currentPage)"
             ]
@@ -56,7 +56,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
                 .store(in: &self.cancellables)
         }
         catch let exception {
-            print("Exception in loadCharacters = \(exception)")
+            DLog("Exception in loadCharacters = \(exception)")
         }
     }
 

@@ -29,7 +29,7 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     public func loadCharacterDetails(id: Int) async {
         
         guard id > 0 else {
-            print("Error in loadCharacterDetails - passed characterId is \(id)")
+            DLog("Error in loadCharacterDetails - passed characterId is \(id)")
             return
         }
 
@@ -41,7 +41,7 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
             publisher
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
-                    print("loadCharacterDetails completion \(completion)")
+                    DLog("loadCharacterDetails completion \(completion)")
                     if case .failure(let error) = completion {
                         self.isServerError = true
                         self.errorMessage = error.localizedDescription
@@ -49,12 +49,12 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
                     self.finishedLoading = true
                 } receiveValue: { character in
                     self.character = character
-                    print("character details received:")
+                    DLog("character details received:")
                 }
                 .store(in: &self.cancellables)
         }
         catch let exception {
-            print("Exception in loadCharacterDetails = \(exception)")
+            DLog("Exception in loadCharacterDetails = \(exception)")
         }
     }
     

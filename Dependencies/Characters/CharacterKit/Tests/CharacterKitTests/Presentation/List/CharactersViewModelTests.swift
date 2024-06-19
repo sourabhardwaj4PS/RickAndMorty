@@ -159,7 +159,7 @@ class CharactersViewModelTests: XCTestCase {
             XCTAssertTrue(sut.shouldLoadMore(index: characters.count - 2))
         }
         catch let exception {
-            print("Exception in testCharactersViewModel_shouldLoadNextPage_shouldLoadNextPageForCharacters = \(exception)")
+            DLog("Exception in testCharactersViewModel_shouldLoadNextPage_shouldLoadNextPageForCharacters = \(exception)")
         }
     }
     

@@ -132,7 +132,6 @@ extension XCUIElement {
            while currentScrolls < maxScrolls {
                swipeUp()
                currentScrolls += 1
-               print("swiping up = \(currentScrolls)")
            }
        }
 }
