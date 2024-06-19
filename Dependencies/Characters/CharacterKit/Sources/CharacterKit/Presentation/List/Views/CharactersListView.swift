@@ -42,9 +42,6 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                                     navigateToDetails = true
                                 }
                         }
-                        else {
-                            Text("Not able to parse View Model in Listing View")
-                        }
                     }
                 }
                 .accessibilityIdentifier("charactersListView")

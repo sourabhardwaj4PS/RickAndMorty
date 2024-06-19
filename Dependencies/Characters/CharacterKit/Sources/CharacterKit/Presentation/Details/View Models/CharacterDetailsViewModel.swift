@@ -64,7 +64,6 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     
     public init(characterId: Int) {
         self.characterId = characterId
-        print("CharacterDetailsViewModelImpl init")
     }
     
     public func loadCharacterDetails(id: Int) async {

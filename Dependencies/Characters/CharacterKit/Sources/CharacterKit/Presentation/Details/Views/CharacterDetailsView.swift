@@ -14,7 +14,6 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
     
     public init(viewModel: @autoclosure @escaping () -> T) {
         _viewModel = StateObject(wrappedValue: viewModel())
-        print("CharacterDetailsView init")
     }
     
     public var body: some View {
