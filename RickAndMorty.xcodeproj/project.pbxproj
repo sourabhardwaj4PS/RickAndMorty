@@ -16,6 +16,7 @@
 		2F05F5732C1B078E00475454 /* RickAndMortyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05F5722C1B078E00475454 /* RickAndMortyUITestsLaunchTests.swift */; };
 		2F3A80892C21BE0E00800758 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2F3A80882C21BE0E00800758 /* README.md */; };
 		2F673E392C1B29C400943B32 /* CharacterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F673E382C1B29C400943B32 /* CharacterKit */; };
+		2F8C66C22C24214C00BDED79 /* EpisodeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8C66C12C24214C00BDED79 /* EpisodeKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F673E392C1B29C400943B32 /* CharacterKit in Frameworks */,
+				2F8C66C22C24214C00BDED79 /* EpisodeKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +154,7 @@
 			name = RickAndMorty;
 			packageProductDependencies = (
 				2F673E382C1B29C400943B32 /* CharacterKit */,
+				2F8C66C12C24214C00BDED79 /* EpisodeKit */,
 			);
 			productName = RickAndMorty;
 			productReference = 2F05F5512C1B078B00475454 /* RickAndMorty.app */;
@@ -227,6 +230,7 @@
 			mainGroup = 2F05F5482C1B078B00475454;
 			packageReferences = (
 				2F673E372C1B29C400943B32 /* XCLocalSwiftPackageReference "Dependencies/Characters/CharacterKit" */,
+				2F8C66C02C24214C00BDED79 /* XCLocalSwiftPackageReference "Dependencies/Episodes/EpisodeKit" */,
 			);
 			productRefGroup = 2F05F5522C1B078B00475454 /* Products */;
 			projectDirPath = "";
@@ -629,12 +633,20 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Dependencies/Characters/CharacterKit;
 		};
+		2F8C66C02C24214C00BDED79 /* XCLocalSwiftPackageReference "Dependencies/Episodes/EpisodeKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Dependencies/Episodes/EpisodeKit;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		2F673E382C1B29C400943B32 /* CharacterKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CharacterKit;
+		};
+		2F8C66C12C24214C00BDED79 /* EpisodeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EpisodeKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

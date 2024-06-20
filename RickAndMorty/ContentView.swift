@@ -7,12 +7,26 @@
 
 import SwiftUI
 import CharacterKit
+import EpisodeKit
 
 struct ContentView: View {
     var body: some View {
-        CharactersListView(viewModel: CharactersViewModelImpl())
+        TabView {
+            CharactersListView(viewModel: CharactersViewModelImpl())
+                .tabItem {
+                    Label("Characters", systemImage: "person.3.fill")
+                }
+            
+            EpisodesView()
+                .tabItem {
+                    Label("Episodes", systemImage: "tv.fill")
+                }
+        }
+        .tint(.green)
     }
 }
+
+
 
 #Preview {
     CharactersListView(viewModel: CharactersViewModelImpl())
