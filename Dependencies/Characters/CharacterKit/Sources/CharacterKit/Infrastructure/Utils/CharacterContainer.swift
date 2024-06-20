@@ -15,9 +15,24 @@ public final class CharacterContainer {
      Sets up dependencies for abstractions with respective implementations.
      */
     public static func setupDependencies() {
-        ///
-        /// Character dependencies
-        ///
+        
+        /// Character
+        characterDependencies()
+        
+        /// Character details
+        characterDetailsDependencies()
+        
+        /// Api Client
+        apiClientDependencies()
+        
+        /// Authentication challenge for images
+        authChallengeForImages()
+    }
+    
+    ///
+    /// Character dependencies
+    ///
+    private static func characterDependencies() {
         DependencyContainer.register(type: (any CharactersViewModel).self, CharactersViewModelImpl())
         
         DependencyContainer.register(type: (any CharacterUseCase).self, CharacterUseCaseImpl())
@@ -25,22 +40,33 @@ public final class CharacterContainer {
         DependencyContainer.register(type: (any CharacterRepository).self, CharacterRepositoryImpl())
         
         DependencyContainer.register(type: (any CharacterDataSource).self, CharacterRemoteDataSourceImpl())
-        
-        ///
-        /// Character details dependencies
-        ///
+    }
+    
+    ///
+    /// Character details dependencies
+    ///
+    private static func characterDetailsDependencies() {
         DependencyContainer.register(type: (any CharacterDetailsUseCase).self, CharacterDetailsUseCaseImpl())
         
         DependencyContainer.register(type: (any CharacterDetailsRepository).self, CharacterDetailsRepositoryImpl())
         
         DependencyContainer.register(type: (any CharacterDetailsDataSource).self, CharacterDetailsRemoteDataSourceImpl())
-        
-        ///
-        /// Api Client dependency
-        ///
+    }
+    
+    ///
+    /// Api Client dependency
+    ///
+    private static func apiClientDependencies() {
         DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(
             session: URLSession.shared,
             delegate: DefaultSessionDelegate()))
+    }
+    
+    ///
+    /// Authentication challenge for images to be downloaded via third party
+    ///
+    private static func authChallengeForImages() {
+        CoreKit.setupAuthChallengeForImages()
     }
 
 }

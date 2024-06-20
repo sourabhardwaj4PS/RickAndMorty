@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 
 ///
 /// Global function to handle prints
@@ -14,4 +15,8 @@ public func DLog(_ items: Any..., separator: String = " ", terminator: String = 
     #if DEBUG
     print(items, separator: separator, terminator: terminator)
     #endif
+}
+
+public func setupAuthChallengeForImages() {
+    ImageDownloader.default.authenticationChallengeResponder = ImageAuthenticationChallenge()
 }
