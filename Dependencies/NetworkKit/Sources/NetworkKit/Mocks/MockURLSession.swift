@@ -10,12 +10,16 @@ import Foundation
 
 public class MockURLSession: URLSessionProtocol {
     
-    public init() { }
+    var delegate: URLSessionDelegate? = DefaultSessionDelegate()
+    
+    public init(delegate: URLSessionDelegate? = nil) {
+        self.delegate = delegate
+    }
     
     public func dataTaskPublisher(for request: URLRequest) -> URLSession.DataTaskPublisher {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
-        let session = URLSession(configuration: config)
+        let session = URLSession(configuration: config, delegate: self.delegate, delegateQueue: nil)
         return URLSession.DataTaskPublisher(request: request, session: session)
     }
 }

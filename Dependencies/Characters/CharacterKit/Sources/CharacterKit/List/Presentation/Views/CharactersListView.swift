@@ -58,26 +58,23 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
     
     @ViewBuilder
     private func populateListView() -> some View {
-        List {
-            ForEach(viewModel.characters.indices, id: \.self) { index in
-                if let characterVM = viewModel.characters[index] as? CharacterViewModelImpl {
-                    
-                    // create row view
-                    CharacterRowView(viewModel: characterVM)
-                        .onAppear {
-                            // validates the current index with total number of characters
-                            if viewModel.shouldLoadMore(index: index) {
-                                Task {
-                                    await viewModel.loadMore()
-                                }
+        List(viewModel.characters, id: \.id) { character in
+            if let characterVM = character as? CharacterViewModelImpl {
+                
+                // create row view
+                CharacterRowView(viewModel: characterVM)
+                    .onAppear {
+                        if characterVM == (viewModel.characters.last as? CharacterViewModelImpl) {
+                            Task {
+                                await viewModel.loadCharacters()
                             }
                         }
-                        .onTapGesture {
-                            // store the tapped character Id and trigger navigation using state variable
-                            selectedCharacterId = characterVM.id
-                            navigateToDetails = true
-                        }
-                }
+                    }
+                    .onTapGesture {
+                        // store the tapped character Id and trigger navigation using state variable
+                        selectedCharacterId = characterVM.id
+                        navigateToDetails = true
+                    }
             }
         }
         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.listView)

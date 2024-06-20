@@ -14,8 +14,8 @@
             filePath = "CharacterKit/Sources/CharacterKit/List/Data/Data Source/Remote/CharacterRemoteDataSourceImpl.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "characters(params:)"
             landmarkType = "7">
             <Locations>
@@ -48,6 +48,21 @@
                   startingLineNumber = "34"
                   endingLineNumber = "34"
                   offsetFromSymbolStart = "1637">
+               </Location>
+               <Location
+                  uuid = "B322DB10-8252-4349-91BF-FF50E4DD1FFC - c5428fec97cf2292"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for CharacterKit.CharacterRemoteDataSourceImpl.characters&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(params: CharacterKit.CharacterParameters) async throws -&gt; Combine.AnyPublisher&lt;&#x3c4;_0_0, Swift.Error&gt;"
+                  moduleName = "Characters"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/soubhard/Documents/Projects/RickAndMorty/Dependencies/Characters/CharacterKit/Sources/CharacterKit/List/Data/Data%20Source/Remote/CharacterRemoteDataSourceImpl.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "805">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -22,7 +22,6 @@ public class CharactersViewModelImpl: CharactersViewModel {
     public var isLoading: Bool = false
     
     public var currentPage: Int = 1
-    public var parameters: Parameters?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -33,13 +32,11 @@ public class CharactersViewModelImpl: CharactersViewModel {
             guard !isLoading else { return }
             
             isLoading = true
-            
             DLog("Loading page = \(currentPage)")
-            let params: Parameters = [
-                "page": "\(currentPage)"
-            ]
             
-            let publisher: AnyPublisher<CharactersImpl, Error> = try await useCase.characters(params: parameters ?? params)
+            let params = CharacterParameters(page: currentPage)
+            
+            let publisher: AnyPublisher<CharactersImpl, Error> = try await useCase.characters(params: params)
             publisher
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { [weak self] completion in
@@ -51,8 +48,13 @@ public class CharactersViewModelImpl: CharactersViewModel {
                     self.isLoading = false
                 }, receiveValue: { [weak self] characters in
                     guard let self = self else { return }
+                    
+                    // prepare the viewmodel for the view
                     let characterVM = characters.results.map { CharacterViewModelImpl(character: $0) }
                     self.characters.append(contentsOf: characterVM)
+                    
+                    // increment the page for next load
+                    currentPage = useCase.incrementPage(currentPage: currentPage)
                 })
                 .store(in: &self.cancellables)
         }
@@ -62,18 +64,5 @@ public class CharactersViewModelImpl: CharactersViewModel {
             self.isServerError = true
             self.errorMessage = exception.localizedDescription
         }
-    }
-
-    // Increments currentPage, and load more characters
-    public func loadMore() async {
-        currentPage += 1
-        Task {
-            await loadCharacters()
-        }
-    }
-    
-    // When scrolling arrives at the position "characters.count - 2", call loadMore
-    public func shouldLoadMore(index: Int) -> Bool {
-        return index == characters.count - 2
     }
 }

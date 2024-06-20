@@ -58,15 +58,14 @@ public class MockContainer {
     /// Api Client dependency
     ///
     private static func apiClientDependencies() {
-        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(
-            session: MockURLSession(),
-            delegate: DefaultSessionDelegate()))
+        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, 
+                                     SessionApiClient<CharactersEndpoint>(session: MockURLSession()))
     }
     
     ///
     /// Authentication challenge for images to be downloaded via third party
     ///
     private static func authChallengeForImages() {
-        CoreKit.setupAuthChallengeForImages()
+        ImageDownloaderConfiguration.setup()
     }
 }

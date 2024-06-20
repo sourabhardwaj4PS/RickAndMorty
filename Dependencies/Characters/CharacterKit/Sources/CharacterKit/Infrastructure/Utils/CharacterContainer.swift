@@ -57,16 +57,16 @@ public final class CharacterContainer {
     /// Api Client dependency
     ///
     private static func apiClientDependencies() {
-        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(
-            session: URLSession.shared,
-            delegate: DefaultSessionDelegate()))
+        let session = URLSession(configuration: .default, delegate: DefaultSessionDelegate(), delegateQueue: nil)
+        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self,
+                                     SessionApiClient<CharactersEndpoint>(session: session))
     }
     
     ///
     /// Authentication challenge for images to be downloaded via third party
     ///
     private static func authChallengeForImages() {
-        CoreKit.setupAuthChallengeForImages()
+        ImageDownloaderConfiguration.setup()
     }
 
 }

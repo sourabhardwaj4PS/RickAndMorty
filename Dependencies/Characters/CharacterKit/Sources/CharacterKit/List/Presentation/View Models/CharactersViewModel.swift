@@ -23,14 +23,10 @@ public protocol PublishableCharacters: ObservableObject {
  A protocol for objects that handle network operations related to a character.
  */
 public protocol NetworkableCharacters {
-    var parameters: Parameters? { get set }
+    func loadCharacters() async
     
     // pagination
     var currentPage: Int { get set }
-
-    func loadMore() async
-    func loadCharacters() async
-    func shouldLoadMore(index: Int) -> Bool
 }
 
 /**

@@ -8,8 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
-import CoreKit
 
 public protocol CharacterRepository {
-    func characters<T: Decodable>(params: CoreKit.Parameters) async throws -> AnyPublisher<T, Error>
+    func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error>
 }

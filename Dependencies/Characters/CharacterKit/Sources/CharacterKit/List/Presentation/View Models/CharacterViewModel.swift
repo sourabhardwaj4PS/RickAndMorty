@@ -23,7 +23,7 @@ public protocol CharacterViewModel {
     var episodesCount: Int { get }
 }
 
-public class CharacterViewModelImpl: CharacterViewModel {
+public class CharacterViewModelImpl: CharacterViewModel, Equatable {
     public var character: Character?
     
     // getters
@@ -38,5 +38,9 @@ public class CharacterViewModelImpl: CharacterViewModel {
     // initializer
     public init(character: Character) {
         self.character = character
+    }
+    
+    public static func == (lhs: CharacterViewModelImpl, rhs: CharacterViewModelImpl) -> Bool {
+        return lhs.id == rhs.id
     }
 }

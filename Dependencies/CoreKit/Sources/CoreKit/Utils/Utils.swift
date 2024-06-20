@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkKit
 import Kingfisher
 
 ///
@@ -15,8 +16,4 @@ public func DLog(_ items: Any..., separator: String = " ", terminator: String = 
     #if DEBUG
     print(items, separator: separator, terminator: terminator)
     #endif
-}
-
-public func setupAuthChallengeForImages() {
-    ImageDownloader.default.authenticationChallengeResponder = ImageAuthenticationChallenge()
 }

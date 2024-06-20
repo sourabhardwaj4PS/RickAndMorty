@@ -16,15 +16,10 @@ public class CharacterRemoteDataSourceImpl: CharacterRemoteDataSource {
     
     public init() { }
     
-    public func characters<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error> {
-        
-        guard let page = params["page"], let currentPage = Int(String(describing: page)) else {
-            return Fail(error: ApiError.invalidParameter).eraseToAnyPublisher()
-        }
-        
+    public func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> {
         do {
             // create request
-            let endpont = CharactersEndpoint.characters(page: currentPage)
+            let endpont = CharactersEndpoint.characters(page: params.page)
             let request = try apiClient.createRequest(endpont)
             
             // execute the request

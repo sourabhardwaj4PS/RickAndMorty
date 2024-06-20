@@ -15,7 +15,7 @@ public class CharacterRepositoryImpl: CharacterRepository {
     
     public init() { }
     
-    public func characters<T: Decodable>(params: CoreKit.Parameters) async throws -> AnyPublisher<T, Error> {
+    public func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> {
         return try await dataSource.characters(params: params)
     }
 }

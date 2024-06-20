@@ -21,14 +21,12 @@ extension URLSession: URLSessionProtocol { }
 
 public class SessionApiClient<EndpointType: ApiEndpoint>: ApiClient {
     private var session: URLSessionProtocol
-    private var delegate: URLSessionDelegate?
     public var request: URLRequest!
 
     // MARK: - Init
 
-    public init(session: URLSessionProtocol = URLSession.shared, delegate: URLSessionDelegate? = nil) {
+    public init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
-        self.delegate = delegate
     }
 
     // MARK: - Request

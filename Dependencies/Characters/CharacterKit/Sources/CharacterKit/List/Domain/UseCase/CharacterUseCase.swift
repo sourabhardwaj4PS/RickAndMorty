@@ -10,7 +10,8 @@ import Combine
 import CoreKit
 
 public protocol CharacterUseCase {
-    func characters<T: Decodable>(params filter: Parameters) async throws -> AnyPublisher<T, Error>
+    func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error>
+    func incrementPage(currentPage: Int) -> Int
 }
 
 public class CharacterUseCaseImpl: CharacterUseCase {
@@ -18,7 +19,11 @@ public class CharacterUseCaseImpl: CharacterUseCase {
     
     public init() { }
     
-    public func characters<T: Decodable>(params filter: Parameters) async throws -> AnyPublisher<T, Error> {
-        return try await repository.characters(params: filter)
+    public func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> {
+        return try await repository.characters(params: params)
+    }
+    
+    public func incrementPage(currentPage: Int) -> Int {
+        return currentPage + 1
     }
 }

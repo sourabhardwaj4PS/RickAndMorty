@@ -10,7 +10,7 @@ import CoreKit
 import Combine
 
 public protocol CharacterDataSource {
-    func characters<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error>
+    func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error>
 }
 
 public protocol CharacterRemoteDataSource: CharacterDataSource { }
