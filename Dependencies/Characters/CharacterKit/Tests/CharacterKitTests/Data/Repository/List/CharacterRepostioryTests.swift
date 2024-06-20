@@ -31,6 +31,7 @@ class CharacterRepostioryTests: XCTestCase {
     func testCharacterRepository_loadingCharacters_shouldLoadWithSuccess() async {
         let expectation = XCTestExpectation(description: "Character Repository should load characters")
         
+        // Given
         // validate mocked data source
         guard let dataSource = sut.dataSource as? CharacterRemoteDataSourceMock else { return }
         
@@ -38,12 +39,13 @@ class CharacterRepostioryTests: XCTestCase {
         let jsonData = MockData.allCharacters
         let characters = try! JSONDecoder().decode(CharactersImpl.self, from: jsonData)
         
-        // Given
         dataSource.expectedResult = .success(Just(characters).setFailureType(to: Error.self).eraseToAnyPublisher())
-    
+        
+        let params = CharacterParameters(page: 1)
+        
         do {
             // When
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characters(params: ["page": "1"])
+            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characters(params: params)
             publisher
                 .dropFirst()
                 .sink { completion in

@@ -16,10 +16,9 @@ enum MockError: Error {
 }
 
 class CharacterUseCaseMock: CharacterUseCase {
-    
     var expectedResult: Result<AnyPublisher<CharactersImpl, Error>, Error>?
     
-    func characters<T>(params filter: Parameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
+    func characters<T>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
         if let expectedResult = expectedResult {
             switch expectedResult {
             case .success(let publisher):
@@ -35,4 +34,9 @@ class CharacterUseCaseMock: CharacterUseCase {
             throw URLError(.badServerResponse)
         }
     }
+    
+    func incrementPage(currentPage: Int) -> Int {
+        return currentPage + 1
+    }
+    
 }

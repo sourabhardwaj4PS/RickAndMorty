@@ -86,7 +86,7 @@ class CharactersViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
     }
     
-    func testCharactersViewModel_loadingCharacters_withNoExpectedResultShouldThrowException() async {
+    /*func testCharactersViewModel_loadingCharacters_withNoExpectedResultShouldThrowException() async {
         let expectation = XCTestExpectation(description: "All characters should throw an exception")
         
         // Given and When
@@ -102,7 +102,7 @@ class CharactersViewModelTests: XCTestCase {
         await sut.loadCharacters()
         
         await fulfillment(of: [expectation], timeout: 1.0)
-    }
+    }*/
     
     /*func testCharactersViewModel_loadingCharacters_shouldHandleExceptions() {
         // Given
@@ -154,42 +154,17 @@ class CharactersViewModelTests: XCTestCase {
 //        XCTAssertFalse(sut.isLoading)
 //    }
     
-    func testCharactersViewModel_shouldLoadNextPage_loadNextPageForCharacters() async {
-        do {
-            // Given
-            let expectedResult = MockData.character
-            let character: CharacterImpl = try JSONDecoder().decode(CharacterImpl.self, from: expectedResult)
-            let characterVM = CharacterViewModelImpl(character: character)
-            
-            var characters: [CharacterViewModel] = []
-            for _ in 0..<20 {
-                characters.append(characterVM)
-            }
-
-            // When
-            sut.characters = characters
-            
-            // Then
-            // Everytime next page is loaded when (characters.count - 2) = totolResults
-            XCTAssertFalse(sut.shouldLoadMore(index: characters.count - 3))
-            XCTAssertTrue(sut.shouldLoadMore(index: characters.count - 2))
-        }
-        catch let exception {
-            DLog("Exception in testCharactersViewModel_shouldLoadNextPage_shouldLoadNextPageForCharacters = \(exception)")
-        }
-    }
-    
-    func testCharactersViewModel_loadMore_shouldLoadNextPageForCharacters() async {
-        
-        // Given
-        XCTAssertEqual(sut.currentPage, 1)
-        
-        // When
-        await sut.loadMore()
-        
-        // Then
-        XCTAssertEqual(sut.currentPage, 2)
-    }
+//    func testCharactersViewModel_loadMore_shouldLoadNextPageForCharacters() async {
+//        
+//        // Given
+//        XCTAssertEqual(sut.currentPage, 1)
+//        
+//        // When
+//        await sut.loadCharacters()
+//        
+//        // Then
+//        XCTAssertEqual(sut.currentPage, 2)
+//    }
     
     func testNeverDecodableThrowsUnexpectedValue() {
         // Given

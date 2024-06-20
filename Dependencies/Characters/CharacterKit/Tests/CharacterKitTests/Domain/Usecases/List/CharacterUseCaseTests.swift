@@ -30,6 +30,7 @@ class CharactersUseCaseTests: XCTestCase {
     func testCharacterUseCase_loadingCharacters_shouldLoadWithSuccess() async {
         let expectation = XCTestExpectation(description: "Character UseCase should load characters")
         
+        // Given
         // validate mocked repository
         guard let repository = sut.repository as? CharacterRepositoryMock else { return }
         
@@ -37,12 +38,13 @@ class CharactersUseCaseTests: XCTestCase {
         let jsonData = MockData.allCharacters
         let characters = try! JSONDecoder().decode(CharactersImpl.self, from: jsonData)
         
-        // Given
         repository.expectedResult = .success(Just(characters).setFailureType(to: Error.self).eraseToAnyPublisher())
-    
+        
+        let params = CharacterParameters(page: 1)
+        
         do {
             // When
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characters(params: [:])
+            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characters(params: params)
             publisher
                 .dropFirst()
                 .sink { completion in
@@ -59,6 +61,18 @@ class CharactersUseCaseTests: XCTestCase {
         catch {
             DLog("Exception in testCharacterUseCase_loadingCharacters_shouldLoadWithSuccess = \(error)")
         }
+    }
+    
+    func testCharacterUseCase_loadingCharacters_loadsNextPageWithSuccess() async {
+        
+        // Given
+        let currentpage = 1
+        
+        // When
+        let nextPage = sut.incrementPage(currentPage: currentpage)
+        
+        // Then
+        XCTAssertNotEqual(currentpage, nextPage)
     }
     
     /*

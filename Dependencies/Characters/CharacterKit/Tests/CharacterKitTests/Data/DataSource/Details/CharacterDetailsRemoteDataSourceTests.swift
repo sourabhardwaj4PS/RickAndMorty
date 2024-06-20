@@ -57,7 +57,7 @@ class CharacterDetailsRemoteDataSourceTests: XCTestCase {
             await fulfillment(of: [expectation], timeout: 1.0)
         }
         catch {
-            DLog("Exception in testCharacterDetailsRemoteDataSource_characterDetails_shouldLoadWithSuccess = \(error)")
+            print("Exception in testCharacterDetailsRemoteDataSource_characterDetails_shouldLoadWithSuccess = \(error)")
         }
     }
     
@@ -86,7 +86,7 @@ class CharacterDetailsRemoteDataSourceTests: XCTestCase {
             await fulfillment(of: [expectation], timeout: 1.0)
         }
         catch {
-            DLog("Exception in testCharacterDetailsRemoteDataSource_charactersDetails_shouldValidateRequiredParams = \(error)")
+            print("Exception in testCharacterDetailsRemoteDataSource_charactersDetails_shouldValidateRequiredParams = \(error)")
         }
     }
     
