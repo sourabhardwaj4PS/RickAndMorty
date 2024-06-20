@@ -27,7 +27,7 @@ public struct MockData {
                 "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
                 "url": "",
                 "created": "17-06-2024",
-                "episode": []
+                "episode": ["","",""]
             },
             {
                 "id": 2,
@@ -39,7 +39,7 @@ public struct MockData {
                 "image": "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
                 "url": "",
                 "created": "14-06-2024",
-                "episode": []
+                "episode": ["","","","","",""]
             },
             {
                 "id": 3,
@@ -51,7 +51,7 @@ public struct MockData {
                 "image": "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
                 "url": "",
                 "created": "14-06-2024",
-                "episode": []
+                "episode": ["","","","","","","",""]
             },
             {
                 "id": 4,
@@ -63,7 +63,7 @@ public struct MockData {
                 "image": "https://rickandmortyapi.com/api/character/avatar/4.jpeg",
                 "url": "",
                 "created": "14-06-2024",
-                "episode": []
+                "episode": ["","","","","","","","","","","",""]
             }
         ]
     }

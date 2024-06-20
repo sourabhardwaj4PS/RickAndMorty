@@ -43,7 +43,7 @@ struct CharacterRowView<T>: View where T: CharacterViewModel {
             species: "Cartoon",
             type: "",
             gender: "Males",
-            image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            image: "file:///Users/soubhard/Library/Developer/Xcode/DerivedData/Characters-fhdcxxluuqjoprcecbwsucmfzzqm/Build/Products/Debug-iphonesimulator/CharacterKitTests.xctest/CharacterKit_CharacterKitTests.bundle/morty.jpg",
             url: "none",
             created: "NA",
             episode: []

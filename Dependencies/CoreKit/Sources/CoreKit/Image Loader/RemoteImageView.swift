@@ -5,41 +5,32 @@
 //  Created by Sourabh Bhardwaj on 14/06/24.
 //
 
-import Foundation
 import SwiftUI
+import Kingfisher
 
 public struct RemoteImageView<Placeholder: View, ConfiguredImage: View>: View {
-    
+    @ObservedObject var imageLoader: ImageLoader
     private let placeholder: () -> Placeholder
     private let image: (Image) -> ConfiguredImage
     
-    var urlString: String
-
-    @ObservedObject var imageLoader: ImageLoader
-    @State var imageData: Image?
-
     public init(urlString: String,
-        @ViewBuilder placeholder: @escaping () -> Placeholder,
-        @ViewBuilder image: @escaping (Image) -> ConfiguredImage) {
-                
-        self.urlString = urlString
+                @ViewBuilder placeholder: @escaping () -> Placeholder,
+                @ViewBuilder image: @escaping (Image) -> ConfiguredImage) {
+        self.imageLoader = ImageLoader()
         self.placeholder = placeholder
         self.image = image
-        self.imageLoader = ImageLoader(urlString: urlString)
+        self.imageLoader.load(from: urlString)
     }
-
-    @ViewBuilder private var imageContent: some View {
-        if let data = imageData {
-            data
-        } else {
-            placeholder()
+    
+    public var body: some View {
+        Group {
+            if let uiImage = imageLoader.image {
+                image(Image(uiImage: uiImage).resizable())
+            } 
+            else {
+                placeholder()
+            }
         }
     }
-
-    public var body: some View {
-        imageContent
-            .onReceive(imageLoader.$image) { imageData in
-                self.imageData = imageData
-            }
-    }
 }
+

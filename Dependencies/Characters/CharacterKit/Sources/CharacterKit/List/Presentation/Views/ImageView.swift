@@ -23,11 +23,12 @@ struct ImageView: View {
             placeholder: {
                 Image(systemName: "photo")
                     .font(.largeTitle)
-            }, image: {
+            },
+            image: {
                 $0
                     .resizable()
-        })
-        .cornerRadius(5)
+            }
+        )
     }
 }
 

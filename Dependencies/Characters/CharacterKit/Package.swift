@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.16.1"),
         .package(path: "../../CoreKit"),
         .package(path: "../../NetworkKit")
     ],
@@ -20,9 +21,17 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CharacterKit", dependencies: ["CoreKit", "NetworkKit"]),
+            name: "CharacterKit", 
+            dependencies: [
+                "CoreKit",
+                "NetworkKit"
+            ]),
         .testTarget(
             name: "CharacterKitTests",
-            dependencies: ["CharacterKit"]),
+            dependencies: [
+                "CharacterKit",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ],
+            resources: [.process("TestResources")]),
     ]
 )

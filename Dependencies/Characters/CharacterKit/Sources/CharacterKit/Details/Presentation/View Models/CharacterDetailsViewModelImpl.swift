@@ -17,9 +17,9 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     
     public var isServerError: Bool = false
     public var characterId: Int
+    public var character: Character?
     
     private var cancellables = Set<AnyCancellable>()
-    private var character: Character?
     
     public init(characterId: Int) {
         self.characterId = characterId

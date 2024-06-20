@@ -5,41 +5,49 @@
 //  Created by Sourabh Bhardwaj on 14/06/24.
 //
 
-import Foundation
-import Kingfisher
 import SwiftUI
+import Combine
+import Kingfisher
 
-public class ImageLoader: ObservableObject {
-    @Published var image: Image?
-
-    public convenience init(urlString: String) {
-        self.init()
-        
-        guard let url = URL(string: urlString) else {
-            print("Invalid url for image download = \(urlString)")
-            return
+class ImageLoader: ObservableObject {
+    @Published var image: UIImage?
+    
+    func load(from urlString: String) {
+        if let url = URL(string: urlString), url.isFileURL {
+            loadLocalImage(from: url)
+        } 
+        else {
+            loadRemoteImage(from: urlString)
         }
-        
-        downloadImage(with: url.absoluteString)
     }
     
-    func downloadImage(`with` urlString : String) {
-        guard let url = URL.init(string: urlString) else {
+    private func loadLocalImage(from url: URL) {
+        if let uiImage = UIImage(contentsOfFile: url.path) {
+            self.image = uiImage
+        } 
+        else {
+            self.image = nil
+        }
+    }
+    
+    private func loadRemoteImage(from urlString: String) {
+        guard let url = URL(string: urlString) else {
+            self.image = nil
             return
         }
-        let resource = KF.ImageResource(downloadURL: url)
-
-        KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
+        
+        // Use Kingfisher to download the image
+        KingfisherManager.shared.retrieveImage(with: url) { result in
             switch result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    self.image = Image(uiImage: value.image).renderingMode(.original)
+                    self.image = value.image
                 }
-                print("Image: \(value.image). Got from: \(value.cacheType)")
-            case .failure(let error):
-                print("Error: \(error)")
+            case .failure:
+                DispatchQueue.main.async {
+                    self.image = nil
+                }
             }
         }
     }
-    
 }

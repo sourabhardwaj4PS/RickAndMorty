@@ -13,24 +13,52 @@ import SnapshotTesting
 
 class CharacterListViewTests: XCTestCase {
     
+    var path: URL!
+
     override func setUpWithError() throws {
-        
+        MockContainer.setupMockDependencies()
     }
     
     override func tearDownWithError() throws {
-        
+        path = nil
     }
     
     func testCharacterRowView_shouldShowCharacterRowView() {
-        let rowView = Text("characterRowView")
+        guard var character = try? JSONDecoder().decode(CharacterImpl.self, from: MockData.character) else {
+            return
+        }
+        
+        // set image from resources
+        path = getImageFromBundle(resource: "morty", withExtension: "jpg")
+        character.image = path.absoluteString
+        
+        let characterVM = CharacterViewModelImpl(character: character)
+        let rowView = CharacterRowView(viewModel: characterVM)
         
         rowView.toVC.performSnapshotTest(named: "CharacterRowView", testName: "shouldShowCharacterRowView")
     }
     
     func testCharactersListView_shouldShowCharactersListView() {
-        let testView = Text("Test View")
+        guard let characters = try? JSONDecoder().decode(CharactersImpl.self, from: MockData.allCharacters) else {
+            return
+        }
+        path = getImageFromBundle(resource: "rick", withExtension: "jpg")
+
+        var results = characters.results
         
-        testView.toVC.performSnapshotTest(named: "CharactersListView", testName: "shouldShowCharactersListView")
+        // to make list long
+        results.append(contentsOf: characters.results)
+        results.append(contentsOf: characters.results)
+        
+        let charactersVM = CharactersViewModelImpl()
+        charactersVM.characters = results.map({ character in
+            var character = character
+            character.image = path.absoluteString
+            return CharacterViewModelImpl(character: character)
+        })
+
+        let listView = CharactersListView(viewModel: charactersVM)
+        listView.toVC.performSnapshotTest(named: "CharactersListView", testName: "shouldShowCharactersListView")
     }
 }
 
@@ -55,12 +83,15 @@ extension UIViewController {
 }
 
 extension XCTestCase {
+    
     func getImageFromBundle(resource: String, withExtension: String) -> URL {
-        let bundle = Bundle(for: type(of: self))
-        guard let path = bundle.url(forResource: resource, withExtension: withExtension) else {
-            return URL(string: "")!
-        }
+        // Access the module bundle
+        let bundle = Bundle.module
         
+        // Retrieve the URL for the resource
+        guard let path = bundle.url(forResource: resource, withExtension: withExtension) else {
+            fatalError("Resource not found: \(resource).\(withExtension)")
+        }
         return path
     }
 }
