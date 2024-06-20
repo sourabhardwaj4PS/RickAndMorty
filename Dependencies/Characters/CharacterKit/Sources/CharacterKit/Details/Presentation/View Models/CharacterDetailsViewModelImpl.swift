@@ -16,7 +16,6 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     @Published public var errorMessage: String?
     
     public var isServerError: Bool = false
-    public var parameters: Parameters?
     public var characterId: Int
     
     private var cancellables = Set<AnyCancellable>()
@@ -33,11 +32,9 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
             return
         }
 
-        let params: Parameters = [
-            "characterId": "\(id)"
-        ]
+        let params = CharacterDetailParameters(id: id)
         do {
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await useCase.characterDetails(params: parameters ?? params)
+            let publisher: AnyPublisher<CharacterImpl, Error> = try await useCase.characterDetails(params: params)
             publisher
                 .receive(on: DispatchQueue.main)
                 .sink { completion in

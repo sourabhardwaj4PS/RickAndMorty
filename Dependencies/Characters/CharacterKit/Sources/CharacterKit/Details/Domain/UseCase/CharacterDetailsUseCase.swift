@@ -10,7 +10,7 @@ import Combine
 import CoreKit
 
 public protocol CharacterDetailsUseCase {
-    func characterDetails<T: Decodable>(params filter: Parameters) async throws -> AnyPublisher<T, Error>
+    func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error>
 }
 
 public class CharacterDetailsUseCaseImpl: CharacterDetailsUseCase {
@@ -18,7 +18,7 @@ public class CharacterDetailsUseCaseImpl: CharacterDetailsUseCase {
     
     public init() { }
     
-    public func characterDetails<T: Decodable>(params filter: Parameters) async throws -> AnyPublisher<T, Error> {
-        return try await repository.characterDetails(params: filter)
+    public func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> {
+        return try await repository.characterDetails(params: params)
     }
 }

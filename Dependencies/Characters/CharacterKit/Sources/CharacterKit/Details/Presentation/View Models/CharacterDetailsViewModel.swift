@@ -22,9 +22,7 @@ public protocol PublishableCharacterDetails: ObservableObject {
 /**
  A protocol for objects that handle network operations related to character details.
  */
-public protocol NetworkableCharacterDetails {
-    var parameters: Parameters? { get set }
-    
+public protocol NetworkableCharacterDetails {    
     func loadCharacterDetails(id: Int) async
 }
 

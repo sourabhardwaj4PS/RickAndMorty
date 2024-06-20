@@ -9,6 +9,20 @@
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:CharacterKit",
+          "identifier" : "CharacterKit",
+          "name" : "CharacterKit"
+        },
+        {
+          "containerPath" : "container:Characters.xcodeproj",
+          "identifier" : "2F05F5A52C1B24FA00475454",
+          "name" : "CharactersUITests"
+        }
+      ]
+    },
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [

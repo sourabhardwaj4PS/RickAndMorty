@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import CoreKit
 import Combine
 
 public protocol CharacterDetailsDataSource {
-    func characterDetails<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error>
+    func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error>
 }
 
 public protocol CharacterDetailsRemoteDataSource: CharacterDetailsDataSource { }

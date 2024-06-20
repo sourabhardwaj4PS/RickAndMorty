@@ -16,11 +16,7 @@ class CharacterDetailsRemoteDataSourceMock: CharacterDetailsRemoteDataSource {
     
     var expectedResult: Result<AnyPublisher<CharacterImpl, Error>, Error>?
 
-    func characterDetails<T>(params filter: Parameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
-        guard let id = filter["characterId"], let _ = Int(String(describing: id)) else {
-            return Fail(error: ApiError.invalidParameter).eraseToAnyPublisher()
-        }
-        
+    func characterDetails<T>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> where T : Decodable {        
         if let expectedResult = expectedResult {
             switch expectedResult {
             case .success(let publisher):

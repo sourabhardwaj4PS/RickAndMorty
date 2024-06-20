@@ -40,9 +40,11 @@ class CharacterDetailsUseCaseTests: XCTestCase {
         // Given
         repository.expectedResult = .success(Just(character).setFailureType(to: Error.self).eraseToAnyPublisher())
         
+        let params = CharacterDetailParameters(id: 1)
+
         do {
             // When
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characterDetails(params: [:])
+            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characterDetails(params: params)
             publisher
                 .sink { completion in
                     if case .failure(_) = completion {

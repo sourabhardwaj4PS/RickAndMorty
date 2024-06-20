@@ -80,5 +80,7 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
 
 
 //#Preview {
-//    CharacterDetailsView(viewModel: CharacterDetailsViewModelImpl(characterId: 3))
+//    let detailsVM = CharacterDetailsViewModelImpl()
+//    detailsVM.loadCharacterDetails(id: 2)
+//    CharacterDetailsView(viewModel: detailsVM)
 //}

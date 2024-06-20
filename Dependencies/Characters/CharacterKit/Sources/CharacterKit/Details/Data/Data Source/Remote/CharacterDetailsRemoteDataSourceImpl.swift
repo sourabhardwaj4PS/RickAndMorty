@@ -16,15 +16,10 @@ public class CharacterDetailsRemoteDataSourceImpl: CharacterDetailsRemoteDataSou
     
     public init() { }
     
-    public func characterDetails<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error> {
-        
-        guard let id = params["characterId"], let characterId = Int(String(describing: id)) else {
-            return Fail(error: ApiError.invalidParameter).eraseToAnyPublisher()
-        }
-        
+    public func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> {
         do {
             // create request
-            let endpont = CharactersEndpoint.characterDetails(characterId: characterId)
+            let endpont = CharactersEndpoint.characterDetails(characterId: params.id)
             let request = try apiClient.createRequest(endpont)
             
             // execute the request

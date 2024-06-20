@@ -15,7 +15,7 @@ class CharacterDetailsRepositoryMock: CharacterDetailsRepository {
     
     var expectedResult: Result<AnyPublisher<CharacterImpl, Error>, Error>?
 
-    func characterDetails<T>(params filter: Parameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
+    func characterDetails<T>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
         if let expectedResult = expectedResult {
             switch expectedResult {
             case .success(let publisher):

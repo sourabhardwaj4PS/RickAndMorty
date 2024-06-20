@@ -15,7 +15,7 @@ public class CharacterDetailsRepositoryImpl: CharacterDetailsRepository {
     
     public init() { }
     
-    public func characterDetails<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error> {
+    public func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> {
         return try await dataSource.characterDetails(params: params)
     }
 }
