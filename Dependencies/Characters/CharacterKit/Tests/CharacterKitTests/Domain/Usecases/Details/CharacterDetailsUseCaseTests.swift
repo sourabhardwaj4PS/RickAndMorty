@@ -8,6 +8,7 @@
 import Foundation
 import XCTest
 import Combine
+import CoreKit
 
 @testable import CharacterKit
 
@@ -57,7 +58,7 @@ class CharacterDetailsUseCaseTests: XCTestCase {
             await fulfillment(of: [expectation], timeout: 1.0)
         }
         catch {
-            print("Exception in testCharacterDetailsUseCase_loadingCharacters_shouldLoadWithSuccess = \(error)")
+            DLog("Exception in testCharacterDetailsUseCase_loadingCharacters_shouldLoadWithSuccess = \(error)")
         }
     }
 }

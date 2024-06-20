@@ -9,6 +9,7 @@ import Foundation
 import XCTest
 import Combine
 import NetworkKit
+import CoreKit
 
 @testable import CharacterKit
 
@@ -59,7 +60,7 @@ class CharacterRepostioryTests: XCTestCase {
             await fulfillment(of: [expectation], timeout: 1.0)
         }
         catch {
-            print("Exception in testCharacterRepository_loadingCharacters_shouldLoadWithSuccess = \(error)")
+            DLog("Exception in testCharacterRepository_loadingCharacters_shouldLoadWithSuccess = \(error)")
         }
     }
     

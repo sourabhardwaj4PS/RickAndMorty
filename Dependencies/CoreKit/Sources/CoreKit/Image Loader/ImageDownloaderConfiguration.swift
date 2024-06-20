@@ -23,14 +23,14 @@ final class KFAuthenticationChallengeResponder: AuthenticationChallengeResponsib
     public func downloader(_ downloader: ImageDownloader,
                            didReceive challenge: URLAuthenticationChallenge,
                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print("KFAuthenticationChallenge:: downloader :: didReceive challenge called")
+        DLog("KFAuthenticationChallenge:: downloader :: didReceive challenge called")
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
            let serverTrust = challenge.protectionSpace.serverTrust {
             let credential = URLCredential(trust: serverTrust)
             completionHandler(.useCredential, credential)
         }
         else {
-            print("KFAuthenticationChallenge:: downloader .performDefaultHandling")
+            DLog("KFAuthenticationChallenge:: downloader .performDefaultHandling")
             completionHandler(.performDefaultHandling, nil)
         }
     }
@@ -39,28 +39,28 @@ final class KFAuthenticationChallengeResponder: AuthenticationChallengeResponsib
                     task: URLSessionTask,
                     didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print("KFAuthenticationChallenge:: task :: didReceive challenge called")
+        DLog("KFAuthenticationChallenge:: task :: didReceive challenge called")
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
            let serverTrust = challenge.protectionSpace.serverTrust {
             let credential = URLCredential(trust: serverTrust)
             completionHandler(.useCredential, credential)
         }
         else {
-            print("KFAuthenticationChallenge:: task .performDefaultHandling")
+            DLog("KFAuthenticationChallenge:: task .performDefaultHandling")
             completionHandler(.performDefaultHandling, nil)
         }
     }
     
     func handle(_ challenge: URLAuthenticationChallenge,
                 completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print("KFAuthenticationChallenge:: handle :: didReceive challenge called")
+        DLog("KFAuthenticationChallenge:: handle :: didReceive challenge called")
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
            let serverTrust = challenge.protectionSpace.serverTrust {
             let credential = URLCredential(trust: serverTrust)
             completionHandler(.useCredential, credential)
         } 
         else {
-            print("KFAuthenticationChallenge:: handle .performDefaultHandling")
+            DLog("KFAuthenticationChallenge:: handle .performDefaultHandling")
             completionHandler(.performDefaultHandling, nil)
         }
     }

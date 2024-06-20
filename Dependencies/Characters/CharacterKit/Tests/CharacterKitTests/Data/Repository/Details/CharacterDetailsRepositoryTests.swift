@@ -58,7 +58,7 @@ class CharacterDetailsRepositoryTests: XCTestCase {
             await fulfillment(of: [expectation], timeout: 1.0)
         }
         catch {
-            print("Exception in testCharacterDetailsRepository_characterDetails_shouldLoadWithSuccess = \(error)")
+            DLog("Exception in testCharacterDetailsRepository_characterDetails_shouldLoadWithSuccess = \(error)")
         }
     }
 
