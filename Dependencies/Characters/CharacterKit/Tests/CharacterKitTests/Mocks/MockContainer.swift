@@ -40,6 +40,8 @@ public class MockContainer {
         ///
         /// Api Client dependency
         ///
-        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(session: MockURLSession()))
+        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(
+            session: MockURLSession(),
+            delegate: DefaultSessionDelegate()))
     }
 }

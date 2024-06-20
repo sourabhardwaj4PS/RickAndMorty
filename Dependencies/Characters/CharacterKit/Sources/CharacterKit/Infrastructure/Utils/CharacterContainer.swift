@@ -38,7 +38,9 @@ public final class CharacterContainer {
         ///
         /// Api Client dependency
         ///
-        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(session: URLSession.shared))
+        DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, SessionApiClient<CharactersEndpoint>(
+            session: URLSession.shared,
+            delegate: DefaultSessionDelegate()))
     }
 
 }
