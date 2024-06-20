@@ -69,6 +69,42 @@ public struct MockData {
     }
     """.data(using: .utf8)!
     
+    static let invalidCharacters = """
+    {
+        "info": {
+            "count": 2,
+            "pages": 1,
+            "next": null,
+            "prev": null
+        },
+        "data": [
+            {
+                "id": 1,
+                "name": "Rick",
+                "status": "Alive"
+            },
+            {
+                "id": 2,
+                "name": "Morty Smith",
+                "status": "Alive",
+                "species": "Human"
+            },
+            {
+                "id": 3,
+                "name": "Justin",
+                "status": "Alive",
+                "species": "Human",
+                "type": "",
+                "gender": "Male"
+            },
+            {
+                "id": 4,
+                "name": "Treudo"
+            }
+        ]
+    }
+    """.data(using: .utf8)!
+    
     static let character = """
     {
           "id": 2,

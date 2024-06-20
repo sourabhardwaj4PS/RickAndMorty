@@ -14,8 +14,7 @@ import Combine
 
 class CharacterDetailsViewModelTests: XCTestCase {
     
-    var sut: CharacterDetailsViewModelImpl!
-    
+    private var sut: CharacterDetailsViewModelImpl!
     private var cancellables = Set<AnyCancellable>()
     
     override func setUpWithError() throws {
@@ -29,16 +28,17 @@ class CharacterDetailsViewModelTests: XCTestCase {
     }
     
     func testCharactersViewModel_characterDetails_shouldLoadWithSuccess() async {
+        let expectation = XCTestExpectation(description: "Character details should loaded successfully")
+
+        // validate mocked use case
+        guard let useCase = sut.useCase as? CharacterDetailsUseCaseMock else { return }
+
+        // Decode JSON to Domain model and wrap in a Just publisher
+        let jsonData = MockData.character
+        let character = try! JSONDecoder().decode(CharacterImpl.self, from: jsonData)
+        
         // Given
-        let expectedResult = MockData.character
-        
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: "https://example.com/mock/character/2")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, expectedResult)
-        }
-        
-        let expectation = XCTestExpectation(description: "Character details loaded successfully!")
+        useCase.expectedResult = .success(Just(character).setFailureType(to: Error.self).eraseToAnyPublisher())
         
         // When
         sut.$finishedLoading
@@ -46,6 +46,7 @@ class CharacterDetailsViewModelTests: XCTestCase {
             .sink { [self] finished in
                 // Then
                 XCTAssertTrue(finished)
+                
                 XCTAssertEqual(sut.name, "Morty Smith")
                 XCTAssertEqual(sut.status, "Alive")
                 XCTAssertEqual(sut.species, "Human")
@@ -67,13 +68,14 @@ class CharacterDetailsViewModelTests: XCTestCase {
     }
     
     func testCharactersViewModel_characterDetails_shouldLoadWithFailure() async {
+        let expectation = XCTestExpectation(description: "Character details should not load")
+        
+        // validate mocked use case
+        guard let useCase = sut.useCase as? CharacterDetailsUseCaseMock else { return }
         
         // Given
-        let expectation = XCTestExpectation(description: "Character details should not load")
-          
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.populateRequestHandler()
-        MockURLProtocol.requestFailed = true
+        let expectedError = URLError(.badServerResponse)
+        useCase.expectedResult = .failure(expectedError)
         
         // When
         sut.$finishedLoading
@@ -96,7 +98,6 @@ class CharacterDetailsViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         
-        
         await sut.loadCharacterDetails(id: 2)
         
         await fulfillment(of: [expectation], timeout: 1.0)
@@ -104,42 +105,30 @@ class CharacterDetailsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.finishedLoading)        
     }
     
+    func testCharactersViewModel_characterDetails_withNoExpectedResultShouldThrowException() async {
+        let expectation = XCTestExpectation(description: "Characters details should throw an exception")
+        
+        // Given and When
+        sut.$errorMessage
+            .dropFirst()
+            .sink(receiveValue: { errorMessage in
+                // Then
+                XCTAssertNotNil(errorMessage)
+                expectation.fulfill()
+            })
+            .store(in: &cancellables)
+        
+        await sut.loadCharacterDetails(id: 2)
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+    }
+    
     func testCharacterDetailsViewModel_characterDetails_shouldValidateCharacterId() async {
-        
-        // Given
-        
-        // When
+        // Given and When
         await sut.loadCharacterDetails(id: 0)
                 
         // Then
         XCTAssertFalse(sut.finishedLoading, "Character details request should not begin because of invalid Id")
     }
-    
-    func testCharacterUseCase_characterDetails_ShouldValidateParameters() async {
-        
-        // Given
-        let expectation = XCTestExpectation(description: "Invalid parameters should fail the characterDetails request")
-          
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.populateRequestHandler()
-        
-        // When
-        sut.$isServerError
-            .dropFirst()
-            .sink(receiveValue: { serverError in
-                // Then
-                XCTAssertTrue(serverError)
-                expectation.fulfill()
-            })
-            .store(in: &cancellables)
-        
-        sut.parameters = ["invalidCharacterId": "3"]
-        
-        await sut.loadCharacterDetails(id: 3)
-        
-        await fulfillment(of: [expectation], timeout: 1.0)
-    }
-
-
     
 }

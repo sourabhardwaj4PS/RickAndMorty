@@ -22,20 +22,20 @@ public class MockContainer {
         ///
         DependencyContainer.register(type: (any CharactersViewModel).self, CharactersViewModelImpl())
         
-        DependencyContainer.register(type: (any CharacterUseCase).self, CharacterUseCaseImpl())
+        DependencyContainer.register(type: (any CharacterUseCase).self, CharacterUseCaseMock())
         
-        DependencyContainer.register(type: (any CharacterRepository).self, CharacterRepositoryImpl())
+        DependencyContainer.register(type: (any CharacterRepository).self, CharacterRepositoryMock())
         
-        DependencyContainer.register(type: (any CharacterDataSource).self, CharacterRemoteDataSourceImpl())
+        DependencyContainer.register(type: (any CharacterDataSource).self, CharacterRemoteDataSourceMock())
         
         ///
         /// Character details dependencies
         ///
-        DependencyContainer.register(type: (any CharacterDetailsUseCase).self, CharacterDetailsUseCaseImpl())
+        DependencyContainer.register(type: (any CharacterDetailsUseCase).self, CharacterDetailsUseCaseMock())
         
-        DependencyContainer.register(type: (any CharacterDetailsRepository).self, CharacterDetailsRepositoryImpl())
+        DependencyContainer.register(type: (any CharacterDetailsRepository).self, CharacterDetailsRepositoryMock())
         
-        DependencyContainer.register(type: (any CharacterDetailsDataSource).self, CharacterDetailsRemoteDataSourceImpl())
+        DependencyContainer.register(type: (any CharacterDetailsDataSource).self, CharacterDetailsRemoteDataSourceMock())
         
         ///
         /// Api Client dependency

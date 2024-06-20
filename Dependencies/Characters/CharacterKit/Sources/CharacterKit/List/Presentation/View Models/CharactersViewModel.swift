@@ -16,7 +16,7 @@ public protocol PublishableCharacters: ObservableObject {
     
     // error handling
     var isServerError: Bool { get set }
-    var errorMessage: String { get set }
+    var errorMessage: String? { get set }
 }
 
 /**

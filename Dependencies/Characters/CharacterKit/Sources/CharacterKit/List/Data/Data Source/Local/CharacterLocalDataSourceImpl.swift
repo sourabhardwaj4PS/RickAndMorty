@@ -9,9 +9,10 @@ import Foundation
 import Combine
 import CoreKit
 
+/*
 public class CharacterLocalDataSourceImpl: CharacterLocalDataSource {
     
     public func characters<T: Decodable>(params: Parameters) async throws -> AnyPublisher<T, Error> {
         return Empty().eraseToAnyPublisher() //TODO: implement if needed
     }
-}
+}*/

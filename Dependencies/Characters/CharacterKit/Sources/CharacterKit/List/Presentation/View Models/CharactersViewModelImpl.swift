@@ -16,10 +16,11 @@ public class CharactersViewModelImpl: CharactersViewModel {
     @Published public var hasAppeared: Bool = false
     
     // error handling
-    @Published public var isServerError = false
-    @Published public var errorMessage = ""
+    @Published public var errorMessage: String?
     
+    public var isServerError: Bool = false
     public var isLoading: Bool = false
+    
     public var currentPage: Int = 1
     public var parameters: Parameters?
     
@@ -57,6 +58,9 @@ public class CharactersViewModelImpl: CharactersViewModel {
         }
         catch let exception {
             DLog("Exception in loadCharacters = \(exception)")
+            self.isLoading = false
+            self.isServerError = true
+            self.errorMessage = exception.localizedDescription
         }
     }
 

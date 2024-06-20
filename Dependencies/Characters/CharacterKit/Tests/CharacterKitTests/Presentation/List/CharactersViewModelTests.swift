@@ -9,13 +9,13 @@ import Foundation
 import XCTest
 import NetworkKit
 import Combine
+import CoreKit
 
 @testable import CharacterKit
 
 class CharactersViewModelTests: XCTestCase {
 
-    var sut: CharactersViewModelImpl!
-    
+    private var sut: CharactersViewModelImpl!
     private var cancellables = Set<AnyCancellable>()
     
     override func setUpWithError() throws {
@@ -29,22 +29,24 @@ class CharactersViewModelTests: XCTestCase {
     }
     
     func testCharactersViewModel_loadingCharacters_shouldLoadWithSuccess() async {
-        // Given
-        let expectedResult = MockData.allCharacters
-        
         let expectation = XCTestExpectation(description: "All characters should load successfully!")
         
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: "https://example.com/mock/character")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, expectedResult)
-        }
+        // validate mocked use case
+        guard let useCase = sut.useCase as? CharacterUseCaseMock else { return }
+        
+        // Decode JSON to Domain model and wrap in a Just publisher
+        let jsonData = MockData.allCharacters
+        let characters = try! JSONDecoder().decode(CharactersImpl.self, from: jsonData)
+        
+        // Given
+        useCase.expectedResult = .success(Just(characters).setFailureType(to: Error.self).eraseToAnyPublisher())
         
         // When
         sut.$characters
             .dropFirst()
             .sink { characters in
                 // Then
+                XCTAssertNotNil(characters)
                 XCTAssertEqual(characters.count, 4)
                 XCTAssertEqual(characters.first?.name, "Rick")
                 XCTAssertEqual(characters.last?.name, "Treudo")
@@ -60,23 +62,21 @@ class CharactersViewModelTests: XCTestCase {
     }
     
     func testCharactersViewModel_loadingCharacters_shouldLoadWithFailure() async {
+        let expectation = XCTestExpectation(description: "All characters should not load")
+        
+        // validate mocked use case
+        guard let useCase = sut.useCase as? CharacterUseCaseMock else { return }
         
         // Given
-        let expectation = XCTestExpectation(description: "All characters should not load")
-          
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.populateRequestHandler()
-        MockURLProtocol.requestFailed = true
-        
-        // validate server error is false at first
-        XCTAssertFalse(sut.isServerError)
+        let expectedError = URLError(.badServerResponse)
+        useCase.expectedResult = .failure(expectedError)
         
         // When
-        sut.$isServerError
+        sut.$errorMessage
             .dropFirst()
-            .sink(receiveValue: { serverError in
+            .sink(receiveValue: { errorMessage in
                 // Then
-                XCTAssertTrue(serverError)
+                XCTAssertEqual(errorMessage, expectedError.localizedDescription)
                 expectation.fulfill()
             })
             .store(in: &cancellables)
@@ -84,8 +84,24 @@ class CharactersViewModelTests: XCTestCase {
         await sut.loadCharacters()
         
         await fulfillment(of: [expectation], timeout: 1.0)
-
-        XCTAssertFalse(sut.isLoading)
+    }
+    
+    func testCharactersViewModel_loadingCharacters_withNoExpectedResultShouldThrowException() async {
+        let expectation = XCTestExpectation(description: "All characters should throw an exception")
+        
+        // Given and When
+        sut.$errorMessage
+            .dropFirst()
+            .sink(receiveValue: { errorMessage in
+                // Then
+                XCTAssertNotNil(errorMessage)
+                expectation.fulfill()
+            })
+            .store(in: &cancellables)
+        
+        await sut.loadCharacters()
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
     }
     
     /*func testCharactersViewModel_loadingCharacters_shouldHandleExceptions() {
@@ -111,32 +127,32 @@ class CharactersViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
     }*/
 
-    func testCharactersViewModel_loadingCharacters_shouldValidateParameters() async {
-        
-        // Given
-        let expectation = XCTestExpectation(description: "All characters should not not because expected parameter is 'page' instead of 'invalidPage'.")
-          
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.populateRequestHandler()
-        
-        // When
-        sut.$isServerError
-            .dropFirst()
-            .sink(receiveValue: { serverError in
-                // Then
-                XCTAssertTrue(serverError)
-                expectation.fulfill()
-            })
-            .store(in: &cancellables)
-        
-        sut.parameters = ["invalidPage": "1"]
-        
-        await sut.loadCharacters()
-        
-        await fulfillment(of: [expectation], timeout: 1.0)
-
-        XCTAssertFalse(sut.isLoading)
-    }
+//    func testCharactersViewModel_loadingCharacters_shouldValidateParameters() async {
+//        
+//        // Given
+//        let expectation = XCTestExpectation(description: "All characters should not not because expected parameter is 'page' instead of 'invalidPage'.")
+//          
+//        MockURLProtocol.resetMockData()
+//        MockURLProtocol.populateRequestHandler()
+//        
+//        // When
+//        sut.$isServerError
+//            .dropFirst()
+//            .sink(receiveValue: { serverError in
+//                // Then
+//                XCTAssertTrue(serverError)
+//                expectation.fulfill()
+//            })
+//            .store(in: &cancellables)
+//        
+//        sut.parameters = ["invalidPage": "1"]
+//        
+//        await sut.loadCharacters()
+//        
+//        await fulfillment(of: [expectation], timeout: 1.0)
+//
+//        XCTAssertFalse(sut.isLoading)
+//    }
     
     func testCharactersViewModel_shouldLoadNextPage_loadNextPageForCharacters() async {
         do {

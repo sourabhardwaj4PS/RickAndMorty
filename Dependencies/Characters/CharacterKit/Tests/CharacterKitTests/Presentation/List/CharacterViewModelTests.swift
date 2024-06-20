@@ -7,17 +7,13 @@
 
 import Foundation
 import XCTest
-import NetworkKit
-import Combine
 
 @testable import CharacterKit
 
 class CharacterViewModelTests: XCTestCase {
     
     var sut: CharacterViewModelImpl!
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     override func setUpWithError() throws {
         let character = try JSONDecoder().decode(CharacterImpl.self, from: MockData.character)
         sut = CharacterViewModelImpl(character: character as Character)

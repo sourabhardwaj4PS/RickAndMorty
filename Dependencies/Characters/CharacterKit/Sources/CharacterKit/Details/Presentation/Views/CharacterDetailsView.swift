@@ -72,7 +72,7 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
             }
             Button(CharacterConstants.Titles.Buttons.cancel, role: .cancel) { }
         }, message: {
-            Text(viewModel.errorMessage)
+            Text(viewModel.errorMessage ?? CharacterConstants.Titles.Alerts.somethingWentWrong)
         })
     }
 }

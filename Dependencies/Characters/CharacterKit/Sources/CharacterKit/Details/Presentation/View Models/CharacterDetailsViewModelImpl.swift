@@ -13,9 +13,9 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     @Dependency public var useCase: CharacterDetailsUseCase
     
     @Published public var finishedLoading: Bool = false
-    @Published public var isServerError: Bool = false
-    @Published public var errorMessage: String = ""
+    @Published public var errorMessage: String?
     
+    public var isServerError: Bool = false
     public var parameters: Parameters?
     public var characterId: Int
     
@@ -55,6 +55,9 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
         }
         catch let exception {
             DLog("Exception in loadCharacterDetails = \(exception)")
+            self.isServerError = true
+            self.finishedLoading = true
+            self.errorMessage = exception.localizedDescription
         }
     }
     
