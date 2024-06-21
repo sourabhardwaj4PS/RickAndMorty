@@ -19,13 +19,13 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
     public var body: some View {
         ScrollView {
             if viewModel.finishedLoading {
+                ImageView(imageUrlString: viewModel.image)
+                    .frame(maxWidth: .infinity, maxHeight: 360)
+                    .aspectRatio(contentMode: .fit)
+                    .background(Color.gray.opacity(0.1))
+                    .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.image)
+
                 VStack(alignment: .leading, spacing: 16) {
-                    ImageView(imageUrlString: viewModel.image)
-                        .frame(maxWidth: .infinity, maxHeight: 360)
-                        .aspectRatio(contentMode: .fit)
-                        .background(Color.gray.opacity(0.1))
-                        .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.image)
-                    
                     Text(viewModel.name)
                         .font(.largeTitle)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.name)
@@ -51,6 +51,8 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
                         Text(episode)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
             }
             else {
                 ProgressView()

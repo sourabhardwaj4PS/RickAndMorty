@@ -11,11 +11,13 @@ import Foundation
 public class MockURLProtocol: URLProtocol {
     
     // MARK: - Mocking Data
+    public static var error: Error?
     public static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
     public static var requestFailed = false
     public static var decodingFailed = false
         
     public static func resetMockData() {
+        error = nil
         requestHandler = nil
         requestFailed = false
         decodingFailed = false
@@ -68,7 +70,7 @@ public class MockURLProtocol: URLProtocol {
     }
 
     public override func stopLoading() {
-        //
+        // implement if needed
     }
 }
 

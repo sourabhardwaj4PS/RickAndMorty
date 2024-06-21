@@ -63,33 +63,4 @@ class CharacterRemoteDataSourceTests: XCTestCase {
         }
     }
     
-//    func testCharacterRemoteDataSource_loadingCharacters_shouldValidateRequiredParams() async {
-//        let expectation = XCTestExpectation(description: "Characters Remote Data Source should load characters")
-//        
-//        // Given
-//        let expectedError = ApiError.invalidParameter
-//        
-//        do {
-//            // When
-//            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characters(params: ["invalidKey":"1"])
-//            publisher
-//                .dropFirst()
-//                .sink { completion in
-//                    if case .failure(let error) = completion {
-//                        // Then
-//                        XCTAssertEqual(error.localizedDescription, expectedError.localizedDescription)
-//                        expectation.fulfill()
-//                    }
-//                } receiveValue: { character in
-//                    XCTFail("Not expected to receive success")
-//                }
-//                .store(in: &cancellables)
-//            
-//            await fulfillment(of: [expectation], timeout: 1.0)
-//        }
-//        catch {
-//            DLog("Exception in testCharacterRemoteDataSource_loadingCharacters_shouldValidateRequiredParams = \(error)")
-//        }
-//    }
-    
 }

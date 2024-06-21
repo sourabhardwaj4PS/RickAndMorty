@@ -44,11 +44,7 @@ class CharacterListViewTests: XCTestCase {
         }
         path = getImageFromBundle(resource: "rick", withExtension: "jpg")
 
-        var results = characters.results
-        
-        // to make list long
-        results.append(contentsOf: characters.results)
-        results.append(contentsOf: characters.results)
+        let results = characters.results
         
         let charactersVM = CharactersViewModelImpl()
         charactersVM.characters = results.map({ character in

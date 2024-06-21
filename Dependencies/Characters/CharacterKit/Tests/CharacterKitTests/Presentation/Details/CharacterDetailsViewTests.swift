@@ -16,7 +16,7 @@ class CharacterDetailsViewTests: XCTestCase {
     var path: URL!
 
     override func setUpWithError() throws {
-        CharacterContainer.setupDependencies()
+        MockContainer.setupMockDependencies()
     }
     
     override func tearDownWithError() throws {

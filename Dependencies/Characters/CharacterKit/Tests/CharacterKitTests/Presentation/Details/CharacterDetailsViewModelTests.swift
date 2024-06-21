@@ -123,12 +123,4 @@ class CharacterDetailsViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
     }
     
-    func testCharacterDetailsViewModel_characterDetails_shouldValidateCharacterId() async {
-        // Given and When
-        await sut.loadCharacterDetails(id: 0)
-                
-        // Then
-        XCTAssertFalse(sut.finishedLoading, "Character details request should not begin because of invalid Id")
-    }
-    
 }

@@ -17,6 +17,7 @@ public enum ApiError: Error, Equatable {
     case requestFailed
     case decodingFailed
     case customError(statusCode: Int)
+    case customError(message: String)
 }
 
 public enum RequestError: Error {
