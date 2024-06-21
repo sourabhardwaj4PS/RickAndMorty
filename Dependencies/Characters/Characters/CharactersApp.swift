@@ -15,8 +15,4 @@ struct CharactersApp: App {
             ContentView()
         }
     }
-    
-    init() {
-        CharacterContainer.setupDependencies()
-    }
 }

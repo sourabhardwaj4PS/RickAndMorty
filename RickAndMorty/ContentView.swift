@@ -12,7 +12,7 @@ import EpisodeKit
 struct ContentView: View {
     var body: some View {
         TabView {
-            CharactersListView(viewModel: CharactersViewModelImpl())
+            CharactersHome(config: AppConfiguration())
                 .tabItem {
                     Label("Characters", systemImage: "person.3.fill")
                 }

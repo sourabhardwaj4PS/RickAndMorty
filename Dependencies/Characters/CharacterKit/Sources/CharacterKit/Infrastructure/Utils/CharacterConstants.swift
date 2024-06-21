@@ -27,11 +27,6 @@ public enum CharacterConstants {
         public static let episodes = "episodes"
     }
     
-    public enum URLConstants {
-        public static let baseURL = "https://rickandmortyapi.com/api"
-        public static let charactersPath = "/character"
-    }
-    
     public enum Titles {
         
         public enum Page {
@@ -51,7 +46,5 @@ public enum CharacterConstants {
             public static let cancel = "Cancel"
         }
     }
-    
-    
     
 }

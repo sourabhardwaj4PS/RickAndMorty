@@ -17,6 +17,10 @@ struct RickAndMortyApp: App {
     }
     
     init() {
-        CharacterContainer.setupDependencies()
+        // Characters
+        //CharacterContainer.setupDependencies()
+        
+        // Episodes
+        //yetToBeDeveloped()
     }
 }

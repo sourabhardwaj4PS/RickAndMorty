@@ -10,10 +10,10 @@ import CharacterKit
 
 struct ContentView: View {
     var body: some View {
-        CharactersListView(viewModel: CharactersViewModelImpl())
+        CharactersHome(config: CharactersConfigurationImpl())
     }
 }
 
 #Preview {
-    CharactersListView(viewModel: CharactersViewModelImpl())
+    CharactersHome(config: CharactersConfigurationImpl())
 }

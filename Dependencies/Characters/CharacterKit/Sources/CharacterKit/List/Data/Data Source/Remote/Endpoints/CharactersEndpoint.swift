@@ -14,15 +14,15 @@ public enum CharactersEndpoint: ApiEndpoint {
     case characterDetails(characterId: Int)
 
     public var baseURL: URL {
-        return URL(string: "https://rickandmortyapi.com/api")!
+        return URL(string: CharacterManager.shared.configuration.baseURL).value
     }
 
     public var path: String {
         switch self {
         case .characters:
-            return "/character/"
+            return CharacterManager.shared.configuration.charactersPath
         case .characterDetails(characterId: let characterId):
-            return "/character/\(characterId)"
+            return "/\(CharacterManager.shared.configuration.charactersPath)/\(characterId)"
         }
     }
 
