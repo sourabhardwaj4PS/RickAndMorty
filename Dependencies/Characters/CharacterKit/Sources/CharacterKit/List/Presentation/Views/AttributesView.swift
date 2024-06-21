@@ -19,19 +19,19 @@ struct AttributesView<T>: View where T: CharacterViewModel {
     var body: some View {
         VStack(alignment: .leading, spacing: 8, content: {
             
-            TitleLabelView(title: "Name:", label: viewModel.name)
+            TitleLabelView(title: "\(AttributeLabels.name.rawValue):", label: viewModel.name)
                 .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.name)-\(viewModel.id)")
             
-            TitleLabelView(title: "Gender:", label: viewModel.gender)
+            TitleLabelView(title: "\(AttributeLabels.gender.rawValue):", label: viewModel.gender)
                 .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.gender)-\(viewModel.id)")
             
-            TitleLabelView(title: "Status:", label: viewModel.status)
+            TitleLabelView(title: "\(AttributeLabels.status.rawValue):", label: viewModel.status)
                 .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.status)-\(viewModel.id)")
 
-            TitleLabelView(title: "Species:", label: viewModel.species)
+            TitleLabelView(title: "\(AttributeLabels.species.rawValue):", label: viewModel.species)
                 .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.species)-\(viewModel.id)")
             
-            TitleLabelView(title: "No of episodes:", label: "\(viewModel.episodesCount)")
+            TitleLabelView(title: "\(AttributeLabels.episodes.rawValue):", label: "\(viewModel.episodesCount)")
                 .accessibilityIdentifier("\(CharacterConstants.AccessibilityIdentifiers.episodes)-\(viewModel.id)")
         })
         .padding(8)

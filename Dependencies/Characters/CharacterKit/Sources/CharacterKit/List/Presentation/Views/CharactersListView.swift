@@ -14,6 +14,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
     @StateObject var viewModel: T
     @State private var selectedCharacterId: Int?
     @State private var navigateToDetails = false
+    @State private var hasAppeared = false
     
     public init(viewModel: @autoclosure @escaping () -> T) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -22,7 +23,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
     // MARK: - Content View
     public var body: some View {
         NavigationView {
-            if viewModel.isLoading && viewModel.characters.isEmpty {
+            if viewModel.characters.isEmpty {
                 ProgressView()
             }
             else {
@@ -48,8 +49,8 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
             }
         }
         .onAppear {
-            guard !viewModel.hasAppeared else { return }
-            viewModel.hasAppeared.toggle()
+            guard !hasAppeared else { return }
+            hasAppeared.toggle()
             Task {
                 await viewModel.loadCharacters()
             }
@@ -64,6 +65,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                 // create row view
                 CharacterRowView(viewModel: characterVM)
                     .onAppear {
+                        //TODO: think about logic
                         if characterVM == (viewModel.characters.last as? CharacterViewModelImpl) {
                             Task {
                                 await viewModel.loadCharacters()

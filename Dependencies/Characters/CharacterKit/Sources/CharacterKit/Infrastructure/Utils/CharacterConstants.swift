@@ -46,5 +46,14 @@ public enum CharacterConstants {
             public static let cancel = "Cancel"
         }
     }
-    
+}
+
+enum AttributeLabels: String {
+    case name = "Name"
+    case gender = "Gender"
+    case status = "Status"
+    case species = "Species"
+    case episodes = "No of episodes"
+    case episodesAired = "Episodes Aired"
+    case birth = "Birth"
 }

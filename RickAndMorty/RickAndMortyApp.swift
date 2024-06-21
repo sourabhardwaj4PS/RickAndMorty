@@ -15,12 +15,4 @@ struct RickAndMortyApp: App {
             ContentView()
         }
     }
-    
-    init() {
-        // Characters
-        //CharacterContainer.setupDependencies()
-        
-        // Episodes
-        //yetToBeDeveloped()
-    }
 }

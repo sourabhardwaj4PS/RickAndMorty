@@ -11,6 +11,7 @@ import SwiftUI
 struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
     
     @StateObject var viewModel: T
+    @State private var hasAppeared = false
     
     public init(viewModel: @autoclosure @escaping () -> T) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -30,19 +31,19 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
                         .font(.largeTitle)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.name)
                     
-                    TitleLabelView(title: "Species:", label: viewModel.species)
+                    TitleLabelView(title: "\(AttributeLabels.species.rawValue):", label: viewModel.species)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.species)
                     
-                    TitleLabelView(title: "Status:", label: viewModel.status)
+                    TitleLabelView(title: "\(AttributeLabels.status.rawValue):", label: viewModel.status)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.status)
                     
-                    TitleLabelView(title: "Gender:", label: viewModel.gender)
+                    TitleLabelView(title: "\(AttributeLabels.gender.rawValue):", label: viewModel.gender)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.gender)
                     
-                    TitleLabelView(title: "Birth:", label: viewModel.created)
+                    TitleLabelView(title: "\(AttributeLabels.birth.rawValue):", label: viewModel.created)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.birth)
 
-                    Text("Episodes Aired:")
+                    Text("\(AttributeLabels.episodesAired.rawValue):")
                         .font(.headline)
                         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.episodes)
                     
@@ -63,6 +64,8 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
         .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.detailsView)
         .navigationBarTitle(CharacterConstants.Titles.Page.characterDetails, displayMode: .inline)
         .onAppear(perform: {
+            guard !hasAppeared else { return }
+            hasAppeared.toggle()
             Task {
                 await viewModel.loadCharacterDetails(id: viewModel.characterId)
             }
@@ -82,8 +85,8 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
 
 
 
-//#Preview {
-//    let detailsVM = CharacterDetailsViewModelImpl()
-//    detailsVM.loadCharacterDetails(id: 2)
-//    CharacterDetailsView(viewModel: detailsVM)
-//}
+/*#Preview {
+    let detailsVM = CharacterDetailsViewModelImpl(characterId: 2)
+    detailsVM.loadCharacterDetails(id: 2)
+    CharacterDetailsView(viewModel: detailsVM)
+}*/

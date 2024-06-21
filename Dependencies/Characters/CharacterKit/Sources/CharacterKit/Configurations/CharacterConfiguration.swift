@@ -11,7 +11,7 @@ import CoreKit
 public struct CharactersConfigurationImpl: CharactersConfiguration {
     public var baseURL = "https://rickandmortyapi.com/api"
     public var charactersPath: String = "/character"
-    public var analyticsURL = "https://analytics.rickandmortyapi.com/"
+    public var analyticsURL = "https://analytics.com/api"
     
     public init() { }
     
