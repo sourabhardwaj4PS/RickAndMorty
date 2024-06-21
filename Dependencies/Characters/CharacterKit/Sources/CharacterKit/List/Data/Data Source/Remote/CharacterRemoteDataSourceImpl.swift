@@ -13,9 +13,7 @@ import NetworkKit
 public class CharacterRemoteDataSourceImpl: CharacterRemoteDataSource {
     
     @Dependency public var apiClient: SessionApiClient<CharactersEndpoint>
-    
-    public init() { }
-    
+        
     public func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> {
         do {
             // create request

@@ -12,9 +12,7 @@ import Combine
 public class CharacterDetailsRepositoryImpl: CharacterDetailsRepository {
     
     @Dependency public var dataSource: CharacterDetailsDataSource
-    
-    public init() { }
-    
+        
     public func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> {
         return try await dataSource.characterDetails(params: params)
     }

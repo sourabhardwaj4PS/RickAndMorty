@@ -13,9 +13,7 @@ import CoreKit
 public class CharacterDetailsRemoteDataSourceImpl: CharacterDetailsRemoteDataSource {
     
     @Dependency public var apiClient: SessionApiClient<CharactersEndpoint>
-    
-    public init() { }
-    
+        
     public func characterDetails<T: Decodable>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> {
         do {
             // create request

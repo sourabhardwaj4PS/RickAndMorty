@@ -16,9 +16,7 @@ public protocol CharacterUseCase {
 
 public class CharacterUseCaseImpl: CharacterUseCase {
     @Dependency public var repository: CharacterRepository
-    
-    public init() { }
-    
+        
     public func characters<T: Decodable>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> {
         return try await repository.characters(params: params)
     }
