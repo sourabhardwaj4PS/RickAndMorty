@@ -1,0 +1,22 @@
+//
+//  Release.xcconfig
+//  RickAndMorty
+//
+//  Created by Sourabh Bhardwaj on 21/06/24.
+//
+
+// Network
+BASE_URL = rickandmortyapi.com/api
+
+// Analytics
+ANALYTICS_URL = rickandmorty.com/analytics/prod/api
+
+//
+// Characters
+//
+CHARACTERS_PATH = /character/
+
+//
+// Episodes
+//
+EPISODES_PATH = /episodes/

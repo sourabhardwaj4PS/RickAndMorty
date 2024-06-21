@@ -18,7 +18,7 @@
 		2F673E392C1B29C400943B32 /* CharacterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F673E382C1B29C400943B32 /* CharacterKit */; };
 		2F8C66C22C24214C00BDED79 /* EpisodeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8C66C12C24214C00BDED79 /* EpisodeKit */; };
 		2F8C66CB2C2550BA00BDED79 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C66CA2C2550BA00BDED79 /* AppConfiguration.swift */; };
-		2F8C66CD2C25915B00BDED79 /* EnvironmentVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C66CC2C25915B00BDED79 /* EnvironmentVars.swift */; };
+		2F8C66CD2C25915B00BDED79 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C66CC2C25915B00BDED79 /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,10 @@
 		2F05F5722C1B078E00475454 /* RickAndMortyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2F3A80882C21BE0E00800758 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2F8C66CA2C2550BA00BDED79 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		2F8C66CC2C25915B00BDED79 /* EnvironmentVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentVars.swift; sourceTree = "<group>"; };
+		2F8C66CC2C25915B00BDED79 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		2F8C66CE2C25C78100BDED79 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		2F8C66CF2C25C79200BDED79 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		2F8C66D22C25DB9B00BDED79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,7 @@
 				2F8C66C32C254F4900BDED79 /* Configurations */,
 				2F05F5542C1B078B00475454 /* RickAndMortyApp.swift */,
 				2F05F5562C1B078B00475454 /* ContentView.swift */,
+				2F8C66D22C25DB9B00BDED79 /* Info.plist */,
 				2F05F5582C1B078E00475454 /* Assets.xcassets */,
 				2F05F55A2C1B078E00475454 /* RickAndMorty.entitlements */,
 				2F05F55B2C1B078E00475454 /* Preview Content */,
@@ -145,7 +149,9 @@
 			isa = PBXGroup;
 			children = (
 				2F8C66CA2C2550BA00BDED79 /* AppConfiguration.swift */,
-				2F8C66CC2C25915B00BDED79 /* EnvironmentVars.swift */,
+				2F8C66CC2C25915B00BDED79 /* Configuration.swift */,
+				2F8C66CE2C25C78100BDED79 /* Development.xcconfig */,
+				2F8C66CF2C25C79200BDED79 /* Release.xcconfig */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -290,7 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F8C66CB2C2550BA00BDED79 /* AppConfiguration.swift in Sources */,
-				2F8C66CD2C25915B00BDED79 /* EnvironmentVars.swift in Sources */,
+				2F8C66CD2C25915B00BDED79 /* Configuration.swift in Sources */,
 				2F05F5572C1B078B00475454 /* ContentView.swift in Sources */,
 				2F05F5552C1B078B00475454 /* RickAndMortyApp.swift in Sources */,
 			);
@@ -331,6 +337,7 @@
 /* Begin XCBuildConfiguration section */
 		2F05F5742C1B078E00475454 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F8C66CE2C25C78100BDED79 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -392,6 +399,7 @@
 		};
 		2F05F5752C1B078E00475454 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F8C66CF2C25C79200BDED79 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -445,6 +453,7 @@
 		};
 		2F05F5772C1B078E00475454 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F8C66CE2C25C78100BDED79 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -454,6 +463,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RickAndMorty/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -482,6 +492,7 @@
 		};
 		2F05F5782C1B078E00475454 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F8C66CE2C25C78100BDED79 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -491,6 +502,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RickAndMorty/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

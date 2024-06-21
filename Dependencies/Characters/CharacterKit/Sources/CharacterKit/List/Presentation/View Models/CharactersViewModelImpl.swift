@@ -25,6 +25,8 @@ public class CharactersViewModelImpl: CharactersViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
+    public init() { }
+    
     public func loadCharacters() async {
         do {
             guard !isLoading else { return }

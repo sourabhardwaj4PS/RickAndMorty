@@ -10,10 +10,10 @@ import Foundation
 public protocol BaseConfiguration: CustomStringConvertible {
     
     /// For network calls
-    var baseURL: String { get }
+    var baseUrl: URL { get }
     
     /// To track analytics
-    var analyticsURL: String { get }
+    var analyticsUrl: URL { get }
     
 }
 

@@ -24,3 +24,27 @@ extension Optional where Wrapped == URL {
         }
     }
 }
+
+extension URLRequest {
+    public func log() {
+        print("######### URLRequest Log #########")
+        
+        if let url = self.url {
+            print("URL: \(url.absoluteString)")
+        }
+        
+        if let method = self.httpMethod {
+            print("Method: \(method)")
+        }
+        
+        if let headers = self.allHTTPHeaderFields {
+            print("Headers: \(headers)")
+        }
+        
+        if let body = self.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+            print("Body: \(bodyString)")
+        }
+        
+        print("##################################")
+    }
+}

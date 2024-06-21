@@ -1,5 +1,5 @@
 //
-//  Environment.swift
+//  AppConfiguration.swift
 //  RickAndMorty
 //
 //  Created by Sourabh Bhardwaj on 21/06/24.
@@ -10,16 +10,14 @@ import CoreKit
 
 public struct AppConfiguration: BaseConfiguration {
     
-    public let baseURL = EnvironmentVars.baseURL
-    public let analyticsURL = EnvironmentVars.analyticsURL
-    
-    public init() { }
-    
+    public let baseUrl = Configuration.baseURL
+    public let analyticsUrl = Configuration.analyticsURL
+        
     public var description: String {
            """
            Configuration:
-           - Base URL: \(baseURL)
-           - Analytics URL: \(analyticsURL)
+           - Base URL: \(baseUrl)
+           - Analytics URL: \(analyticsUrl)
            - Characters Path: \(charactersPath)
            - Episodes Path: \(episodesPath)
            """
@@ -30,7 +28,7 @@ extension AppConfiguration: CharactersConfiguration {
     
     public var charactersPath: String {
         get {
-            return EnvironmentVars.charactersPath
+            return Configuration.charactersPath
         }
     }
 }
@@ -39,7 +37,7 @@ extension AppConfiguration: EpisodesConfiguration {
     
     public var episodesPath: String {
         get {
-            return EnvironmentVars.episodesPath
+            return Configuration.episodesPath
         }
     }
     

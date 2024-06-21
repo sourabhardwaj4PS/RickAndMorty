@@ -9,18 +9,19 @@ import Foundation
 import CoreKit
 
 public struct CharactersConfigurationImpl: CharactersConfiguration {
-    public var baseURL = "https://rickandmortyapi.com/api"
+    public var baseUrl = URL(string: "https://rickandmortyapi.com/api").value
+    public var analyticsUrl = URL(string: "https://analytics.com/api").value
+    
     public var charactersPath: String = "/character"
-    public var analyticsURL = "https://analytics.com/api"
     
     public init() { }
     
     public var description: String {
            """
-           Chracters Configuration:
-           - Base URL: \(baseURL)
+           Characters Configuration:
+           - Base URL: \(baseUrl)
            - Path: \(charactersPath)
-           - Analytics URL: \(analyticsURL)
+           - Analytics URL: \(analyticsUrl)
            """
     }
 }

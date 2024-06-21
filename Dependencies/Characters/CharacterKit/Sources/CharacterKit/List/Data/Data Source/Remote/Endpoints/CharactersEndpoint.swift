@@ -14,7 +14,7 @@ public enum CharactersEndpoint: ApiEndpoint {
     case characterDetails(characterId: Int)
 
     public var baseURL: URL {
-        return URL(string: CharacterManager.shared.configuration.baseURL).value
+        return CharacterManager.shared.configuration.baseUrl
     }
 
     public var path: String {

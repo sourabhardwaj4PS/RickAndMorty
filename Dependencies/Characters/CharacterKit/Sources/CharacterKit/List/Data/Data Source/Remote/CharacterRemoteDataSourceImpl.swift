@@ -19,6 +19,7 @@ public class CharacterRemoteDataSourceImpl: CharacterRemoteDataSource {
             // create request
             let endpont = CharactersEndpoint.characters(page: params.page)
             let request = try apiClient.createRequest(endpont)
+            DLog(request.log())
             
             // execute the request
             return try apiClient.execute(urlRequest: request)
