@@ -57,6 +57,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
             }, receiveValue: { [weak self] (collection: [Character]) in
                 let charactersVMcollection = collection.map { CharacterViewModelImpl(character: $0) }
                 self?.characters.append(contentsOf: charactersVMcollection)
+                DLog("Characters results loaded.")
             })
             .store(in: &self.cancellables)
     }

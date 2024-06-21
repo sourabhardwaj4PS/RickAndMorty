@@ -66,15 +66,12 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
         .onAppear(perform: {
             guard !hasAppeared else { return }
             hasAppeared.toggle()
-            Task {
-                await viewModel.loadCharacterDetails(id: viewModel.characterId)
-            }
+            
+            viewModel.loadCharacterDetails(id: viewModel.characterId)
         })
         .alert(CharacterConstants.Titles.Alerts.somethingWentWrong, isPresented: $viewModel.isServerError, actions: {
             Button(CharacterConstants.Titles.Buttons.ok) {
-                Task {
-                    await viewModel.loadCharacterDetails(id: viewModel.characterId)
-                }
+                viewModel.loadCharacterDetails(id: viewModel.characterId)
             }
             Button(CharacterConstants.Titles.Buttons.cancel, role: .cancel) { }
         }, message: {

@@ -13,49 +13,38 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
     @Dependency public var useCase: CharacterDetailsUseCase
     
     @Published public var finishedLoading: Bool = false
-    @Published public var errorMessage: String?
+    
+    public var errorMessage: String? {
+        didSet {
+            isServerError = (errorMessage != nil)
+        }
+    }
     
     public var isServerError: Bool = false
-    public var characterId: Int
     public var character: Character?
     
     private var cancellables = Set<AnyCancellable>()
     
+    public var characterId: Int
     public init(characterId: Int) {
         self.characterId = characterId
     }
     
-    public func loadCharacterDetails(id: Int) async {
+    public func loadCharacterDetails(id: Int) {
+        self.errorMessage = nil
         
-        guard id > 0 else {
-            DLog("Error in loadCharacterDetails - passed characterId is \(id)")
-            return
-        }
-
-        let params = CharacterDetailParameters(id: id)
-        do {
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await useCase.characterDetails(params: params)
-            publisher
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    DLog("loadCharacterDetails completion \(completion)")
-                    if case .failure(let error) = completion {
-                        self.isServerError = true
-                        self.errorMessage = error.localizedDescription
-                    }
-                    self.finishedLoading = true
-                } receiveValue: { character in
-                    self.character = character
-                    DLog("character details received:")
+        useCase.loadCharacterDetails(characterId: id)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    self.errorMessage = error.localizedDescription
                 }
-                .store(in: &self.cancellables)
-        }
-        catch let exception {
-            DLog("Exception in loadCharacterDetails = \(exception)")
-            self.isServerError = true
-            self.finishedLoading = true
-            self.errorMessage = exception.localizedDescription
-        }
+                self.finishedLoading = true
+            } receiveValue: { character in
+                self.character = character
+                DLog("Character details received.")
+            }
+            .store(in: &self.cancellables)
     }
     
 }
