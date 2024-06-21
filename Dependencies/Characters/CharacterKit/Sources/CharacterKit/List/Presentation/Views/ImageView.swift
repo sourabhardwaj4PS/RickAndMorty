@@ -18,7 +18,7 @@ struct ImageView: View {
     }
     
     var body: some View {
-        RemoteImageView(
+        /*RemoteImageView(
             urlString: imageUrlString,
             placeholder: {
                 Image(systemName: "photo")
@@ -28,7 +28,23 @@ struct ImageView: View {
                 $0
                     .resizable()
             }
-        )
+        )*/
+        AsyncImage(url: URL(string: imageUrlString).value) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+            case .failure:
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+            @unknown default:
+                EmptyView()
+            }
+        }
     }
 }
 

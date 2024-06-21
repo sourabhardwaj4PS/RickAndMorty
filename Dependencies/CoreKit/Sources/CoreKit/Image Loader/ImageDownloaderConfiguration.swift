@@ -10,13 +10,10 @@ import NetworkKit
 import Kingfisher
 
 public class ImageDownloaderConfiguration {
-    
     public static func setup() {
         ImageDownloader.default.authenticationChallengeResponder = KFAuthenticationChallengeResponder()
-      }
-
+    }
 }
-
 
 final class KFAuthenticationChallengeResponder: AuthenticationChallengeResponsible {
     

@@ -38,9 +38,7 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
                     })
                     .alert(CharacterConstants.Titles.Alerts.somethingWentWrong, isPresented: $viewModel.isServerError, actions: {
                         Button(CharacterConstants.Titles.Buttons.retry) {
-                            Task {
-                                await viewModel.loadCharacters()
-                            }
+                            viewModel.loadCharacters()
                         }
                         Button(CharacterConstants.Titles.Buttons.cancel, role: .cancel) { }
                     }, message: {
@@ -51,25 +49,21 @@ public struct CharactersListView<T>: View where T: CharactersViewModel {
         .onAppear {
             guard !hasAppeared else { return }
             hasAppeared.toggle()
-            Task {
-                await viewModel.loadCharacters()
-            }
+            
+            viewModel.loadCharacters()
         }
     }
     
     @ViewBuilder
     private func populateListView() -> some View {
-        List(viewModel.characters, id: \.id) { character in
+        List(viewModel.characters, id: \.name) { character in
             if let characterVM = character as? CharacterViewModelImpl {
                 
                 // create row view
                 CharacterRowView(viewModel: characterVM)
                     .onAppear {
-                        //TODO: think about logic
                         if characterVM == (viewModel.characters.last as? CharacterViewModelImpl) {
-                            Task {
-                                await viewModel.loadCharacters()
-                            }
+                            viewModel.loadMore()
                         }
                     }
                     .onTapGesture {
