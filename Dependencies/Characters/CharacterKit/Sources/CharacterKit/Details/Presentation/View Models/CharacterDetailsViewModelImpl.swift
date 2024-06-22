@@ -58,6 +58,6 @@ extension CharacterDetailsViewModelImpl: AttributableCharacter {
     public var gender: String { return character?.gender ?? "" }
     public var image: String { return character?.image ?? "" }
     public var url: String { return character?.url ?? "" }
-    public var created: String { return character?.created ?? "" }
+    public var created: String { return character?.created.toDateString() ?? "" }
     public var episode: [String] { return character?.episode ?? [] }
 }

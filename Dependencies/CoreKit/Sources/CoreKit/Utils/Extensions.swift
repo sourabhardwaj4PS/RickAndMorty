@@ -48,3 +48,20 @@ extension URLRequest {
         print("##################################")
     }
 }
+
+extension String {
+    public func toDateString(fromFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", toFormat: String = "dd MMM yyyy") -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = fromFormat
+        
+        if let date = dateFormatter.date(from: self) {
+            dateFormatter.dateFormat = toFormat
+            let formattedDateString = dateFormatter.string(from: date)
+            return formattedDateString
+        } 
+        else {
+            return nil
+        }
+    }
+}
