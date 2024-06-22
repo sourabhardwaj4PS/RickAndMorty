@@ -37,6 +37,7 @@ public class CharacterDetailsViewModelImpl: CharacterDetailsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
+                    DLog("Error in loading character details = \(error)")
                     self.errorMessage = error.localizedDescription
                 }
                 self.finishedLoading = true

@@ -46,6 +46,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
                 
                 switch completion {
                 case .failure(let error):
+                    DLog("Error in loading results = \(error)")
                     self.errorMessage = error.localizedDescription
                 case .finished:
                     break
