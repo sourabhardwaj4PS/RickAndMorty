@@ -39,14 +39,14 @@ Glimpse of the app via screenshots:
 
 ### App Icon and Launch Screen
 <p align="left">
-  <img src="Screenshots/AppIcon.png" alt="App Icon" width="25%">
-  <img src="Screenshots/Launch-screen.png" alt="Launch Screen" width="25%">
+  <img src="Screenshots/AppIcon.png" alt="App Icon" width="35%">
+  <img src="Screenshots/Launch-screen.png" alt="Launch Screen" width="35%">
 </p>
 
 ### Characters Listing and Details
 <p align="left">
-  <img src="Screenshots/characters-home.png" alt="App Icon" width="25%">
-  <img src="Screenshots/character-details.png" alt="Launch Screen" width="25%">
+  <img src="Screenshots/characters-home.png" alt="App Icon" width="35%">
+  <img src="Screenshots/character-details.png" alt="Launch Screen" width="35%">
 </p>
 
 
