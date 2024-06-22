@@ -21,7 +21,8 @@ struct CharacterDetailsView<T>: View where T: CharacterDetailsViewModel {
         ScrollView {
             if viewModel.finishedLoading {
                 ImageView(imageUrlString: viewModel.image)
-                    .frame(maxWidth: .infinity, maxHeight: 360)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 360)
                     .aspectRatio(contentMode: .fit)
                     .background(Color.gray.opacity(0.1))
                     .accessibilityIdentifier(CharacterConstants.AccessibilityIdentifiers.image)
