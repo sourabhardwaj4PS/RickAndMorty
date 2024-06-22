@@ -24,6 +24,7 @@ class CharacterListViewTests: XCTestCase {
     }
     
     func testCharacterRowView_shouldShowCharacterRowView() {
+        // Given
         guard var character = try? JSONDecoder().decode(CharacterImpl.self, from: MockData.character) else {
             return
         }
@@ -34,47 +35,47 @@ class CharacterListViewTests: XCTestCase {
         
         let characterVM = CharacterViewModelImpl(character: character)
         let rowView = CharacterRowView(viewModel: characterVM)
-        
-        rowView.toVC.performSnapshotTest(named: "CharacterRowView", testName: "shouldShowCharacterRowView")
+
+        // When & Then
+        // perform snapshot test
+        assertSnapshot(of: rowView.toVC,
+                       as: .image(precision: 0.9),
+                       named: "shouldShowCharacterRowView",
+                       testName: "CharacterRowView")
+
     }
     
     func testCharactersListView_shouldShowCharactersListView() {
+        // Given
         guard let characters = try? JSONDecoder().decode(CharactersImpl.self, from: MockData.allCharacters) else {
             return
         }
         path = getImageFromBundle(resource: "rick", withExtension: "jpg")
 
         let results = characters.results
-        
         let charactersVM = CharactersViewModelImpl()
         charactersVM.characters = results.map({ character in
             var character = character
             character.image = path.absoluteString
             return CharacterViewModelImpl(character: character)
         })
-
         let listView = CharactersListView(viewModel: charactersVM)
-        listView.toVC.performSnapshotTest(named: "CharactersListView", testName: "shouldShowCharactersListView")
+        
+        // When & Then
+        // perform snapshot test
+        assertSnapshot(of: listView.toVC,
+                       as: .image(precision: 0.9),
+                       named: "shouldShowCharactersListView",
+                       testName: "CharactersListView")
     }
 }
-
-
 
 extension SwiftUI.View {
     var toVC: UIViewController {
         let hostingController = UIHostingController(rootView: self)
         hostingController.view.frame = UIScreen.main.bounds
+        hostingController.view.frame.size = CGSize(width: 393, height: 852)
         return hostingController
-    }
-}
-
-extension UIViewController {
-    func performSnapshotTest(named name: String,
-                             testName: String = "Snapshot") {
-        assertSnapshot(matching: self,
-                       as: .image(precision: 0.9),
-                       named: name,
-                       testName: testName)
     }
 }
 

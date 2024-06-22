@@ -54,7 +54,7 @@ class CharacterDetailsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.gender, "Male")
                 XCTAssertEqual(sut.image, "https://rickandmortyapi.com/api/character/avatar/2.jpeg")
                 XCTAssertEqual(sut.url, "https://rickandmortyapi.com/api/character/2")
-                XCTAssertEqual(sut.created, "2017-11-04T18:50:21.651Z")
+                XCTAssertEqual(sut.created, "05 Nov 2017")
                 XCTAssertEqual(sut.episode.count, 16)
                 expectation.fulfill()
             }

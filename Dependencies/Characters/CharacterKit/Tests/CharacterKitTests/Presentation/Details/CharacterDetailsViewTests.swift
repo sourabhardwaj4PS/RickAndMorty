@@ -24,6 +24,7 @@ class CharacterDetailsViewTests: XCTestCase {
     }
     
     func testCharacterDetailsView_shouldShowCharacterDetailsView() {
+        // Given
         guard var character = try? JSONDecoder().decode(CharacterImpl.self, from: MockData.character) else {
             return
         }
@@ -33,11 +34,15 @@ class CharacterDetailsViewTests: XCTestCase {
         character.image = path.absoluteString
         
         let characterDetailsVM = CharacterDetailsViewModelImpl(characterId: character.id)
-        //characterDetailsVM.loadCharacterDetails(id: character.id)
         characterDetailsVM.character = character
         let detailsView = CharacterDetailsView(viewModel: characterDetailsVM)
         characterDetailsVM.finishedLoading = true
         
-        detailsView.toVC.performSnapshotTest(named: "CharacterDetailsView", testName: "shouldShowCharacterDetailsView")
+        // When & Then
+        // perform snapshot test
+        assertSnapshot(of: detailsView.toVC,
+                       as: .image(precision: 0.9),
+                       named: "shouldShowCharacterDetailsView",
+                       testName: "CharacterDetailsView")
     }
 }
