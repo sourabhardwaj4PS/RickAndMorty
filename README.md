@@ -38,12 +38,16 @@ Glimpse of the app via screenshots:
 
 
 ### App Icon and Launch Screen
-![App Icon](/RickAndMorty/Assets.xcassets/appIcon-home.imageset/appIcon-home.png)
-![Launch Screen](/RickAndMorty/Assets.xcassets/launch.imageset/launch.png)
+<p align="left">
+  <img src="Screenshots/AppIcon.png" alt="App Icon" width="25%">
+  <img src="Screenshots/Launch-screen.png" alt="Launch Screen" width="25%">
+</p>
 
 ### Characters Listing and Details
-![Characters Listing](/RickAndMorty/Assets.xcassets/characters-home.imageset/characters-home.png)
-![Character Details](/RickAndMorty/Assets.xcassets/character-details.imageset/character-details.png)
+<p align="left">
+  <img src="Screenshots/characters-home.png" alt="App Icon" width="25%">
+  <img src="Screenshots/character-details.png" alt="Launch Screen" width="25%">
+</p>
 
 
 ## Code Coverage
@@ -52,7 +56,7 @@ Below is a screenshot of the latest code coverage summary:
 
 
 ### Characters Module
-![Code Coverage Summary](/RickAndMorty/Assets.xcassets/Characters-coverage-summary.imageset/Characters-coverage-summary.png)
+![CharacterKit Coverage](Screenshots/characters-coverage-summary.png)
 
 ### Network Module
-![Code Coverage Summary](/RickAndMorty/Assets.xcassets/Network-coverage-summary.imageset/Network-coverage-summary)
+![NetworkKit Coverage](Screenshots/network-coverage-summary.png)
