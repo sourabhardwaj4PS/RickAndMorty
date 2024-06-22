@@ -19,6 +19,7 @@
 		2F8C66C22C24214C00BDED79 /* EpisodeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8C66C12C24214C00BDED79 /* EpisodeKit */; };
 		2F8C66CB2C2550BA00BDED79 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C66CA2C2550BA00BDED79 /* AppConfiguration.swift */; };
 		2F8C66CD2C25915B00BDED79 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C66CC2C25915B00BDED79 /* Configuration.swift */; };
+		2F8C66D52C26B8B600BDED79 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F8C66D42C26B8B600BDED79 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		2F8C66CE2C25C78100BDED79 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		2F8C66CF2C25C79200BDED79 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		2F8C66D22C25DB9B00BDED79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F8C66D42C26B8B600BDED79 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				2F05F5582C1B078E00475454 /* Assets.xcassets */,
 				2F05F55A2C1B078E00475454 /* RickAndMorty.entitlements */,
 				2F05F55B2C1B078E00475454 /* Preview Content */,
+				2F8C66D42C26B8B600BDED79 /* Launch Screen.storyboard */,
 			);
 			path = RickAndMorty;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			files = (
 				2F3A80892C21BE0E00800758 /* README.md in Resources */,
 				2F05F55D2C1B078E00475454 /* Preview Assets.xcassets in Resources */,
+				2F8C66D52C26B8B600BDED79 /* Launch Screen.storyboard in Resources */,
 				2F05F5592C1B078E00475454 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,6 +475,7 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
@@ -510,6 +515,7 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";

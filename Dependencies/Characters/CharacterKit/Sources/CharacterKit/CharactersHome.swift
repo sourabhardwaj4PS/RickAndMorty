@@ -8,10 +8,12 @@
 import Foundation
 import SwiftUI
 import CoreKit
+import Kingfisher
 
 public struct CharactersHome: View {
     
     private var config: CharactersConfiguration
+    private let challengeResponder = ImageAuthenticationChallengeResponder()
     
     public var body: some View {
         CharactersListView(viewModel: CharactersViewModelImpl())
@@ -25,6 +27,9 @@ public struct CharactersHome: View {
         
         // register dependencies
         CharacterContainer.setupDependencies()
+        
+        // set custom challenge responder to thirdparty image downloader
+        ImageDownloader.default.authenticationChallengeResponder = challengeResponder
     }
 }
 

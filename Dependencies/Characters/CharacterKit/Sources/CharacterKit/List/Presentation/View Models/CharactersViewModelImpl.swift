@@ -18,7 +18,7 @@ public class CharactersViewModelImpl: CharactersViewModel {
     // error handling
     @Published public var isServerError: Bool = false
     
-    public var errorMessage: String? {
+    @Published public var errorMessage: String? {
         didSet {
             isServerError = (errorMessage != nil)
         }
@@ -29,15 +29,11 @@ public class CharactersViewModelImpl: CharactersViewModel {
     public init() { }
     
     public func loadCharacters() {
-        self.errorMessage = nil
-        
         let result: Future<[Character], Error> = useCase.loadCharacters()
         process(result: result)
     }
     
     public func loadMore() {
-        self.errorMessage = nil
-        
         let result: Future<[Character], Error> = useCase.loadMore()
         process(result: result)
     }

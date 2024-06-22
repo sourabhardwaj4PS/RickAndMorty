@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "AA4DE2DC-64C4-41EE-AF80-578AE47DCCA6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "NetworkKit",
+          "name" : "NetworkKit"
+        }
+      ]
+    },
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "NetworkKitTests",
+        "name" : "NetworkKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

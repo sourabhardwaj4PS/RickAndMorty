@@ -25,9 +25,6 @@ public class MockContainer {
         
         /// Api Client
         apiClientDependencies()
-        
-        /// Authentication challenge for images
-        authChallengeForImages()
     }
     
     ///
@@ -60,12 +57,5 @@ public class MockContainer {
     private static func apiClientDependencies() {
         DependencyContainer.register(type: (SessionApiClient<CharactersEndpoint>).self, 
                                      SessionApiClient<CharactersEndpoint>(session: MockURLSession()))
-    }
-    
-    ///
-    /// Authentication challenge for images to be downloaded via third party
-    ///
-    private static func authChallengeForImages() {
-        ImageDownloaderConfiguration.setup()
     }
 }

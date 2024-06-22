@@ -16,27 +16,33 @@ enum MockError: Error {
 }
 
 class CharacterUseCaseMock: CharacterUseCase {
-    var expectedResult: Result<AnyPublisher<CharactersImpl, Error>, Error>?
+    var currentPage: Int = 1
     
-    func characters<T>(params: CharacterParameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
-        if let expectedResult = expectedResult {
-            switch expectedResult {
-            case .success(let publisher):
-                guard let typedPublisher = publisher as? AnyPublisher<T, Error> else {
-                    throw MockError.typeMismatch
+    var isLoading: Bool = false
+    
+    var expectedResult: Result<CharactersImpl, Error>?
+    
+    func loadCharacters() -> Future<[Character], Error> {
+        return Future<[Character], Error> { promise in
+            
+            if let expectedResult = self.expectedResult {
+                switch expectedResult {
+                case .success(let character):
+                    promise(.success(character.results))
+                case .failure(let error):
+                    promise(.failure(error))
                 }
-                return typedPublisher
-            case .failure(let error):
-                return Fail(error: error).eraseToAnyPublisher()
             }
-        } 
-        else {
-            throw URLError(.badServerResponse)
+            else {
+                promise(.failure(URLError(.badServerResponse)))
+            }
         }
     }
     
-    func incrementPage(currentPage: Int) -> Int {
-        return currentPage + 1
+    func loadMore() -> Future<[Character], Error> {
+        currentPage += 1
+        return loadCharacters()
     }
+    
     
 }

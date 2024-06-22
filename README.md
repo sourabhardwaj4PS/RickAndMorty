@@ -31,8 +31,28 @@ https://rickandmortyapi.com/documentation/
 
 **Character details**: https://rickandmortyapi.com/api/character/1
 
+
+## Screenshots
+
+Glimpse of the app via screenshots:
+
+
+### App Icon and Launch Screen
+![App Icon](/RickAndMorty/Assets.xcassets/appIcon-home.imageset/appIcon-home.png)
+![Launch Screen](/RickAndMorty/Assets.xcassets/launch.imageset/launch.png)
+
+### Characters Listing and Details
+![Characters Listing](/RickAndMorty/Assets.xcassets/characters-home.imageset/characters-home.png)
+![Character Details](/RickAndMorty/Assets.xcassets/character-details.imageset/character-details.png)
+
+
 ## Code Coverage
 
 Below is a screenshot of the latest code coverage summary:
 
-![Code Coverage Summary](/RickAndMorty/Assets.xcassets/coverage-summary.imageset/coverage-summary.png)
+
+### Characters Module
+![Code Coverage Summary](/RickAndMorty/Assets.xcassets/Characters-coverage-summary.imageset/Characters-coverage-summary.png)
+
+### Network Module
+![Code Coverage Summary](/RickAndMorty/Assets.xcassets/Network-coverage-summary.imageset/Network-coverage-summary)

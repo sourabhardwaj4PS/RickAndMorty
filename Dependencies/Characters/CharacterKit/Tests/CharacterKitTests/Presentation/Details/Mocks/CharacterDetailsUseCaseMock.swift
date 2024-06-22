@@ -12,23 +12,25 @@ import CoreKit
 @testable import CharacterKit
 
 class CharacterDetailsUseCaseMock: CharacterDetailsUseCase {
+    var isLoading: Bool = false
     
-    var expectedResult: Result<AnyPublisher<CharacterImpl, Error>, Error>?
+    var expectedResult: Result<CharacterImpl, Error>?
 
-    func characterDetails<T>(params: CharacterDetailParameters) async throws -> AnyPublisher<T, Error> where T : Decodable {
-        if let expectedResult = expectedResult {
-            switch expectedResult {
-            case .success(let publisher):
-                guard let typedPublisher = publisher as? AnyPublisher<T, Error> else {
-                    throw MockError.typeMismatch
+    public func loadCharacterDetails(characterId: Int) -> Future<Character, Error> {
+        return Future<Character, Error> { promise in
+            
+            if let expectedResult = self.expectedResult {
+                switch expectedResult {
+                case .success(let character):
+                    promise(.success(character))
+                case .failure(let error):
+                    promise(.failure(error))
                 }
-                return typedPublisher
-            case .failure(let error):
-                return Fail(error: error).eraseToAnyPublisher()
+            }
+            else {
+                promise(.failure(URLError(.badServerResponse)))
             }
         }
-        else {
-            throw URLError(.badServerResponse)
-        }
     }
+    
 }

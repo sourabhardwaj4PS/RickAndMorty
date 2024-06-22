@@ -38,7 +38,7 @@ class CharacterDetailsViewModelTests: XCTestCase {
         let character = try! JSONDecoder().decode(CharacterImpl.self, from: jsonData)
         
         // Given
-        useCase.expectedResult = .success(Just(character).setFailureType(to: Error.self).eraseToAnyPublisher())
+        useCase.expectedResult = .success(character)
         
         // When
         sut.$finishedLoading
@@ -60,7 +60,7 @@ class CharacterDetailsViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         
-        await sut.loadCharacterDetails(id: 2)
+        sut.loadCharacterDetails(id: 2)
         
         await fulfillment(of: [expectation], timeout: 1.0)
 
@@ -98,7 +98,7 @@ class CharacterDetailsViewModelTests: XCTestCase {
             }
             .store(in: &cancellables)
         
-        await sut.loadCharacterDetails(id: 2)
+        sut.loadCharacterDetails(id: 2)
         
         await fulfillment(of: [expectation], timeout: 1.0)
 
@@ -108,17 +108,20 @@ class CharacterDetailsViewModelTests: XCTestCase {
     func testCharactersViewModel_characterDetails_withNoExpectedResultShouldThrowException() async {
         let expectation = XCTestExpectation(description: "Characters details should throw an exception")
         
-        // Given and When
-        sut.$errorMessage
+        // Given 
+        sut.errorMessage = "Exception in loading character details"
+        
+        // When
+        sut.$finishedLoading
             .dropFirst()
-            .sink(receiveValue: { errorMessage in
+            .sink(receiveValue: { result in
                 // Then
-                XCTAssertNotNil(errorMessage)
+                XCTAssertNotNil(self.sut.errorMessage)
                 expectation.fulfill()
             })
             .store(in: &cancellables)
         
-        await sut.loadCharacterDetails(id: 2)
+        sut.loadCharacterDetails(id: 2)
         
         await fulfillment(of: [expectation], timeout: 1.0)
     }

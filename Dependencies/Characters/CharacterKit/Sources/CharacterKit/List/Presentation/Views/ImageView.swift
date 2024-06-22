@@ -8,16 +8,31 @@
 import Foundation
 import SwiftUI
 import CoreKit
+import Kingfisher
 
 struct ImageView: View {
     
     var imageUrlString: String
+    @State var isImageLoaded = false
     
     init(imageUrlString: String) {
         self.imageUrlString = imageUrlString
     }
     
     var body: some View {
+        KFImage(URL(string: imageUrlString))
+            .resizable()
+            .placeholder {
+                Image(systemName: "photo")
+                    .font(.largeTitle)
+            }
+            .onSuccess { _ in
+                isImageLoaded = true
+            }
+            .onFailure { _ in
+                isImageLoaded = true
+            }
+        
         /*RemoteImageView(
             urlString: imageUrlString,
             placeholder: {
@@ -29,7 +44,8 @@ struct ImageView: View {
                     .resizable()
             }
         )*/
-        AsyncImage(url: URL(string: imageUrlString).value) { phase in
+         
+        /*AsyncImage(url: URL(string: imageUrlString).value) { phase in
             switch phase {
             case .empty:
                 ProgressView()
@@ -44,7 +60,7 @@ struct ImageView: View {
             @unknown default:
                 EmptyView()
             }
-        }
+        }*/
     }
 }
 

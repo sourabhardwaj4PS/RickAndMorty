@@ -40,27 +40,19 @@ class CharacterDetailsUseCaseTests: XCTestCase {
         // Given
         repository.expectedResult = .success(Just(character).setFailureType(to: Error.self).eraseToAnyPublisher())
         
-        let params = CharacterDetailParameters(id: 1)
-
-        do {
-            // When
-            let publisher: AnyPublisher<CharacterImpl, Error> = try await sut.characterDetails(params: params)
-            publisher
-                .sink { completion in
-                    if case .failure(_) = completion {
-                        XCTFail("Not expected to receive failure")
-                    }
-                } receiveValue: { character in
-                    // Then
-                    XCTAssertNotNil(character)
-                    expectation.fulfill()
+        // When
+        sut.loadCharacterDetails(characterId: 1)
+            .sink { completion in
+                if case .failure(_) = completion {
+                    XCTFail("Not expected to receive failure")
                 }
-                .store(in: &cancellables)
-            
-            await fulfillment(of: [expectation], timeout: 1.0)
-        }
-        catch {
-            DLog("Exception in testCharacterDetailsUseCase_loadingCharacters_shouldLoadWithSuccess = \(error)")
-        }
+            } receiveValue: { character in
+                // Then
+                XCTAssertNotNil(character)
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
     }
 }

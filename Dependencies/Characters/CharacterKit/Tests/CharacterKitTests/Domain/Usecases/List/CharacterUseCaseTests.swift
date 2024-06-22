@@ -39,39 +39,53 @@ class CharactersUseCaseTests: XCTestCase {
         let characters = try! JSONDecoder().decode(CharactersImpl.self, from: jsonData)
         
         repository.expectedResult = .success(Just(characters).setFailureType(to: Error.self).eraseToAnyPublisher())
-        
-        let params = CharacterParameters(page: 1)
-        
-        do {
-            // When
-            let publisher: AnyPublisher<CharactersImpl, Error> = try await sut.characters(params: params)
-            publisher
-                .sink { _ in
-                    
-                } receiveValue: { characters in
-                    // Then
-                    XCTAssertNotNil(characters)
-                    expectation.fulfill()
+
+        // When
+        sut.loadCharacters()
+            .sink { completion in
+                if case .failure(_) = completion {
+                    XCTFail("Not expected to receive failure")
                 }
-                .store(in: &cancellables)
-            
-            await fulfillment(of: [expectation], timeout: 1.0)
-        }
-        catch {
-            DLog("Exception in testCharacterUseCase_loadingCharacters_shouldLoadWithSuccess = \(error)")
-        }
+            } receiveValue: { characters in
+                // Then
+                XCTAssertNotNil(characters)
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
     }
     
-    func testCharacterUseCase_loadingCharacters_loadsNextPageWithSuccess() async {
+    func testCharacterUseCase_loadingMoreCharacters_shouldLoadWithSuccess() async {
+        let expectation = XCTestExpectation(description: "Character UseCase should load characters")
         
         // Given
-        let currentpage = 1
+        // validate mocked repository
+        guard let repository = sut.repository as? CharacterRepositoryMock else { return }
         
+        // Decode JSON to Domain model and wrap in a Just publisher
+        let jsonData = MockData.allCharacters
+        let characters = try! JSONDecoder().decode(CharactersImpl.self, from: jsonData)
+        
+        repository.expectedResult = .success(Just(characters).setFailureType(to: Error.self).eraseToAnyPublisher())
+
+        XCTAssertEqual(sut.currentPage, 1)
+
         // When
-        let nextPage = sut.incrementPage(currentPage: currentpage)
+        sut.loadMore()
+            .sink { completion in
+                if case .failure(_) = completion {
+                    XCTFail("Not expected to receive failure")
+                }
+            } receiveValue: { characters in
+                XCTAssertEqual(self.sut.currentPage, 2)
+                XCTAssertNotNil(characters)
+                
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
         
-        // Then
-        XCTAssertNotEqual(currentpage, nextPage)
+        await fulfillment(of: [expectation], timeout: 1.0)
     }
 
 }
