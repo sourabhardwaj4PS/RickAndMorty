@@ -44,10 +44,10 @@ The `CharactersKit` module leverages snapshot testing to ensure the visual consi
 - **Device used**: iPhone 15
 - **Snapshots Directory**: The reference snapshots are stored within the repository under the `__Snapshots__` directory of each View Test's parent directory. The path is as follows:
  
-    Characters Module > Tests > CharacterKitTests > Presentation
+    `Characters Module` > `Tests` > `CharacterKitTests` > `Presentation`
 
-    - List > __Snapshots__
-    - Details > __Snapshots__
+    - List > `__Snapshots__`
+    - Details > `__Snapshots__`
 
 ### Exexuting Snapshot & UITests
 To ensure the visual consistency and functional correctness of the app, follow these steps to execute snapshot and UI tests:
