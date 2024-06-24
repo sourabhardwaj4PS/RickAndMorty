@@ -46,8 +46,8 @@ The `CharactersKit` module leverages snapshot testing to ensure the visual consi
  
     `Characters Module` > `Tests` > `CharacterKitTests` > `Presentation`
 
-    - List > `__Snapshots__`
-    - Details > `__Snapshots__`
+    - `List` > `__Snapshots__`
+    - `Details` > `__Snapshots__`
 
 ### Exexuting Snapshot & UITests
 To ensure the visual consistency and functional correctness of the app, follow these steps to execute snapshot and UI tests:
