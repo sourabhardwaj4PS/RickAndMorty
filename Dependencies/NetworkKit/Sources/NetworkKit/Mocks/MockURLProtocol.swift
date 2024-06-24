@@ -47,9 +47,9 @@ public class MockURLProtocol: URLProtocol {
                 fatalError("Handler is unavailable.")
             }
 
-            if MockURLProtocol.decodingFailed {
-                throw ApiError.decodingFailed
-            }
+//            if MockURLProtocol.decodingFailed {
+//                throw ApiError.decodingFailed
+//            }
             
             let (response, data) = try handler(request)
             
@@ -64,7 +64,9 @@ public class MockURLProtocol: URLProtocol {
                 client?.urlProtocol(self, didLoad: data)
             }
             client?.urlProtocolDidFinishLoading(self)
-        } catch {
+        } 
+        catch {
+            //let unknownError = ApiError.unknownError(error)
             client?.urlProtocol(self, didFailWithError: error)
         }
     }

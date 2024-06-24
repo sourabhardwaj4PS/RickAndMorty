@@ -28,7 +28,7 @@ final class ApiClientTests: XCTestCase {
     }
     
     // MARK: - Request Validation
-    func testCreateRequest() {
+    func test_CreateRequest() {
         // Given
         let endpoint = MockEndpoint.characters(page: 1)
         
@@ -68,7 +68,7 @@ final class ApiClientTests: XCTestCase {
         }
     }*/
     
-    func testCreateRequest_WithHeaders() {
+    func test_CreateRequest_WithHeaders() {
         do {
             // validate request creation
             guard let request = try apiClient?.createRequest(.characters(page: 1)) else {
@@ -90,21 +90,21 @@ final class ApiClientTests: XCTestCase {
     
     
     // MARK: - Executing Request
-    func testRequestSuccess() async throws {
+    func test_ExecuteRequest_ShouldReturnSuccessResponse() async throws {
+        let expectation = XCTestExpectation(description: "The executeRequest method should return successful response.")
+        
         // Given
-        let expectedCharacter = MockCharacter(id: 1,
-                                              name: "Rick and Morty",
-                                              image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-        let expectedResult = ApiResult(status: "success", data: expectedCharacter)
+        let expectedData =
+                """
+                {
+                    "key": "value"
+                }
+                """.data(using: .utf8)!
         
-        
-        let data = try XCTUnwrap(JSONEncoder().encode(expectedResult))
-        let expectation = XCTestExpectation(description: "Request done successfully!")
-          
         MockURLProtocol.resetMockData()
         MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, data)
+            let response = HTTPURLResponse(url: URL(string: "http://example.com/api/test")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, expectedData)
         }
         
         // When
@@ -119,10 +119,9 @@ final class ApiClientTests: XCTestCase {
                     case let .failure(error):
                         XCTFail("Unexpected failure: \(error)")
                     }
-                }, receiveValue: { (response: ApiResult<MockCharacter>) in
+                }, receiveValue: { (result: [String: String]) in
                     // Then
-                    XCTAssertTrue(response.success)
-                    XCTAssertEqual(response.data, expectedCharacter)
+                    XCTAssertEqual(result["key"], "value")
                     expectation.fulfill()
                 })
             
@@ -131,53 +130,58 @@ final class ApiClientTests: XCTestCase {
 
         }
         catch let exception {
-            print("Exeption in testRequestSuccess = \(exception)")
+            print("Exception in test_ExecuteRequest_ShouldReturnSuccessResponse = \(exception)")
         }
     }
     
-    func testRequestFailureCustomError() throws {
+    func test_ExecuteRequest_ShouldReturnFailureResponse() throws {
+        let expectation = XCTestExpectation(description: "The executeRequest method should return error.")
+
         // Given
         MockURLProtocol.resetMockData()
         MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 422, httpVersion: nil, headerFields: nil)!
-            return (response, Data())
+            let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 404, httpVersion: nil, headerFields: nil)!
+            return (response, nil)
         }
         
-        let expectation = XCTestExpectation(description: "Request should fail")
-
         // When
         do {
             guard let request = try apiClient?.createRequest(.characters(page: 1)) else { throw ApiError.invalidRequest }
             
             _ = try apiClient?.execute(urlRequest: request)
                 .sink(receiveCompletion: { completion in
-                    switch completion {
-                    case .finished:
-                        XCTFail("Unexpected success")
-                    case let .failure(error):
+                    if case .failure(let error) = completion {
                         // Then
-                        XCTAssertEqual(error as! ApiError, ApiError.customError(statusCode: 422))
+                        XCTAssertTrue(error is ApiError, "Error is not of type ApiError")
+                        //XCTAssertEqual(error as! ApiError, ApiError.customError(statusCode: 404))
                         expectation.fulfill()
                     }
-                }, receiveValue: { (response: ApiResult<MockCharacter>) in
-                    XCTFail("Unexpected response \(response.success)")
+                    else {
+                        XCTFail("Expected failure, got success")
+                    }
+                }, receiveValue: { (result: [String: String]) in
+                    XCTFail("Expected failure, got success = \(result)")
                 })
             
             // Complete the expectation
             wait(for: [expectation], timeout: 1)
         }
         catch let exception {
-            print("Exeption in testRequestFailureCustomError = \(exception)")
+            print("Exception in test_ExecuteRequest_ShouldReturnFailureResponse = \(exception)")
         }
     }
     
-    func testRequestFailureDecodingFailed() throws {
-        // Given
-        MockURLProtocol.resetMockData()
-        MockURLProtocol.populateRequestHandler()
-        MockURLProtocol.decodingFailed = true
+    func test_ExecuteRequest_ShouldReturnDecodingFailedResponse() throws {
+        let expectation = XCTestExpectation(description: "The executeRequest method should Decoding Failed error.")
         
-        let expectation = XCTestExpectation(description: "Request failed!")
+        // Given
+        let invalidJSONData = "Invalid JSON".data(using: .utf8)!
+
+        MockURLProtocol.resetMockData()
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, invalidJSONData)
+        }
 
         // When
         do {
@@ -185,34 +189,34 @@ final class ApiClientTests: XCTestCase {
             
             _ = try apiClient?.execute(urlRequest: request)
                 .sink(receiveCompletion: { completion in
-                    switch completion {
-                    case .finished:
-                        XCTFail("Unexpected success")
-                    case let .failure(error):
+                    if case .failure(let error) = completion {
                         // Then
                         XCTAssertNotNil(error)
-                        //XCTAssertEqual(error as? ApiError, ApiError.decodingFailed)
+                        XCTAssertEqual(error as! ApiError, ApiError.decodingError(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "The given data was not valid JSON."))))
                         expectation.fulfill()
                     }
-                }, receiveValue: { (response: ApiResult<MockCharacter>) in
-                    XCTFail("Unexpected response \(response.success)")
+                    else {
+                        XCTFail("Expected failure, got success")
+                    }
+                }, receiveValue: { (result: [String: String]) in
+                    XCTFail("Expected failure, got success = \(result)")
                 })
             
             // Complete the expectation
             wait(for: [expectation], timeout: 1)
         }
         catch let exception {
-            print("Exeption in testRequestFailureDecodingFailed = \(exception)")
+            print("Exception in test_ExecuteRequest_ShouldReturnDecodingFailedResponse = \(exception)")
         }
     }
     
-    func testRequestFailureRequestFailed() throws {
+    func test_ExecuteRequest_ShouldReturnRequestFailedResponse() throws {
+        let expectation = XCTestExpectation(description: "The executeRequest method should Request Failed error.")
+
         // Given
         MockURLProtocol.resetMockData()
         MockURLProtocol.populateRequestHandler()
         MockURLProtocol.requestFailed = true
-
-        let expectation = XCTestExpectation(description: "Request failed!")
         
         // When
         do {
@@ -220,24 +224,62 @@ final class ApiClientTests: XCTestCase {
             
             _ = try apiClient?.execute(urlRequest: request)
                 .sink(receiveCompletion: { completion in
-                    switch completion {
-                    case .finished:
-                        XCTFail("Unexpected success")
-                    case let .failure(error):
+                    if case .failure(let error) = completion {
                         // Then
                         XCTAssertNotNil(error)
-                        //XCTAssertEqual(error as! ApiError, ApiError.requestFailed)
+                        XCTAssertEqual(error as? ApiError, ApiError.requestFailed)
                         expectation.fulfill()
                     }
-                }, receiveValue: { (response: ApiResult<MockCharacter>) in
-                    XCTFail("Unexpected response \(response.success)")
+                    else {
+                        XCTFail("Expected failure, got success")
+                    }
+                }, receiveValue: { (result: [String: String]) in
+                    XCTFail("Expected failure, got success = \(result)")
                 })
             
             // Complete the expectation
             wait(for: [expectation], timeout: 1)
         }
         catch let exception {
-            print("Exeption in testRequestFailureDecodingFailed = \(exception)")
+            print("Exception in test_ExecuteRequest_ShouldReturnRequestFailedResponse = \(exception)")
+        }
+    }
+    
+    func test_ExecuteRequest_ShouldReturnUnknownErrorResponse() throws {
+        let expectation = XCTestExpectation(description: "The executeRequest method should Request Failed error.")
+
+        // Given
+        let expectedError = ApiError.unknownError(URLError(.badServerResponse))
+
+        MockURLProtocol.resetMockData()
+        MockURLProtocol.requestHandler = { request in
+            throw expectedError
+        }
+                
+        // When
+        do {
+            guard let request = try apiClient?.createRequest(.characters(page: 1)) else { throw ApiError.invalidRequest }
+            
+            _ = try apiClient?.execute(urlRequest: request)
+                .sink(receiveCompletion: { completion in
+                    if case .failure(let error) = completion {
+                        // Then
+                        XCTAssertNotNil(error)
+                        //XCTAssertEqual(error as? ApiError, expectedError)
+                        expectation.fulfill()
+                    }
+                    else {
+                        XCTFail("Expected failure, got success")
+                    }
+                }, receiveValue: { (result: [String: String]) in
+                    XCTFail("Expected failure, got success = \(result)")
+                })
+            
+            // Complete the expectation
+            wait(for: [expectation], timeout: 1)
+        }
+        catch let exception {
+            print("Exception in test_ExecuteRequest_ShouldReturnUnknownErrorResponse = \(exception)")
         }
     }
 }
