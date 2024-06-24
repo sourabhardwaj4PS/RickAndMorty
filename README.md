@@ -40,25 +40,36 @@ https://rickandmortyapi.com/documentation/
 The `CharactersKit` module leverages snapshot testing to ensure the visual consistency of the user interface across different versions. Also, along with Unit Tests, UI tests are also written and can be executed altogether using one test plan.
 
 ### Snapshot Testing Configuration
+
 - **Device used**: iPhone 15
-- **Snapshots Directory**: The reference snapshots are stored within the repository under the __Snapshots__ directory of every View Tests parent directory. Following is the path:
+- **Snapshots Directory**: The reference snapshots are stored within the repository under the `__Snapshots__` directory of each View Test's parent directory. The path is as follows:
  
-    `Characters Module` > `Tests` > `CharacterKitTests` > `Presentation`
-    
-        - `List` > `__Snapshots__`
-        
-        - `Details` > `__Snapshots__`
+    Characters Module > Tests > CharacterKitTests > Presentation
+
+    - List > __Snapshots__
+    - Details > __Snapshots__
 
 ### Exexuting Snapshot & UITests
-    1. Open `Characters.xcodeproj`
-    2. Open `Test Navigator` (or Hit Cmd + 6)
-    3. Run `CharactersTestPlan` Test plan.
-    4. Two Test Targets will be executed:
-        - *CharacterKitTests* With all other tests, following snapshot tests for views are executed:
-            - CharacterListViewTests
-            - CharacterDetailsViewTests
-        - *CharactersUITests* - UITests for the character module are executed
-    5. Coverage of both targets can we viewed under `Reports Navigator` (Hit Cmd + 9).
+To ensure the visual consistency and functional correctness of the app, follow these steps to execute snapshot and UI tests:
+
+1. **Open the Project**:
+    - Open `Characters.xcodeproj` in Xcode.
+
+2. **Access the Test Navigator**:
+    - Open the `Test Navigator` by hitting `Cmd + 6`.
+
+3. **Run the Test Plan**:
+    - Run the `CharactersTestPlan` from the Test Navigator.
+
+4. **Test Targets Executed**:
+    - **CharacterKitTests**: Along with other unit tests, the following snapshot tests for views are executed:
+        - `CharacterListViewTests`
+        - `CharacterDetailsViewTests`
+    - **CharactersUITests**: UI tests for the character module are executed to ensure functional correctness.
+
+5. **View Coverage**:
+    - Coverage reports for both targets can be viewed under the `Reports Navigator` by hitting `Cmd + 9`.
+
 
 ## Screenshots
 
