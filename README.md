@@ -13,9 +13,12 @@ This app is a demonstration of SwiftUI + Combine, async/await for network calls,
 
 ## Modules
 
-1. **Characters Module**: Handles functionality related to characters, including displaying character information, searching characters, and managing character details.
-2. **Episodes Module**: `To be developed later.`
-3. **Main App**: Integrates all modules together to create the "Rick And Morty" app, offering a seamless user experience across characters, episodes, and locations.
+- **Characters Module**: Handles functionality related to characters, including displaying character information, searching characters, and managing character details.
+- **Episodes Module**: `To be developed later.`
+- **Core Module**: Some of the functionalities like Dependency Injection, App Configuration, Remote ImageView, Utils etc which are to (or can) be used accross all modules.
+- **Network Module**: Takes care of creating network request and executing them.
+
+- **Main App**: Integrates all modules together to create the "Rick And Morty" app, offering a seamless user experience across characters, episodes, and locations.
 
 ## Installation
 
@@ -31,6 +34,31 @@ https://rickandmortyapi.com/documentation/
 
 **Character details**: https://rickandmortyapi.com/api/character/1
 
+
+## Snapshots and UITests
+
+The `CharactersKit` module leverages snapshot testing to ensure the visual consistency of the user interface across different versions. Also, along with Unit Tests, UI tests are also written and can be executed altogether using one test plan.
+
+### Snapshot Testing Configuration
+- **Device used**: iPhone 15
+- **Snapshots Directory**: The reference snapshots are stored within the repository under the __Snapshots__ directory of every View Tests parent directory. Following is the path:
+ 
+    `Characters Module` > `Tests` > `CharacterKitTests` > `Presentation`
+    
+        - `List` > `__Snapshots__`
+        
+        - `Details` > `__Snapshots__`
+
+### Exexuting Snapshot & UITests
+    1. Open `Characters.xcodeproj`
+    2. Open `Test Navigator` (or Hit Cmd + 6)
+    3. Run `CharactersTestPlan` Test plan.
+    4. Two Test Targets will be executed:
+        - *CharacterKitTests* With all other tests, following snapshot tests for views are executed:
+            - CharacterListViewTests
+            - CharacterDetailsViewTests
+        - *CharactersUITests* - UITests for the character module are executed
+    5. Coverage of both targets can we viewed under `Reports Navigator` (Hit Cmd + 9).
 
 ## Screenshots
 

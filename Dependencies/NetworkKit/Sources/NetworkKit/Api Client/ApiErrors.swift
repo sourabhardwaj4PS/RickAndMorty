@@ -31,8 +31,6 @@ public enum ApiError: Error, Equatable {
             return true
         case (.customError(let lhsStatus), .customError(let rhsStatus)):
             return lhsStatus == rhsStatus
-        case (.customError(let lhsMessage), .customError(let rhsMessage)):
-            return lhsMessage == rhsMessage
         case (.decodingError(let lhsError), .decodingError(let rhsError)):
             return lhsError.localizedDescription == rhsError.localizedDescription
         case (.unknownError(let lhsError), .unknownError(let rhsError)):
